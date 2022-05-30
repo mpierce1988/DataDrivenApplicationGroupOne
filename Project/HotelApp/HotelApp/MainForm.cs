@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using HotelApp.MenuForms;
 
 namespace HotelApp
 {
@@ -49,6 +50,10 @@ namespace HotelApp
 
                 // otherwise, show this mdi container MainForm
                 this.Show();
+
+                // open home page, by default
+                SwitchToForm(new Home(this));
+
             }
             catch (Exception ex)
             {
@@ -56,13 +61,70 @@ namespace HotelApp
             }
         }
 
-        private void ShowNewForm(object sender, EventArgs e)
+        internal void ShowNewForm(object sender, EventArgs e)
         {
-            Form childForm = new Form();
+            /*Form childForm = new Form();
             childForm.MdiParent = this;
             childForm.Text = "Window " + childFormNumber++;
-            childForm.Show();
+            childForm.Show();*/
+
+            String tag = null;
+
+            if(sender is Button)
+            {
+                tag = ((Button)sender).Tag.ToString();
+            }
+            else if(sender is ToolStripMenuItem)
+            {
+                tag = ((ToolStripMenuItem)sender).Tag.ToString();
+            } 
+            else if (sender is ToolStripButton)
+            {
+                tag = (((ToolStripButton)sender).Tag).ToString();
+            }
+
+            if(tag == null)
+            {
+                // calling form control was not anticipated, throwing an error
+                throw new ArgumentException(sender.ToString() 
+                    + " was not a Button, ToolStripMenu Item or ToolStripButton");
+            }
+
+            Form requestedForm = null;
+
+            switch (tag.ToUpper())
+            {
+                case "HOTEL":
+                    requestedForm = new Hotel();
+                    break;
+                case "AGENT":
+                    requestedForm = new Agent();
+                    break;
+                case "GUEST":
+                    requestedForm = new Guest();
+                    break;
+                case "AVAILBOOKING":
+                    requestedForm = new AvailableBookings();
+                    break;
+                case "CANCELBOOKING":
+                    requestedForm = new CancelBookings();
+                    break;
+                case "HOME":
+                    requestedForm = new Home(this);
+                    break;
+                default:
+                    break;
+            }
+
+            // throw exception if tag did not match any above
+            if(requestedForm == null)
+            {
+                throw new ArgumentException("The tag: " + tag + " was unexpected.");
+            }
+
+            SwitchToForm(requestedForm);
         }
+        
 
         private void OpenFile(object sender, EventArgs e)
         {
@@ -143,6 +205,39 @@ namespace HotelApp
 
         #endregion
 
-        
+        void SwitchToForm(Form requestedForm)
+        {
+            // check if form is already been instantiated. If so, activate it then return to end method
+            foreach (Form childForm in this.MdiChildren)
+            {
+                if (childForm.GetType() == requestedForm.GetType())
+                {
+                    childForm.Activate();
+                    childForm.BringToFront();
+                    return;
+                }
+            }
+
+            // otherwise, assign this form as requestedForm's parent and display it
+            requestedForm.MdiParent = this;
+            requestedForm.Show();
+
+            // set to maximized
+            requestedForm.WindowState = FormWindowState.Maximized;
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // show splash screen 
+                Splash splash = new Splash();
+                splash.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().ToString());
+            }
+        }
     }
 }
