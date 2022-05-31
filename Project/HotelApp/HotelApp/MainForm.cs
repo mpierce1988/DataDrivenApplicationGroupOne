@@ -104,10 +104,10 @@ namespace HotelApp
                     requestedForm = new Guest();
                     break;
                 case "AVAILBOOKING":
-                    requestedForm = new AvailableBookings();
+                    requestedForm = new BookingManager();
                     break;
                 case "CANCELBOOKING":
-                    requestedForm = new CancelBookings();
+                    requestedForm = new BookingManager();
                     break;
                 case "HOME":
                     requestedForm = new Home(this);

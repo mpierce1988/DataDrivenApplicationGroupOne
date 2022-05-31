@@ -78,17 +78,17 @@
     <Compile Include="MenuForms\Agent.Designer.cs">
       <DependentUpon>Agent.cs</DependentUpon>
     </Compile>
-    <Compile Include="MenuForms\AvailableBookings.cs">
+    <Compile Include="MenuForms\BookingManager.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MenuForms\AvailableBookings.Designer.cs">
-      <DependentUpon>AvailableBookings.cs</DependentUpon>
+    <Compile Include="MenuForms\BookingManager.Designer.cs">
+      <DependentUpon>BookingManager.cs</DependentUpon>
     </Compile>
-    <Compile Include="MenuForms\CancelBookings.cs">
+    <Compile Include="MenuForms\CreateBookings.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MenuForms\CancelBookings.Designer.cs">
-      <DependentUpon>CancelBookings.cs</DependentUpon>
+    <Compile Include="MenuForms\CreateBookings.Designer.cs">
+      <DependentUpon>CreateBookings.cs</DependentUpon>
     </Compile>
     <Compile Include="MenuForms\Guest.cs">
       <SubType>Form</SubType>
@@ -123,11 +123,11 @@
     <EmbeddedResource Include="MenuForms\Agent.resx">
       <DependentUpon>Agent.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MenuForms\AvailableBookings.resx">
-      <DependentUpon>AvailableBookings.cs</DependentUpon>
+    <EmbeddedResource Include="MenuForms\BookingManager.resx">
+      <DependentUpon>BookingManager.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MenuForms\CancelBookings.resx">
-      <DependentUpon>CancelBookings.cs</DependentUpon>
+    <EmbeddedResource Include="MenuForms\CreateBookings.resx">
+      <DependentUpon>CreateBookings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MenuForms\Guest.resx">
       <DependentUpon>Guest.cs</DependentUpon>
