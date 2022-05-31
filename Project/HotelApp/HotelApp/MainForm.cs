@@ -220,10 +220,11 @@ namespace HotelApp
 
             // otherwise, assign this form as requestedForm's parent and display it
             requestedForm.MdiParent = this;
-            requestedForm.Show();
-
             // set to maximized
             requestedForm.WindowState = FormWindowState.Maximized;
+            requestedForm.Show();
+
+            
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
