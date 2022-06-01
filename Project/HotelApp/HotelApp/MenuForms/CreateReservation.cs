@@ -10,11 +10,16 @@ using System.Windows.Forms;
 
 namespace HotelApp.MenuForms
 {
-    public partial class AvailableBookings : Form
+    public partial class CreateReservation : Form
     {
-        public AvailableBookings()
+        public CreateReservation()
         {
             InitializeComponent();
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
