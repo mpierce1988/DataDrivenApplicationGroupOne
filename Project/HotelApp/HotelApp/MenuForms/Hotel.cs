@@ -16,5 +16,12 @@ namespace HotelApp.MenuForms
         {
             InitializeComponent();
         }
+
+        private void CancelBookings_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        
     }
 }

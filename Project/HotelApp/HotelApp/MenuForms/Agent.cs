@@ -16,5 +16,12 @@ namespace HotelApp.MenuForms
         {
             InitializeComponent();
         }
+
+        private void Agent_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        
     }
 }
