@@ -95,7 +95,7 @@ namespace HotelApp
             switch (tag.ToUpper())
             {
                 case "HOTEL":
-                    requestedForm = new CreateReservation();
+                    requestedForm = new Hotel();
                     break;
                 case "AGENT":
                     requestedForm = new Agent();
