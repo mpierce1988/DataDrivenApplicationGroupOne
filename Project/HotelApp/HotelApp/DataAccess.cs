@@ -113,6 +113,33 @@ namespace HotelApp
 
         }
 
+        /// <summary>
+        /// Execute a non-Select statement against the HotelApp database
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        public static int ExecuteNonQuery(string sql)
+        {
+            int rowsAffected = 0;
+
+            // get connection string
+            string connStr = ConfigurationManager.ConnectionStrings["Hotel"].ConnectionString;
+
+            using (SqlConnection conn = new SqlConnection(connStr))
+            {
+                // create sql command object
+                SqlCommand cmd = new SqlCommand(sql, conn);
+
+                // open connection
+                conn.Open();
+
+                // execute non-query sql statement to HotelApp database
+                rowsAffected = cmd.ExecuteNonQuery();
+            }
+
+            return rowsAffected;
+        }
+
         #endregion
     }
 }

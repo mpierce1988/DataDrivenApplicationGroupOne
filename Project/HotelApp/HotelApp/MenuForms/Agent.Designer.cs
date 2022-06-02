@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.lblAgentProfile = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.cboUsername = new System.Windows.Forms.ComboBox();
@@ -52,7 +53,10 @@
             this.txtPassword1 = new System.Windows.Forms.TextBox();
             this.lblPassword1 = new System.Windows.Forms.Label();
             this.txtPassword2 = new System.Windows.Forms.TextBox();
-            this.label7 = new System.Windows.Forms.Label();
+            this.lblPassword2 = new System.Windows.Forms.Label();
+            this.txtUsername = new System.Windows.Forms.TextBox();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // lblAgentProfile
@@ -87,6 +91,7 @@
             this.cboUsername.Name = "cboUsername";
             this.cboUsername.Size = new System.Drawing.Size(321, 28);
             this.cboUsername.TabIndex = 3;
+            this.cboUsername.SelectionChangeCommitted += new System.EventHandler(this.cboUsername_SelectionChangeCommitted);
             // 
             // label2
             // 
@@ -153,6 +158,7 @@
             this.btnCancel.TabIndex = 34;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
             // 
             // btnLast
             // 
@@ -173,8 +179,9 @@
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(108, 58);
             this.btnAdd.TabIndex = 31;
-            this.btnAdd.Text = "Add";
+            this.btnAdd.Text = "New";
             this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // btnModify
             // 
@@ -186,6 +193,7 @@
             this.btnModify.TabIndex = 32;
             this.btnModify.Text = "Modify";
             this.btnModify.UseVisualStyleBackColor = true;
+            this.btnModify.Click += new System.EventHandler(this.btnModify_Click);
             // 
             // btnFirst
             // 
@@ -239,6 +247,7 @@
             this.txtFirstName.Name = "txtFirstName";
             this.txtFirstName.Size = new System.Drawing.Size(321, 26);
             this.txtFirstName.TabIndex = 35;
+            this.txtFirstName.Validating += new System.ComponentModel.CancelEventHandler(this.NotEmptyValidation);
             // 
             // txtLastName
             // 
@@ -248,6 +257,7 @@
             this.txtLastName.Name = "txtLastName";
             this.txtLastName.Size = new System.Drawing.Size(321, 26);
             this.txtLastName.TabIndex = 36;
+            this.txtLastName.Validating += new System.ComponentModel.CancelEventHandler(this.NotEmptyValidation);
             // 
             // txtCompany
             // 
@@ -257,6 +267,7 @@
             this.txtCompany.Name = "txtCompany";
             this.txtCompany.Size = new System.Drawing.Size(321, 26);
             this.txtCompany.TabIndex = 37;
+            this.txtCompany.Validating += new System.ComponentModel.CancelEventHandler(this.NotEmptyValidation);
             // 
             // txtPhone
             // 
@@ -266,6 +277,7 @@
             this.txtPhone.Name = "txtPhone";
             this.txtPhone.Size = new System.Drawing.Size(321, 26);
             this.txtPhone.TabIndex = 38;
+            this.txtPhone.Validating += new System.ComponentModel.CancelEventHandler(this.NotEmptyValidation);
             // 
             // txtEmail
             // 
@@ -275,6 +287,7 @@
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(321, 26);
             this.txtEmail.TabIndex = 39;
+            this.txtEmail.Validating += new System.ComponentModel.CancelEventHandler(this.NotEmptyValidation);
             // 
             // txtPassword1
             // 
@@ -284,6 +297,7 @@
             this.txtPassword1.Name = "txtPassword1";
             this.txtPassword1.Size = new System.Drawing.Size(321, 26);
             this.txtPassword1.TabIndex = 41;
+            this.txtPassword1.Validating += new System.ComponentModel.CancelEventHandler(this.PasswordValidation);
             // 
             // lblPassword1
             // 
@@ -304,25 +318,40 @@
             this.txtPassword2.Name = "txtPassword2";
             this.txtPassword2.Size = new System.Drawing.Size(321, 26);
             this.txtPassword2.TabIndex = 43;
+            this.txtPassword2.Validating += new System.ComponentModel.CancelEventHandler(this.PasswordValidation);
             // 
-            // label7
+            // lblPassword2
             // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(148, 510);
-            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(249, 25);
-            this.label7.TabIndex = 42;
-            this.label7.Text = "Enter your password again:";
+            this.lblPassword2.AutoSize = true;
+            this.lblPassword2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPassword2.Location = new System.Drawing.Point(148, 510);
+            this.lblPassword2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblPassword2.Name = "lblPassword2";
+            this.lblPassword2.Size = new System.Drawing.Size(249, 25);
+            this.lblPassword2.TabIndex = 42;
+            this.lblPassword2.Text = "Enter your password again:";
+            // 
+            // txtUsername
+            // 
+            this.txtUsername.Location = new System.Drawing.Point(438, 141);
+            this.txtUsername.Name = "txtUsername";
+            this.txtUsername.Size = new System.Drawing.Size(321, 22);
+            this.txtUsername.TabIndex = 44;
+            this.txtUsername.Validating += new System.ComponentModel.CancelEventHandler(this.ValidateUsernameField);
+            // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
             // 
             // Agent
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
             this.ClientSize = new System.Drawing.Size(1067, 710);
+            this.Controls.Add(this.txtUsername);
             this.Controls.Add(this.txtPassword2);
-            this.Controls.Add(this.label7);
+            this.Controls.Add(this.lblPassword2);
             this.Controls.Add(this.txtPassword1);
             this.Controls.Add(this.lblPassword1);
             this.Controls.Add(this.txtEmail);
@@ -351,6 +380,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Agent";
             this.Load += new System.EventHandler(this.Agent_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -382,6 +412,8 @@
         private System.Windows.Forms.TextBox txtPassword1;
         private System.Windows.Forms.Label lblPassword1;
         private System.Windows.Forms.TextBox txtPassword2;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label lblPassword2;
+        private System.Windows.Forms.TextBox txtUsername;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
     }
 }
