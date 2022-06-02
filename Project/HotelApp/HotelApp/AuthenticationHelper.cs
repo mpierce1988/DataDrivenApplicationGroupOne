@@ -8,6 +8,8 @@ namespace HotelApp
 {
     public static class AuthenticationHelper
     {
+        public static String UserName { get; private set; } 
+
         #region Static Methods
 
         public static bool IsValidUsernamePassword(string username, string password)
@@ -46,6 +48,9 @@ namespace HotelApp
             }
 
             // otherwise sqlPassword must match password, therefore its true
+
+            UserName = username;
+
             return true;
         }
 

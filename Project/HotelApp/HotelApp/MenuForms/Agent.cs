@@ -21,10 +21,13 @@ namespace HotelApp.MenuForms
         int? previousAgentID;
         int? nextAgentID;
 
+        #region Constructor
         public Agent()
         {
             InitializeComponent();
         }
+        #endregion
+
         #region Event Handlers
         private void Agent_Load(object sender, EventArgs e)
         {
@@ -96,9 +99,11 @@ namespace HotelApp.MenuForms
             {
                 if(cboUsername.SelectedValue == DBNull.Value)
                 {
+                    btnModify.Enabled = false;
                     return;
                 }
 
+                
                 currentAgentID = (int)cboUsername.SelectedValue;
                 LoadAgentDetails();
             }
@@ -127,6 +132,8 @@ namespace HotelApp.MenuForms
                 txtEmail.Text = "";
                 txtPhone.Text = "";
                 txtUsername.Text = "";
+                txtPassword1.Text = "";
+                txtPassword2.Text = "";
 
                 // disable navigation buttons
                 SetNavButtonsEnabledState(false);
@@ -137,7 +144,11 @@ namespace HotelApp.MenuForms
                 // disable dropdown
                 cboUsername.Visible = false;
 
+                // set combo box to blank
+                cboUsername.SelectedValue = DBNull.Value;
+
                 // enable txtUsername
+                txtUsername.Enabled = true;
                 txtUsername.Visible = true;
 
                 // enable save and cancel button
@@ -184,9 +195,107 @@ namespace HotelApp.MenuForms
             }
         }
 
+        private void btnModify_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // enable textboxes to be edited
+                SetTextBoxesReadOnly(false);
+
+                // enable save and cancel button
+                btnSave.Enabled = true;
+                btnCancel.Enabled = true;
+
+                // disable dropdown
+                cboUsername.Enabled = false;
+
+                // disable new button
+                btnAdd.Enabled = false;
+
+                // disable modify button
+                btnModify.Enabled = false;
+
+                // disable navigation buttons
+                SetNavButtonsEnabledState(false);
+
+                // if selected username matches currently logged in username, display password edit fields
+
+                DataRowView dataRowView = (DataRowView)cboUsername.SelectedItem;
+                string selectedUserName = dataRowView.Row["UserName"].ToString();
+
+                if(selectedUserName == AuthenticationHelper.UserName)
+                {
+                    SetPasswordFieldsEnabledState(true);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().ToString());
+            }
+        }
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // determine if this is an insert or an update
+                if(cboUsername.SelectedValue == DBNull.Value)
+                {
+                    // this is an insert
+                    SaveNewAgent();
+                }
+                else
+                {
+                    // this is an update
+                    UpdateAgentRecord();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().ToString());
+            }
+        }
+
+        
+
         #endregion
 
+        #region UI Helpers
 
+        /// <summary>
+        /// Set all of the Nav Buttons' Enabled state to the given bool
+        /// </summary>
+        /// <param name="v"></param>
+        private void SetNavButtonsEnabledState(bool v)
+        {
+            btnNext.Enabled = v;
+            btnPrevious.Enabled = v;
+            btnFirst.Enabled = v;
+            btnLast.Enabled = v;
+        }
+
+
+        /// <summary>
+        /// Enables or disables the password fields for entry
+        /// </summary>
+        /// <param name="activeState"></param>
+        private void SetPasswordFieldsEnabledState(bool activeState)
+        {
+            txtPassword1.Visible = activeState;
+            txtPassword1.Enabled = activeState;
+            
+            txtPassword2.Visible = activeState;
+            txtPassword2.Enabled = activeState;
+
+            lblPassword1.Visible = activeState;
+            lblPassword2.Visible = activeState;
+        }
+
+
+        /// <summary>
+        /// Sets the ReadOnly status of all the TextBoxes.
+        /// </summary>
+        /// <param name="state"></param>
         private void SetTextBoxesReadOnly(bool state)
         {
             txtUsername.ReadOnly = state;
@@ -213,12 +322,50 @@ namespace HotelApp.MenuForms
             errorProvider1.SetError(txtPhone, "");
         }
 
+
+        /// <summary>
+        /// Sets the Enabled state of the Previous and Next buttons 
+        /// based on the value (or lack of value) in previousAgentID and nextAgentID
+        /// </summary>
+        private void HandlePrevNextFirstLastButtonStates()
+        {
+
+            // enable first and last buttons
+            btnFirst.Enabled = true;
+            btnLast.Enabled = true;
+
+            if (previousAgentID == null)
+            {
+                btnPrevious.Enabled = false;
+            }
+            else
+            {
+                btnPrevious.Enabled = true;
+            }
+
+            if (nextAgentID == null)
+            {
+                btnNext.Enabled = false;
+            }
+            else
+            {
+                btnNext.Enabled = true;
+            }
+        }
+        #endregion
+
+        #region Load Information
+
         /// <summary>
         /// Loads Usernames and displays the first agent id
         /// </summary>
         private void Setup()
         {
+            // enable username combobox
+            cboUsername.Enabled = true;
             cboUsername.Visible = true;
+            // disable and hide the txtUsername so it doesn't trigger validation on Modify form
+            txtUsername.Enabled = false;
             txtUsername.Visible = false;
 
             LoadUsernames();
@@ -229,10 +376,7 @@ namespace HotelApp.MenuForms
             // set password fields to display secret symbol (***)
             txtPassword1.UseSystemPasswordChar = true;
             txtPassword2.UseSystemPasswordChar = true;
-
-            // save and cancel buttons should be disabled
-            btnSave.Enabled = false;
-            btnCancel.Enabled = false;
+            SetButtonsToBrowseState();
 
             // set textboxes to read only
             SetTextBoxesReadOnly(true);
@@ -240,53 +384,15 @@ namespace HotelApp.MenuForms
 
 
         /// <summary>
-        /// Set all of the Nav Buttons' Enabled state to the given bool
+        /// Sets the bottom button's to the state required for browsing (not modifying or creating) user records
         /// </summary>
-        /// <param name="v"></param>
-        private void SetNavButtonsEnabledState(bool v)
+        private void SetButtonsToBrowseState()
         {
-            btnNext.Enabled = v;
-            btnPrevious.Enabled = v;
-            btnFirst.Enabled = v;
-            btnLast.Enabled = v;
-        }
-
-
-        /// <summary>
-        /// Enables or disables the password fields for entry
-        /// </summary>
-        /// <param name="activeState"></param>
-        private void SetPasswordFieldsEnabledState(bool activeState)
-        {
-            txtPassword1.Visible = activeState;
-            txtPassword2.Visible = activeState;
-            lblPassword1.Visible = activeState;
-            lblPassword2.Visible = activeState;
-        }
-
-        /// <summary>
-        /// Sets the Enabled state of the Previous and Next buttons 
-        /// based on the value (or lack of value) in previousAgentID and nextAgentID
-        /// </summary>
-        private void HandlePrevNextButtonStates()
-        {
-            if(previousAgentID == null)
-            {
-                btnPrevious.Enabled = false;
-            }
-            else
-            {
-                btnPrevious.Enabled = true;
-            }
-
-            if(nextAgentID == null)
-            {
-                btnNext.Enabled = false;
-            }
-            else
-            {
-                btnNext.Enabled = true;
-            }
+            // set initial button states
+            btnSave.Enabled = false;
+            btnCancel.Enabled = false;
+            btnAdd.Enabled = true;
+            btnModify.Enabled = true;
         }
 
         /// <summary>
@@ -306,8 +412,6 @@ namespace HotelApp.MenuForms
 
         }
 
-        
-
         /// <summary>
         /// Loads the details for the currentAgentID from the Agent table, and
         /// populates the form fields
@@ -320,7 +424,7 @@ namespace HotelApp.MenuForms
 
             // execute query and save result to a datarow
             DataTable dt = DataAccess.GetData(sqlAgentDetailsQuery);
-            if(dt.Rows.Count == 0)
+            if (dt.Rows.Count == 0)
             {
                 throw new ArgumentException("Load Agent sqlQuery for agent id " + currentAgentID + " returned zero results.");
             }
@@ -337,6 +441,9 @@ namespace HotelApp.MenuForms
 
             // set first and last prev next values
             SetFirstLastPrevNextValues();
+
+            // enable modify button
+            btnModify.Enabled = true;
         }
 
         /// <summary>
@@ -375,7 +482,7 @@ WHERE CurrentAgentID = {currentAgentID};
                 Convert.ToInt32(resultRow["NextAgentID"]) : (int?)null;
 
             // set button states based on these values
-            HandlePrevNextButtonStates();
+            HandlePrevNextFirstLastButtonStates();
         }
 
         /// <summary>
@@ -391,9 +498,128 @@ WHERE CurrentAgentID = {currentAgentID};
             DataTable dtAgents = DataAccess.GetData(sqlAgentQuery);
 
             // bind to combo box using UIUtility method
-            UIUtilities.BindListControl(cboUsername, "AgentID", "UserName", 
+            UIUtilities.BindListControl(cboUsername, "AgentID", "UserName",
                 dtAgents, true);
         }
+
+        #endregion
+
+        #region Save/Update Information
+
+        /// <summary>
+        /// Updates the record for the agent selected in the combo box
+        /// </summary>
+        private void UpdateAgentRecord()
+        {
+            // validate form first
+            if (!ValidateChildren(ValidationConstraints.Enabled))
+            {
+                MessageBox.Show("Some of your form data is invalid. Please fix the invalid data and try again",
+                    "Invalid Data", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            // save relevant information to variables
+            int? selectedAgentID = cboUsername.SelectedValue as int?;
+
+            string updatedFirstName = txtFirstName.Text.Trim();
+            string updatedLastName = txtLastName.Text.Trim();
+            string updatedCompanyName = txtCompany.Text.Trim();
+            string updatedPhone = txtPhone.Text.Trim();
+            string updatedEmail = txtEmail.Text.Trim();
+
+            // create update sql statement
+            string sqlUpdateAgent =
+                $@"UPDATE Agent SET FirstName = '{updatedFirstName}', LastName = '{updatedLastName}', Company = '{updatedCompanyName}', Phone = '{updatedPhone}', Email = '{updatedEmail}' WHERE AgentID = {selectedAgentID} ;";
+
+            int rowsUpdated = DataAccess.ExecuteNonQuery(sqlUpdateAgent);
+
+            // throw error if no rows were affected
+            if(rowsUpdated == 0)
+            {
+                throw new Exception("Something went wrong, the record was not modified");
+            }
+
+            // display message saying update was successful
+            MessageBox.Show("Agent information for " + cboUsername.SelectedValue.ToString() + " was successfully updated.");
+
+            // run setup to put back to browse state
+            Setup();           
+
+        }
+
+
+        /// <summary>
+        /// Saves the entered information as a new agent in the database
+        /// </summary>        
+        private void SaveNewAgent()
+        {
+            // validate form first. This includes validating the userName is unique
+            if (!ValidateChildren(ValidationConstraints.Enabled))
+            {
+                MessageBox.Show("Some of your form data is invalid. Please fix the invalid data and try again", 
+                    "Invalid Data", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            // save information into variables
+            string firstName = txtFirstName.Text.Trim();
+            string lastName = txtLastName.Text.Trim();
+            string companyName = txtCompany.Text.Trim();
+            string phone = txtPhone.Text.Trim();
+            string email = txtEmail.Text.Trim();
+            string userName = txtUsername.Text.Trim();
+            string password = txtPassword1.Text;
+
+            // construct sql insert non-query
+            string sqlInsertAgentNonQuery =
+                $@"INSERT INTO Agent (FirstName, LastName, Company, Phone, Email, UserName)
+VALUES
+('{firstName}', '{lastName}', '{companyName}', '{phone}', '{email}', '{userName}');";
+
+            // execute statement, saving num of rows affected as an int
+            int? rowsAffected = DataAccess.ExecuteNonQuery(sqlInsertAgentNonQuery);
+
+            if(!rowsAffected.HasValue || rowsAffected.Value == 0)
+            {
+                throw new Exception("Inserting of new agent record failed.");
+            }
+
+            // get new AgentID from new record
+            string sqlNewAgentID =
+                $"SELECT AgentID FROM Agent WHERE UserName = '{userName}';";
+            int newAgentID = Convert.ToInt32(DataAccess.ExecuteScalar(sqlNewAgentID));
+           
+
+            // insert password into password table
+            // construct sql insert query
+            string sqlInsertPassword =
+                $"INSERT INTO Password (AgentID, Password) VALUES ({newAgentID}, '{password}')";
+
+            int? passwordRowsAffected = DataAccess.ExecuteNonQuery(sqlInsertPassword);
+
+            // if saving password failed, delete newly created agent record from Agent and 
+            // throw error
+            if(!passwordRowsAffected.HasValue || passwordRowsAffected.Value == 0)
+            {
+                // delete new agent record, as it has no associated password
+                string sqlDeleteAgentRecord =
+                    $"DELETE FROM Agent WHERE AgentID = {newAgentID}";
+                int? deleteRowsAffected = DataAccess.ExecuteNonQuery(sqlDeleteAgentRecord);
+
+                // throw error
+                throw new Exception("Password was not saved to database. Agent record was not saved");
+            }
+
+            // show message box saying agent was successfully saved
+            MessageBox.Show("Agent Profile for " + userName + " was successfully created!", "New Agent Profile Added", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            // rerun setup to reset form with new agent record in the dropdown
+            Setup();
+        }
+
+        #endregion
+
+        #region Validation
 
         private void NotEmptyValidation(object sender, CancelEventArgs e)
         {
@@ -402,14 +628,14 @@ WHERE CurrentAgentID = {currentAgentID};
                 TextBox textBox = sender as TextBox;
 
                 // if textBox is null, something other than a textbox as called this method
-                if(textBox == null)
+                if (textBox == null)
                 {
                     throw new ArgumentException("A non-textbox has called the NotEmptyValidation method");
                 }
 
                 string errorMsg = "";
 
-                if(textBox.Text.Trim() == "")
+                if (textBox.Text.Trim() == "")
                 {
                     errorMsg = "This field is required";
                     e.Cancel = true;
@@ -429,7 +655,7 @@ WHERE CurrentAgentID = {currentAgentID};
             try
             {
                 // validate field is not empty
-                if(txtUsername.Text.Trim() == "")
+                if (txtUsername.Text.Trim() == "")
                 {
                     errorProvider1.SetError(txtUsername, "Please enter a username");
                     e.Cancel = true;
@@ -441,12 +667,12 @@ WHERE CurrentAgentID = {currentAgentID};
                 // it is not taken
                 string sqlNameQuery =
                     $"SELECT AgentID FROM Agent WHERE UserName = '{txtUsername.Text.Trim()}';";
-                
+
                 // execute scalar and save result to an obj, which is nullable
                 object result = DataAccess.ExecuteScalar(sqlNameQuery);
 
                 // if result is null, then name is unique. if result has a value, then name is taken
-                if(result != null)
+                if (result != null)
                 {
                     // name is already taken
                     errorProvider1.SetError(txtUsername, "This username is already taken.");
@@ -458,7 +684,7 @@ WHERE CurrentAgentID = {currentAgentID};
 
                 // by this point, there should be no errors for username. reset error provider
                 errorProvider1.SetError(txtUsername, "");
-                
+
             }
             catch (Exception ex)
             {
@@ -472,17 +698,17 @@ WHERE CurrentAgentID = {currentAgentID};
             {
                 string msg = "";
                 // if one or both of the text boxes are empty, display an error on both
-                if(txtPassword1.Text.Trim() == "" || txtPassword2.Text.Trim() == "")
+                if (txtPassword1.Text.Trim() == "" || txtPassword2.Text.Trim() == "")
                 {
-                    msg = "Please enter a password in both boxes";                    
+                    msg = "Please enter a password in both boxes";
                     e.Cancel = true;
-                    
+
                 }
                 // if the text boxes do not match, throw an error on both text boxes
-                else if(txtPassword1.Text.Trim() != txtPassword2.Text.Trim())
+                else if (txtPassword1.Text.Trim() != txtPassword2.Text.Trim())
                 {
-                    msg = "The passwords entered in both boxes must match";                    
-                    e.Cancel = true;                   
+                    msg = "The passwords entered in both boxes must match";
+                    e.Cancel = true;
                 }
 
                 // set error providers
@@ -496,17 +722,6 @@ WHERE CurrentAgentID = {currentAgentID};
             }
         }
 
-        private void btnModify_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                // enable textboxes to be edited
-                SetTextBoxesReadOnly(false);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, ex.GetType().ToString());
-            }
-        }
+        #endregion
     }
 }

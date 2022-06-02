@@ -87,7 +87,7 @@
             this.cboUsername.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cboUsername.FormattingEnabled = true;
             this.cboUsername.Location = new System.Drawing.Point(438, 140);
-            this.cboUsername.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cboUsername.Margin = new System.Windows.Forms.Padding(4);
             this.cboUsername.Name = "cboUsername";
             this.cboUsername.Size = new System.Drawing.Size(321, 28);
             this.cboUsername.TabIndex = 3;
@@ -152,7 +152,7 @@
             // 
             this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnCancel.Location = new System.Drawing.Point(651, 635);
-            this.btnCancel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(4);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(108, 58);
             this.btnCancel.TabIndex = 34;
@@ -163,7 +163,7 @@
             // btnLast
             // 
             this.btnLast.Location = new System.Drawing.Point(651, 574);
-            this.btnLast.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnLast.Margin = new System.Windows.Forms.Padding(4);
             this.btnLast.Name = "btnLast";
             this.btnLast.Size = new System.Drawing.Size(108, 53);
             this.btnLast.TabIndex = 30;
@@ -175,7 +175,7 @@
             // 
             this.btnAdd.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAdd.Location = new System.Drawing.Point(303, 635);
-            this.btnAdd.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnAdd.Margin = new System.Windows.Forms.Padding(4);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(108, 58);
             this.btnAdd.TabIndex = 31;
@@ -187,7 +187,7 @@
             // 
             this.btnModify.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnModify.Location = new System.Drawing.Point(419, 635);
-            this.btnModify.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnModify.Margin = new System.Windows.Forms.Padding(4);
             this.btnModify.Name = "btnModify";
             this.btnModify.Size = new System.Drawing.Size(108, 58);
             this.btnModify.TabIndex = 32;
@@ -198,7 +198,7 @@
             // btnFirst
             // 
             this.btnFirst.Location = new System.Drawing.Point(303, 574);
-            this.btnFirst.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnFirst.Margin = new System.Windows.Forms.Padding(4);
             this.btnFirst.Name = "btnFirst";
             this.btnFirst.Size = new System.Drawing.Size(108, 53);
             this.btnFirst.TabIndex = 29;
@@ -210,17 +210,18 @@
             // 
             this.btnSave.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnSave.Location = new System.Drawing.Point(535, 635);
-            this.btnSave.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(4);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(108, 58);
             this.btnSave.TabIndex = 33;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnPrevious
             // 
             this.btnPrevious.Location = new System.Drawing.Point(419, 574);
-            this.btnPrevious.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnPrevious.Margin = new System.Windows.Forms.Padding(4);
             this.btnPrevious.Name = "btnPrevious";
             this.btnPrevious.Size = new System.Drawing.Size(108, 53);
             this.btnPrevious.TabIndex = 28;
@@ -231,7 +232,7 @@
             // btnNext
             // 
             this.btnNext.Location = new System.Drawing.Point(535, 574);
-            this.btnNext.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnNext.Margin = new System.Windows.Forms.Padding(4);
             this.btnNext.Name = "btnNext";
             this.btnNext.Size = new System.Drawing.Size(108, 53);
             this.btnNext.TabIndex = 27;
@@ -243,7 +244,7 @@
             // 
             this.txtFirstName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtFirstName.Location = new System.Drawing.Point(438, 194);
-            this.txtFirstName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtFirstName.Margin = new System.Windows.Forms.Padding(4);
             this.txtFirstName.Name = "txtFirstName";
             this.txtFirstName.Size = new System.Drawing.Size(321, 26);
             this.txtFirstName.TabIndex = 35;
@@ -253,7 +254,7 @@
             // 
             this.txtLastName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtLastName.Location = new System.Drawing.Point(438, 247);
-            this.txtLastName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtLastName.Margin = new System.Windows.Forms.Padding(4);
             this.txtLastName.Name = "txtLastName";
             this.txtLastName.Size = new System.Drawing.Size(321, 26);
             this.txtLastName.TabIndex = 36;
@@ -263,7 +264,7 @@
             // 
             this.txtCompany.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtCompany.Location = new System.Drawing.Point(438, 300);
-            this.txtCompany.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtCompany.Margin = new System.Windows.Forms.Padding(4);
             this.txtCompany.Name = "txtCompany";
             this.txtCompany.Size = new System.Drawing.Size(321, 26);
             this.txtCompany.TabIndex = 37;
@@ -273,7 +274,7 @@
             // 
             this.txtPhone.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtPhone.Location = new System.Drawing.Point(438, 353);
-            this.txtPhone.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtPhone.Margin = new System.Windows.Forms.Padding(4);
             this.txtPhone.Name = "txtPhone";
             this.txtPhone.Size = new System.Drawing.Size(321, 26);
             this.txtPhone.TabIndex = 38;
@@ -283,7 +284,7 @@
             // 
             this.txtEmail.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtEmail.Location = new System.Drawing.Point(438, 406);
-            this.txtEmail.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtEmail.Margin = new System.Windows.Forms.Padding(4);
             this.txtEmail.Name = "txtEmail";
             this.txtEmail.Size = new System.Drawing.Size(321, 26);
             this.txtEmail.TabIndex = 39;
@@ -375,7 +376,7 @@
             this.Controls.Add(this.cboUsername);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lblAgentProfile);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Agent";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Agent";
