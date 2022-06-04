@@ -95,7 +95,7 @@
             // btnLast
             // 
             this.btnLast.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnLast.Location = new System.Drawing.Point(41, 553);
+            this.btnLast.Location = new System.Drawing.Point(677, 553);
             this.btnLast.Name = "btnLast";
             this.btnLast.Size = new System.Drawing.Size(173, 74);
             this.btnLast.TabIndex = 38;
@@ -126,7 +126,7 @@
             // btnFirst
             // 
             this.btnFirst.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnFirst.Location = new System.Drawing.Point(677, 553);
+            this.btnFirst.Location = new System.Drawing.Point(41, 553);
             this.btnFirst.Name = "btnFirst";
             this.btnFirst.Size = new System.Drawing.Size(173, 74);
             this.btnFirst.TabIndex = 37;

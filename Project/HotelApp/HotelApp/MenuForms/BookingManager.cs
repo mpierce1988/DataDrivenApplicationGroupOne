@@ -16,6 +16,8 @@ namespace HotelApp.MenuForms
         int? nextHotelID;
         int? previousHotelID;
         int hotelCount;
+        int firstHotelID = Convert.ToInt32(DataAccess.ExecuteScalar("SELECT TOP 1 HotelID FROM Hotel ORDER BY HotelID ASC"));
+        int lastHotelID = Convert.ToInt32(DataAccess.ExecuteScalar("SELECT TOP 1 HotelID FROM Hotel ORDER BY HotelID DESC"));
         public BookingManager()
         {
             InitializeComponent();
@@ -67,37 +69,22 @@ namespace HotelApp.MenuForms
         }
 
 
-        private void LoadFirstHotelID()
-        {
-            cmbHotel.SelectedIndex = 1;
-            currentHotelID = Convert.ToInt32(cmbHotel.SelectedValue);
-            LoadBookingDetails();
-        }
-
-        private void LoadLastHotelID()
-        {
-            cmbHotel.SelectedIndex = cmbHotel.Items.Count - 1;
-            currentHotelID = Convert.ToInt32(cmbHotel.SelectedValue);
-            LoadBookingDetails();
-        }
-
 
         private void LoadNavigation()
         {
             string sqlNavigation = $@"SELECT nav.NextHotelID, nav.PreviousHotelID, nav.RowNumber
-                                    FROM
-                                    (
-                                    SELECT 
-                                    HotelID,
-                                    HotelName,
-                                    LEAD(HotelID) OVER(ORDER BY HotelName) AS NextHotelID,
-                                    LAG(HotelID) OVER(ORDER BY HotelName) AS PreviousHotelID,
-                                    ROW_NUMBER() OVER(ORDER BY HotelName) AS 'RowNumber'
-                                    FROM Hotel
-                                    ) AS nav
-                                    WHERE HotelID = {currentHotelID}
-                                    ORDER BY HotelName;";
-
+                    FROM
+                    (
+                    SELECT 
+                    HotelID,
+                    HotelName,
+                    LEAD(HotelID) OVER(ORDER BY HotelName) AS NextHotelID,
+                    LAG(HotelID) OVER(ORDER BY HotelName) AS PreviousHotelID,
+                    ROW_NUMBER() OVER(ORDER BY HotelName) AS 'RowNumber'
+                    FROM Hotel
+                    ) AS nav
+                    WHERE HotelID = {currentHotelID}
+                    ORDER BY HotelName;";
             DataTable dtNavigation = DataAccess.GetData(sqlNavigation);
 
             DataRow selectedRow = dtNavigation.Rows[0];
@@ -110,7 +97,11 @@ namespace HotelApp.MenuForms
                 ? Convert.ToInt32(selectedRow["PreviousHotelID"])
                 :(int?)null;
 
-            currentHotelID = Convert.ToInt32(selectedRow["RowNumber"]);
+            hotelCount = Convert.ToInt32(selectedRow["RowNumber"]);
+
+            //firstHotelID = Convert.ToInt32(selectedRow["FirstHotelID"]);
+
+            //lastHotelID = Convert.ToInt32(selectedRow["LastHotelID"]);
         }
 
         private void cmbHotel_SelectionChangeCommitted(object sender, EventArgs e)
@@ -127,43 +118,56 @@ namespace HotelApp.MenuForms
             {
                 LoadBookingDetails();
             }
+
+            LoadNavigation();
         }
 
         private void btnFirst_Click(object sender, EventArgs e)
         {
-            LoadFirstHotelID();
+            cmbHotel.SelectedIndex = 1;
+            currentHotelID = (int)cmbHotel.SelectedValue;
+            LoadNavigation();
+            LoadBookingDetails();
         }
 
         private void btnLast_Click(object sender, EventArgs e)
         {
-            LoadLastHotelID();
+            cmbHotel.SelectedIndex = cmbHotel.Items.Count - 1;
+            currentHotelID = (int)cmbHotel.SelectedValue;
+            LoadNavigation();
+            LoadBookingDetails();
         }
 
         private void btnPrevious_Click(object sender, EventArgs e)
         {
-            if(currentHotelID == -1)
+            if (currentHotelID == -1)
             {
-                LoadLastHotelID();
+                cmbHotel.SelectedIndex = 1;
+                currentHotelID = (int)cmbHotel.SelectedValue;
+                LoadBookingDetails();
                 return;
             }
 
             LoadNavigation();
 
+
             if (previousHotelID == null)
             {
-                MessageBox.Show("Last hotel is currently being displayed");
+                MessageBox.Show("First hotel is currently being displayed");
                 return;
             }
-            currentHotelID = (int)previousHotelID;
+            currentHotelID = previousHotelID.Value;
             LoadBookingDetails();
-            
+
         }
 
         private void btnNext_Click(object sender, EventArgs e)
         {
             if (currentHotelID == -1)
             {
-                LoadFirstHotelID();
+                cmbHotel.SelectedIndex = cmbHotel.Items.Count - 1;
+                currentHotelID = (int)cmbHotel.SelectedValue;
+                LoadBookingDetails();
                 return;
             }
 
@@ -171,12 +175,11 @@ namespace HotelApp.MenuForms
 
             if (nextHotelID == null)
             {
-                MessageBox.Show("First hotel is currently being displayed");
+                MessageBox.Show("Last hotel is currently being displayed");
                 return;
             }
-            currentHotelID = (int)nextHotelID;
+            currentHotelID = nextHotelID.Value;
             LoadBookingDetails();
-
         }
     }
 }
