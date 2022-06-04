@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.cmbHotel = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dgvBookings = new System.Windows.Forms.DataGridView();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnLast = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
@@ -40,7 +40,8 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.btnPrevious = new System.Windows.Forms.Button();
             this.btnNext = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.lblBookings = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvBookings)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -54,13 +55,14 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Booking Manager";
             // 
-            // comboBox1
+            // cmbHotel
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(380, 103);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(217, 21);
-            this.comboBox1.TabIndex = 1;
+            this.cmbHotel.FormattingEnabled = true;
+            this.cmbHotel.Location = new System.Drawing.Point(380, 103);
+            this.cmbHotel.Name = "cmbHotel";
+            this.cmbHotel.Size = new System.Drawing.Size(217, 21);
+            this.cmbHotel.TabIndex = 1;
+            this.cmbHotel.SelectionChangeCommitted += new System.EventHandler(this.cmbHotel_SelectionChangeCommitted);
             // 
             // label2
             // 
@@ -72,13 +74,13 @@
             this.label2.TabIndex = 2;
             this.label2.Text = "Hotel:";
             // 
-            // dataGridView1
+            // dgvBookings
             // 
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(41, 173);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(809, 354);
-            this.dataGridView1.TabIndex = 3;
+            this.dgvBookings.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvBookings.Location = new System.Drawing.Point(41, 173);
+            this.dgvBookings.Name = "dgvBookings";
+            this.dgvBookings.Size = new System.Drawing.Size(809, 354);
+            this.dgvBookings.TabIndex = 3;
             // 
             // btnCancel
             // 
@@ -99,6 +101,7 @@
             this.btnLast.TabIndex = 38;
             this.btnLast.Text = "Last";
             this.btnLast.UseVisualStyleBackColor = true;
+            this.btnLast.Click += new System.EventHandler(this.btnLast_Click);
             // 
             // btnAdd
             // 
@@ -129,6 +132,7 @@
             this.btnFirst.TabIndex = 37;
             this.btnFirst.Text = "First";
             this.btnFirst.UseVisualStyleBackColor = true;
+            this.btnFirst.Click += new System.EventHandler(this.btnFirst_Click);
             // 
             // btnSave
             // 
@@ -149,6 +153,7 @@
             this.btnPrevious.TabIndex = 36;
             this.btnPrevious.Text = "Previous";
             this.btnPrevious.UseVisualStyleBackColor = true;
+            this.btnPrevious.Click += new System.EventHandler(this.btnPrevious_Click);
             // 
             // btnNext
             // 
@@ -159,12 +164,24 @@
             this.btnNext.TabIndex = 35;
             this.btnNext.Text = "Next";
             this.btnNext.UseVisualStyleBackColor = true;
+            this.btnNext.Click += new System.EventHandler(this.btnNext_Click);
+            // 
+            // lblBookings
+            // 
+            this.lblBookings.AutoSize = true;
+            this.lblBookings.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblBookings.Location = new System.Drawing.Point(36, 136);
+            this.lblBookings.Name = "lblBookings";
+            this.lblBookings.Size = new System.Drawing.Size(93, 25);
+            this.lblBookings.TabIndex = 43;
+            this.lblBookings.Text = "Bookings";
             // 
             // BookingManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(891, 774);
+            this.Controls.Add(this.lblBookings);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnLast);
             this.Controls.Add(this.btnAdd);
@@ -173,15 +190,15 @@
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.btnPrevious);
             this.Controls.Add(this.btnNext);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.dgvBookings);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.cmbHotel);
             this.Controls.Add(this.label1);
             this.Name = "BookingManager";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Bookings";
             this.Load += new System.EventHandler(this.AvailableBookings_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvBookings)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -190,9 +207,9 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cmbHotel;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgvBookings;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnLast;
         private System.Windows.Forms.Button btnAdd;
@@ -201,5 +218,6 @@
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.Button btnPrevious;
         private System.Windows.Forms.Button btnNext;
+        private System.Windows.Forms.Label lblBookings;
     }
 }
