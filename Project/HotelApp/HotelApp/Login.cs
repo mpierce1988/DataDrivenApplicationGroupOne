@@ -50,11 +50,8 @@ namespace HotelApp
         {
             try
             {
-                // DEBUG: password is 'password'
-                // DEBUG: just check is username matches Environment.UserName
-                // TODO: Implement Authentication system, likely as another class
-                if(txtUserName.Text.Trim() == Environment.UserName 
-                    && txtPassword.Text.Trim() == "password")
+                
+                if(AuthenticationHelper.IsValidUsernamePassword(txtUserName.Text.Trim(), txtPassword.Text.Trim()))
                 {
                     // return DialogResult OK to proceed to MainForm
                     DialogResult=DialogResult.OK;
