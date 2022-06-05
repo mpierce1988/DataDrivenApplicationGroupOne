@@ -183,7 +183,11 @@ namespace HotelApp.MenuForms
                 }
                 else if(btn.Text.ToLower() == "create")
                 {
-                    // validate form controls
+                    // create hotel from the values entered in the form
+                    CreateHotel();
+                    // reload dropdown values so they include newly created hotel, and reload first
+                    // hotel information
+                    Setup();
 
                 }
                 else
@@ -196,6 +200,8 @@ namespace HotelApp.MenuForms
                 MessageBox.Show(ex.Message, ex.GetType().ToString());
             }
         }
+
+        
 
         /// <summary>
         /// Ensures the Hotel Fields are not empty
@@ -422,7 +428,120 @@ namespace HotelApp.MenuForms
 
         #endregion
 
+        #region Modifying And Saving Information
+
+        /// <summary>
+        /// Create a new hotel entry out of the information entered in the form fields
+        /// </summary>
+        private void CreateHotel()
+        {
+            // validate fields
+            if (!ValidateChildren(ValidationConstraints.Enabled))
+            {
+                MessageBox.Show("One or more fields are missing information. Please complete all fields and try again");
+                Setup();
+                return;
+            }
+
+            // save information to variables
+            string hotelName = txtHotelName.Text.Trim();
+            string civicNumber = txtCivicNumber.Text.Trim();
+            string streetName = txtStreetName.Text.Trim();
+            string city = txtCity.Text.Trim();
+            string province = txtProvince.Text.Trim();
+            string phoneNumber = txtPhone.Text.Trim();
+            string pathToImage = "";
+
+            bool hasPool = chkPool.Checked;
+            bool hasBreakfast = chkBreakfast.Checked;
+            bool hasParking = chkParking.Checked;
+
+            // check to make sure a record with this information does not already exist
+            string sqlDuplicateHotelCheck =
+                $"SELECT COUNT(*) FROM Hotel WHERE HotelName = '{hotelName}' AND CivicNumber = '{civicNumber}' AND StreetName = '{streetName}' AND City = '{city}' AND Province = '{province}' AND PhoneNumber = '{phoneNumber}'";
+
+            int? duplicateHotels = DataAccess.ExecuteScalar(sqlDuplicateHotelCheck) as int?;
+
+            if (!duplicateHotels.HasValue)
+            {
+                MessageBox.Show("Cannot check for duplicate records. Aborting new record attempt.");
+                return;
+            }
+
+            if(duplicateHotels.Value > 0)
+            {
+                MessageBox.Show("A hotel with these details already exists in the system.");
+                return;
+            }
+
+            // create sql string to insert basic hotel info (without amenities)
+            string sqlCreateHotel =
+                $@"INSERT INTO Hotel (HotelName, CivicNumber, StreetName, City, Province, PhoneNumber, PathToPicture)
+VALUES
+('{hotelName}', '{civicNumber}', '{streetName}', '{city}', '{province}', '{phoneNumber}', '{pathToImage}')".Replace(Environment.NewLine, " ");
+
+            // save results to int. use int? in case null value is returned
+            int? rowsAffected = DataAccess.ExecuteNonQuery(sqlCreateHotel);
+
+            // null or zero rows affected check
+            if(!rowsAffected.HasValue || rowsAffected == 0)
+            {
+                throw new Exception("Insert of new Hotel record was unsuccessful");
+            }
+
+            // get HotelID for the newly created Hotel
+            // create sql query to get hotelID
+            string sqlHotelId =
+                $"SELECT HotelID from Hotel WHERE HotelName = '{hotelName}' AND CivicNumber = '{civicNumber}' AND StreetName = '{streetName}' AND City = '{city}' AND Province = '{province}' AND PhoneNumber = '{phoneNumber}'";
+            object result = DataAccess.ExecuteScalar(sqlHotelId);
+
+            if(result == null || (int)result == 0)
+            {
+                throw new Exception("Unable to retrieve newly created HotelID");
+            }
+
+            int hotelId = (int)result;
+
+            // add hotel amenities to hotel amenities table
+            // add amenityID of each amenity for this hotel to a list of amenityIDs
+            List<int> amenitiesToAdd = new List<int>();
+
+            if (chkParking.Checked)
+            {
+                amenitiesToAdd.Add(1);
+            }
+
+            if (chkPool.Checked)
+            {
+                amenitiesToAdd.Add(2);
+            }
+
+            if (chkBreakfast.Checked)
+            {
+                amenitiesToAdd.Add(3);
+            } 
+
+
+            if(amenitiesToAdd.Count > 0)
+            {
+                // add each amentityID in the amenitiesToAdd list into the AmentitiesHotel table
+                foreach (int amenityID in amenitiesToAdd)
+                {
+                   string sqlInsertAmentityStatement = $"INSERT INTO AmentitiesHotel (HotelID, AmentityID) VALUES ({hotelId}, {amenityID})";
+                   int amentityRowsAffected = DataAccess.ExecuteNonQuery(sqlInsertAmentityStatement);
+                    if (amentityRowsAffected == 0)
+                    {
+                        throw new Exception("Failed to insert amentity for this hotel");
+                    }
+                }
+            }
+        }
+
+        #endregion
+
         #region Loading Information
+
+
 
         /// <summary>
         /// Load hotels from database into the dropdown, fetch the first hotel, and display it
