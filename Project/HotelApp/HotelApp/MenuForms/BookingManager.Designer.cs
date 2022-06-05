@@ -81,6 +81,7 @@
             this.dgvBookings.Name = "dgvBookings";
             this.dgvBookings.Size = new System.Drawing.Size(809, 354);
             this.dgvBookings.TabIndex = 3;
+            this.dgvBookings.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvBookings_CellDoubleClick);
             // 
             // btnCancel
             // 

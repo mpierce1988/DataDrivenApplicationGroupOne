@@ -181,5 +181,10 @@ namespace HotelApp.MenuForms
             currentHotelID = nextHotelID.Value;
             LoadBookingDetails();
         }
+
+        private void dgvBookings_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }
