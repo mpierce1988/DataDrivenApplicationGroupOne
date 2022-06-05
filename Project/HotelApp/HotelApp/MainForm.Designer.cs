@@ -73,8 +73,7 @@
             this.helpMenu});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Padding = new System.Windows.Forms.Padding(8, 2, 0, 2);
-            this.menuStrip.Size = new System.Drawing.Size(1064, 28);
+            this.menuStrip.Size = new System.Drawing.Size(1095, 24);
             this.menuStrip.TabIndex = 0;
             this.menuStrip.Text = "MenuStrip";
             // 
@@ -84,13 +83,13 @@
             this.exitToolStripMenuItem});
             this.fileMenu.ImageTransparentColor = System.Drawing.SystemColors.ActiveBorder;
             this.fileMenu.Name = "fileMenu";
-            this.fileMenu.Size = new System.Drawing.Size(46, 24);
+            this.fileMenu.Size = new System.Drawing.Size(37, 20);
             this.fileMenu.Text = "&File";
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(116, 26);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(93, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.ExitToolsStripMenuItem_Click);
             // 
@@ -101,13 +100,13 @@
             this.toolBarToolStripMenuItem,
             this.statusBarToolStripMenuItem});
             this.viewMenu.Name = "viewMenu";
-            this.viewMenu.Size = new System.Drawing.Size(55, 24);
+            this.viewMenu.Size = new System.Drawing.Size(44, 20);
             this.viewMenu.Text = "&View";
             // 
             // homePageToolStripMenuItem
             // 
             this.homePageToolStripMenuItem.Name = "homePageToolStripMenuItem";
-            this.homePageToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
+            this.homePageToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.homePageToolStripMenuItem.Tag = "Home";
             this.homePageToolStripMenuItem.Text = "Home Page";
             this.homePageToolStripMenuItem.Click += new System.EventHandler(this.ShowNewForm);
@@ -118,7 +117,7 @@
             this.toolBarToolStripMenuItem.CheckOnClick = true;
             this.toolBarToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.toolBarToolStripMenuItem.Name = "toolBarToolStripMenuItem";
-            this.toolBarToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
+            this.toolBarToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.toolBarToolStripMenuItem.Text = "&Toolbar";
             this.toolBarToolStripMenuItem.Click += new System.EventHandler(this.ToolBarToolStripMenuItem_Click);
             // 
@@ -128,7 +127,7 @@
             this.statusBarToolStripMenuItem.CheckOnClick = true;
             this.statusBarToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.statusBarToolStripMenuItem.Name = "statusBarToolStripMenuItem";
-            this.statusBarToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
+            this.statusBarToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.statusBarToolStripMenuItem.Text = "&Status Bar";
             this.statusBarToolStripMenuItem.Click += new System.EventHandler(this.StatusBarToolStripMenuItem_Click);
             // 
@@ -139,13 +138,13 @@
             this.editAddHotelToolStripMenuItem,
             this.editAddGuestToolStripMenuItem});
             this.maintenanceToolStripMenuItem.Name = "maintenanceToolStripMenuItem";
-            this.maintenanceToolStripMenuItem.Size = new System.Drawing.Size(108, 24);
+            this.maintenanceToolStripMenuItem.Size = new System.Drawing.Size(88, 20);
             this.maintenanceToolStripMenuItem.Text = "Maintenance";
             // 
             // editAddAgentToolStripMenuItem
             // 
             this.editAddAgentToolStripMenuItem.Name = "editAddAgentToolStripMenuItem";
-            this.editAddAgentToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.editAddAgentToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.editAddAgentToolStripMenuItem.Tag = "Agent";
             this.editAddAgentToolStripMenuItem.Text = "Edit/Add Agent";
             this.editAddAgentToolStripMenuItem.Click += new System.EventHandler(this.ShowNewForm);
@@ -153,7 +152,7 @@
             // editAddHotelToolStripMenuItem
             // 
             this.editAddHotelToolStripMenuItem.Name = "editAddHotelToolStripMenuItem";
-            this.editAddHotelToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.editAddHotelToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.editAddHotelToolStripMenuItem.Tag = "Hotel";
             this.editAddHotelToolStripMenuItem.Text = "Edit/Add Hotel";
             this.editAddHotelToolStripMenuItem.Click += new System.EventHandler(this.ShowNewForm);
@@ -161,7 +160,7 @@
             // editAddGuestToolStripMenuItem
             // 
             this.editAddGuestToolStripMenuItem.Name = "editAddGuestToolStripMenuItem";
-            this.editAddGuestToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.editAddGuestToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
             this.editAddGuestToolStripMenuItem.Tag = "Guest";
             this.editAddGuestToolStripMenuItem.Text = "Edit/Add Guest";
             this.editAddGuestToolStripMenuItem.Click += new System.EventHandler(this.ShowNewForm);
@@ -171,13 +170,13 @@
             this.bookingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.viewAvailableBookingsToolStripMenuItem});
             this.bookingsToolStripMenuItem.Name = "bookingsToolStripMenuItem";
-            this.bookingsToolStripMenuItem.Size = new System.Drawing.Size(84, 24);
+            this.bookingsToolStripMenuItem.Size = new System.Drawing.Size(68, 20);
             this.bookingsToolStripMenuItem.Text = "Bookings";
             // 
             // viewAvailableBookingsToolStripMenuItem
             // 
             this.viewAvailableBookingsToolStripMenuItem.Name = "viewAvailableBookingsToolStripMenuItem";
-            this.viewAvailableBookingsToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.viewAvailableBookingsToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.viewAvailableBookingsToolStripMenuItem.Tag = "AvailBooking";
             this.viewAvailableBookingsToolStripMenuItem.Text = "View Bookings";
             this.viewAvailableBookingsToolStripMenuItem.Click += new System.EventHandler(this.ShowNewForm);
@@ -187,13 +186,13 @@
             this.helpMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.aboutToolStripMenuItem});
             this.helpMenu.Name = "helpMenu";
-            this.helpMenu.Size = new System.Drawing.Size(55, 24);
+            this.helpMenu.Size = new System.Drawing.Size(44, 20);
             this.helpMenu.Text = "&Help";
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(159, 26);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(131, 22);
             this.aboutToolStripMenuItem.Text = "&About ... ...";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -209,9 +208,9 @@
             this.toolStripSeparator2,
             this.toolStripButton3,
             this.toolStripButton4});
-            this.toolStrip.Location = new System.Drawing.Point(0, 28);
+            this.toolStrip.Location = new System.Drawing.Point(0, 24);
             this.toolStrip.Name = "toolStrip";
-            this.toolStrip.Size = new System.Drawing.Size(1064, 27);
+            this.toolStrip.Size = new System.Drawing.Size(1095, 27);
             this.toolStrip.TabIndex = 1;
             this.toolStrip.Text = "ToolStrip";
             // 
@@ -221,7 +220,7 @@
             this.toolStripButton5.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton5.Image")));
             this.toolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton5.Name = "toolStripButton5";
-            this.toolStripButton5.Size = new System.Drawing.Size(29, 24);
+            this.toolStripButton5.Size = new System.Drawing.Size(24, 24);
             this.toolStripButton5.Tag = "Home";
             this.toolStripButton5.Text = "Home";
             this.toolStripButton5.Click += new System.EventHandler(this.ShowNewForm);
@@ -237,7 +236,7 @@
             this.newToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("newToolStripButton.Image")));
             this.newToolStripButton.ImageTransparentColor = System.Drawing.Color.Black;
             this.newToolStripButton.Name = "newToolStripButton";
-            this.newToolStripButton.Size = new System.Drawing.Size(29, 24);
+            this.newToolStripButton.Size = new System.Drawing.Size(24, 24);
             this.newToolStripButton.Tag = "Agent";
             this.newToolStripButton.Text = "Edit/Add Agent";
             this.newToolStripButton.Click += new System.EventHandler(this.ShowNewForm);
@@ -248,7 +247,7 @@
             this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
             this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(29, 24);
+            this.toolStripButton1.Size = new System.Drawing.Size(24, 24);
             this.toolStripButton1.Tag = "Hotel";
             this.toolStripButton1.Text = "Edit/Add Hotel";
             this.toolStripButton1.Click += new System.EventHandler(this.ShowNewForm);
@@ -259,7 +258,7 @@
             this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
             this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton2.Name = "toolStripButton2";
-            this.toolStripButton2.Size = new System.Drawing.Size(29, 24);
+            this.toolStripButton2.Size = new System.Drawing.Size(24, 24);
             this.toolStripButton2.Tag = "Guest";
             this.toolStripButton2.Text = "Edit/Add Guest";
             this.toolStripButton2.Click += new System.EventHandler(this.ShowNewForm);
@@ -275,7 +274,7 @@
             this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
             this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton3.Name = "toolStripButton3";
-            this.toolStripButton3.Size = new System.Drawing.Size(29, 24);
+            this.toolStripButton3.Size = new System.Drawing.Size(24, 24);
             this.toolStripButton3.Tag = "AvailBooking";
             this.toolStripButton3.Text = "AvailableBookings";
             this.toolStripButton3.Click += new System.EventHandler(this.ShowNewForm);
@@ -286,7 +285,7 @@
             this.toolStripButton4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton4.Image")));
             this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton4.Name = "toolStripButton4";
-            this.toolStripButton4.Size = new System.Drawing.Size(29, 24);
+            this.toolStripButton4.Size = new System.Drawing.Size(24, 24);
             this.toolStripButton4.Tag = "CancelBooking";
             this.toolStripButton4.Text = "Cancel Bookings";
             this.toolStripButton4.Click += new System.EventHandler(this.ShowNewForm);
@@ -296,31 +295,29 @@
             this.statusStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel});
-            this.statusStrip.Location = new System.Drawing.Point(0, 655);
+            this.statusStrip.Location = new System.Drawing.Point(0, 914);
             this.statusStrip.Name = "statusStrip";
-            this.statusStrip.Padding = new System.Windows.Forms.Padding(1, 0, 19, 0);
-            this.statusStrip.Size = new System.Drawing.Size(1064, 26);
+            this.statusStrip.Size = new System.Drawing.Size(1095, 22);
             this.statusStrip.TabIndex = 2;
             this.statusStrip.Text = "StatusStrip";
             // 
             // toolStripStatusLabel
             // 
             this.toolStripStatusLabel.Name = "toolStripStatusLabel";
-            this.toolStripStatusLabel.Size = new System.Drawing.Size(49, 20);
+            this.toolStripStatusLabel.Size = new System.Drawing.Size(39, 17);
             this.toolStripStatusLabel.Text = "Status";
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1064, 681);
+            this.ClientSize = new System.Drawing.Size(1095, 936);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.toolStrip);
             this.Controls.Add(this.menuStrip);
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.menuStrip;
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.MinimumSize = new System.Drawing.Size(1082, 728);
+            this.MinimumSize = new System.Drawing.Size(816, 599);
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Hotel App";
