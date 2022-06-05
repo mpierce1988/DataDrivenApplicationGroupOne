@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label2 = new System.Windows.Forms.Label();
             this.cboHotel = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -48,7 +49,7 @@
             this.chkParking = new System.Windows.Forms.CheckBox();
             this.chkPool = new System.Windows.Forms.CheckBox();
             this.label10 = new System.Windows.Forms.Label();
-            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnCancelDelete = new System.Windows.Forms.Button();
             this.btnLast = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnModify = new System.Windows.Forms.Button();
@@ -58,7 +59,9 @@
             this.btnNext = new System.Windows.Forms.Button();
             this.chkBreakfast = new System.Windows.Forms.CheckBox();
             this.label11 = new System.Windows.Forms.Label();
+            this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
             // label2
@@ -123,6 +126,8 @@
             this.txtPhone.Name = "txtPhone";
             this.txtPhone.Size = new System.Drawing.Size(349, 30);
             this.txtPhone.TabIndex = 66;
+            this.txtPhone.Tag = "Phone Number";
+            this.txtPhone.Validating += new System.ComponentModel.CancelEventHandler(this.ValidateHotelField);
             // 
             // label8
             // 
@@ -143,6 +148,8 @@
             this.txtProvince.Name = "txtProvince";
             this.txtProvince.Size = new System.Drawing.Size(349, 30);
             this.txtProvince.TabIndex = 64;
+            this.txtProvince.Tag = "Province";
+            this.txtProvince.Validating += new System.ComponentModel.CancelEventHandler(this.ValidateHotelField);
             // 
             // label9
             // 
@@ -163,6 +170,8 @@
             this.txtCity.Name = "txtCity";
             this.txtCity.Size = new System.Drawing.Size(349, 30);
             this.txtCity.TabIndex = 62;
+            this.txtCity.Tag = "City";
+            this.txtCity.Validating += new System.ComponentModel.CancelEventHandler(this.ValidateHotelField);
             // 
             // label6
             // 
@@ -183,6 +192,8 @@
             this.txtStreetName.Name = "txtStreetName";
             this.txtStreetName.Size = new System.Drawing.Size(349, 30);
             this.txtStreetName.TabIndex = 60;
+            this.txtStreetName.Tag = "Street Name";
+            this.txtStreetName.Validating += new System.ComponentModel.CancelEventHandler(this.ValidateHotelField);
             // 
             // label5
             // 
@@ -203,6 +214,8 @@
             this.txtCivicNumber.Name = "txtCivicNumber";
             this.txtCivicNumber.Size = new System.Drawing.Size(349, 30);
             this.txtCivicNumber.TabIndex = 58;
+            this.txtCivicNumber.Tag = "Civic Number";
+            this.txtCivicNumber.Validating += new System.ComponentModel.CancelEventHandler(this.ValidateHotelField);
             // 
             // label4
             // 
@@ -223,6 +236,8 @@
             this.txtHotelName.Name = "txtHotelName";
             this.txtHotelName.Size = new System.Drawing.Size(349, 30);
             this.txtHotelName.TabIndex = 70;
+            this.txtHotelName.Tag = "Hotel Name";
+            this.txtHotelName.Validating += new System.ComponentModel.CancelEventHandler(this.ValidateHotelField);
             // 
             // label3
             // 
@@ -268,16 +283,17 @@
             this.label10.TabIndex = 72;
             this.label10.Text = "Includes Pool:";
             // 
-            // btnCancel
+            // btnCancelDelete
             // 
-            this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancel.Location = new System.Drawing.Point(987, 692);
-            this.btnCancel.Margin = new System.Windows.Forms.Padding(4);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(231, 91);
-            this.btnCancel.TabIndex = 81;
-            this.btnCancel.Text = "Cancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancelDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancelDelete.Location = new System.Drawing.Point(987, 692);
+            this.btnCancelDelete.Margin = new System.Windows.Forms.Padding(4);
+            this.btnCancelDelete.Name = "btnCancelDelete";
+            this.btnCancelDelete.Size = new System.Drawing.Size(231, 91);
+            this.btnCancelDelete.TabIndex = 81;
+            this.btnCancelDelete.Text = "Cancel";
+            this.btnCancelDelete.UseVisualStyleBackColor = true;
+            this.btnCancelDelete.Click += new System.EventHandler(this.btnCancelDelete_Click);
             // 
             // btnLast
             // 
@@ -301,6 +317,7 @@
             this.btnAdd.TabIndex = 78;
             this.btnAdd.Text = "Add";
             this.btnAdd.UseVisualStyleBackColor = true;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
             // btnModify
             // 
@@ -335,6 +352,7 @@
             this.btnSave.TabIndex = 80;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnPrevious
             // 
@@ -382,14 +400,19 @@
             this.label11.TabIndex = 82;
             this.label11.Text = "Includes Breakfast:";
             // 
+            // errorProvider1
+            // 
+            this.errorProvider1.ContainerControl = this;
+            // 
             // Hotel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
             this.ClientSize = new System.Drawing.Size(1303, 844);
             this.Controls.Add(this.chkBreakfast);
             this.Controls.Add(this.label11);
-            this.Controls.Add(this.btnCancel);
+            this.Controls.Add(this.btnCancelDelete);
             this.Controls.Add(this.btnLast);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.btnModify);
@@ -422,6 +445,7 @@
             this.Text = "Hotel";
             this.Load += new System.EventHandler(this.Hotel_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -449,7 +473,7 @@
         private System.Windows.Forms.CheckBox chkParking;
         private System.Windows.Forms.CheckBox chkPool;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Button btnCancelDelete;
         private System.Windows.Forms.Button btnLast;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnModify;
@@ -459,5 +483,6 @@
         private System.Windows.Forms.Button btnNext;
         private System.Windows.Forms.CheckBox chkBreakfast;
         private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.ErrorProvider errorProvider1;
     }
 }

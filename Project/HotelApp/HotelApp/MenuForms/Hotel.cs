@@ -34,19 +34,13 @@ namespace HotelApp.MenuForms
         {
             try
             {
-                // load hotels into dropdown
-                LoadHotelsDropdown();
-                // set current hotel ID to the ID of the first hotel, if sorted alphabetically
-                currentHotelID = GetFirstHotelID();
-                // load first hotel's information into fields
-                LoadHotelInformation();                
+                Setup();
             }
             catch (Exception ex) 
             {
                 MessageBox.Show(ex.Message, ex.GetType().ToString());
             }
-        }
-
+        }        
 
         private void cboHotel_SelectionChangeCommitted(object sender, EventArgs e)
         {
@@ -115,9 +109,251 @@ namespace HotelApp.MenuForms
             }
         }
 
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // set button state to Add state
+                SetButtonsState(ButtonState.Add);
+
+                // clear form controls
+                ClearFormFields();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().ToString());
+
+            }
+        }
+
+        private void btnCancelDelete_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // determine if this button is current a delete or a cancel
+                // cast sender as a button
+                Button button = sender as Button;
+
+                // check if value is null before proceeding
+                if(button == null)
+                {
+                    throw new ArgumentException("A non-button has called the btnCancelDelete_Click method");
+                }
+
+                // respond differently if this is a cancel or a delete
+                if(button.Text.ToLower() == "cancel")
+                {
+                    Setup();
+                }
+                else if(button.Text.ToLower() == "delete")
+                {
+                    MessageBox.Show("Delete functionality not implemented yet");
+                    Setup();
+                }
+                else
+                {
+                    throw new ArgumentException("CancelDelete button has an invalid name");
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().ToString());
+            }
+        }
+
+
+        private void btnSave_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // determine if this is a create or modify
+                Button btn = sender as Button;
+
+                // verify cast was successful
+                if(btn == null)
+                {
+                    throw new ArgumentException("A non-button has called the btnSave_click method");
+                }
+
+                if(btn.Text.ToLower() == "save")
+                {
+
+                }
+                else if(btn.Text.ToLower() == "create")
+                {
+                    // validate form controls
+
+                }
+                else
+                {
+                    throw new ArgumentException("SaveCreate button has an invalid name while calling btnSave_click");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().ToString());
+            }
+        }
+
+        /// <summary>
+        /// Ensures the Hotel Fields are not empty
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ValidateHotelField(object sender, CancelEventArgs e)
+        {
+            try
+            {
+                // case sender as text field
+                TextBox textBox = sender as TextBox;
+
+                // verify cast was successful
+                if(textBox == null)
+                {
+                    throw new ArgumentException("A non-Textbox has called the ValidateHotelField method");
+                }
+
+                // if text is empty, display error and cancel validation
+                if(textBox.Text == "")
+                {
+                    // set error provider to display error
+                    errorProvider1.SetError(textBox, $"{textBox.Tag} field must not be blank");
+
+                    // cancel validation
+                    e.Cancel = true;
+                }
+                else
+                {
+                    // reset error provider
+                    errorProvider1.SetError(textBox, "");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().ToString());
+            }
+        }
+
         #endregion
 
         #region UI Helpers
+
+        /// <summary>
+        ///  Resets/disables all error providers
+        /// </summary>
+        private void ClearAllErrorProviders()
+        {
+            errorProvider1.SetError(txtCity, "");
+            errorProvider1.SetError(txtCivicNumber, "");
+            errorProvider1.SetError(txtHotelName, "");
+            errorProvider1.SetError(txtPhone, "");
+            errorProvider1.SetError(txtProvince, "");
+            errorProvider1.SetError(txtStreetName, "");
+        }
+
+        /// <summary>
+        /// Clears all of the form Input fields
+        /// </summary>
+        private void ClearFormFields()
+        {
+            // clear form fields
+            cboHotel.SelectedValue = DBNull.Value;
+
+            txtCity.Text = "";
+            txtCivicNumber.Text = "";
+            txtHotelName.Text = "";
+            txtPhone.Text = "";
+            txtProvince.Text = "";
+            txtStreetName.Text = "";
+
+            chkBreakfast.Checked = false;
+            chkParking.Checked = false;
+            chkPool.Checked = false;
+        }
+
+        /// <summary>
+        /// Enum to keep handle changing enabled/disabled state of buttons
+        /// </summary>
+        private enum ButtonState
+        {
+            Browse,
+            Add,
+            Modify,
+            Delete
+        }
+
+        /// <summary>
+        /// Sets the state of the nav buttons based on the current state of the app
+        /// </summary>
+        /// <param name="buttonState"></param>
+        private void SetButtonsState(ButtonState buttonState)
+        {
+            void SetNavState(bool state)
+            {
+                btnPrevious.Enabled = state;
+                btnNext.Enabled = state;
+                btnFirst.Enabled = state;
+                btnLast.Enabled = state;                
+            }
+            switch (buttonState)
+            {
+                case ButtonState.Browse:
+                    SetNavState(true);
+
+                    btnSave.Enabled = false;
+                    btnSave.Text = "Save";
+
+                    btnCancelDelete.Enabled = true;
+                    btnCancelDelete.Text = "Delete";                    
+
+                    btnAdd.Enabled = true;
+                    btnModify.Enabled = true;
+                    cboHotel.Enabled = true;
+                    break;
+                case ButtonState.Add:
+                    // only enable Save and Cancel
+                    // change save button text to "Create"
+                    SetNavState(false);
+                    cboHotel.SelectedValue = DBNull.Value;
+                    cboHotel.Enabled = false;
+
+                    btnSave.Enabled = true;
+                    btnSave.Text = "Create";
+
+                    btnCancelDelete.Enabled = true;
+
+                    btnCancelDelete.Text = "Cancel";
+
+                    btnAdd.Enabled = false;
+                    btnModify.Enabled = false;
+                    break;
+                case ButtonState.Modify:
+                    // Only enable save and cancel
+                    // set save button text to "Save"
+                    SetNavState(false);
+                    cboHotel.SelectedValue = DBNull.Value;
+                    cboHotel.Enabled = false;
+
+                    btnSave.Enabled = true;
+                    btnSave.Text = "Save";
+                    btnCancelDelete.Enabled = true;
+
+                    btnCancelDelete.Text = "Cancel";
+
+                    btnAdd.Enabled = false;
+                    btnModify.Enabled = false;
+
+                    break;
+                case ButtonState.Delete:
+                    break;
+                default:
+                    break;
+            }
+        }
+
 
         /// <summary>
         /// Sets the form fields to display information from a DataRow containing a Hotel record
@@ -187,6 +423,22 @@ namespace HotelApp.MenuForms
         #endregion
 
         #region Loading Information
+
+        /// <summary>
+        /// Load hotels from database into the dropdown, fetch the first hotel, and display it
+        /// </summary>
+        private void Setup()
+        {
+            // load hotels into dropdown
+            LoadHotelsDropdown();
+            // set current hotel ID to the ID of the first hotel, if sorted alphabetically
+            currentHotelID = GetFirstHotelID();
+            // load first hotel's information into fields
+            LoadHotelInformation();
+            // set button state to Browse state
+            SetButtonsState(ButtonState.Browse);
+        }
+
 
         /// <summary>
         /// Load the information for the hotel currentHotelID into the form fields
@@ -311,6 +563,11 @@ WHERE CurrentHotelID = {currentHotelID}
             return Convert.ToInt32(result);
         }
 
+
+
+
         #endregion
+
+        
     }
 }
