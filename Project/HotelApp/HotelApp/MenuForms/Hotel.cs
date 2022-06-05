@@ -535,6 +535,9 @@ VALUES
                     }
                 }
             }
+
+            // Show message indicating successful creation of a new hotel
+            MessageBox.Show($"{hotelName} was successfully added to the database");
         }
 
         #endregion
