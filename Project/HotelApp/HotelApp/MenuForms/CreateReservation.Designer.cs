@@ -62,7 +62,6 @@
             this.label1.Size = new System.Drawing.Size(441, 46);
             this.label1.TabIndex = 0;
             this.label1.Text = "Hotel Reservation Form";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // label2
             // 
