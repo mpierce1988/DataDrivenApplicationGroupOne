@@ -12,14 +12,14 @@ namespace HotelApp.MenuForms
 {
     public partial class CreateReservation : Form
     {
+        int assignedAgentID;
+        int selectedRoomID;
+        int selectedGuestID;
         public CreateReservation()
         {
             InitializeComponent();
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
+       
     }
 }
