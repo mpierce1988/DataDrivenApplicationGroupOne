@@ -117,41 +117,37 @@ namespace HotelApp.MenuForms
 
         #endregion
 
+        #region UI Helpers
+
         /// <summary>
-        /// Load the information for the hotel currentHotelID into the form fields
+        /// Sets the form fields to display information from a DataRow containing a Hotel record
         /// </summary>
-        private void LoadHotelInformation()
+        /// <param name="selectedRecord"></param>
+        /// <exception cref="Exception"></exception>
+        private void DisplayHotelInformationFromRecord(DataRow selectedRecord)
         {
-            // create an sql query that will return the the hotel information
-            string sqlHotelInformation =
-                $"SELECT HotelName, CivicNumber, StreetName, City, Province, PhoneNumber, PathToPicture FROM Hotel WHERE HotelID = {currentHotelID};";
+            // verify DataRow is valid
+            if (selectedRecord == null || selectedRecord["HotelName"] == null)
+            {
+                throw new Exception("A null or incorrect hotel record was passed into the DisplayHotelInformation method");
+            }
 
+            // populate form fields with information
+            cboHotel.SelectedValue = currentHotelID;
 
-            // save results to a data row, since there should only be one record result
-            DataRow selectedRecord = DataAccess.GetData(sqlHotelInformation).Rows[0];
-
-            // display hotel information
-            DisplayHotelInformationFromRecord(selectedRecord);
-
-            // get amenities for the selected hotel. Save in a DataTable, as there could be multiple
-            // create sql query
-            string sqlAmenitiesQuery =
-                $"SELECT * FROM AmentitiesHotel WHERE HotelID = {currentHotelID}";
-
-            // save results as a datatable, as there could be multiple
-            DataTable amenitiesResults = DataAccess.GetData(sqlAmenitiesQuery);
-
-            // set radio buttons state
-            SetRadioButtonsFromAmenityResults(amenitiesResults);
-
-            // set FirstPrevNextLast
-            SetFirstPrevNextLastHotelID();
-            // set nav button states
-            SetPrevNextButtonState();
-
+            txtHotelName.Text = selectedRecord["HotelName"].ToString();
+            txtCivicNumber.Text = selectedRecord["CivicNumber"].ToString();
+            txtStreetName.Text = selectedRecord["StreetName"].ToString();
+            txtCity.Text = selectedRecord["City"].ToString();
+            txtProvince.Text = selectedRecord["Province"].ToString();
+            txtPhone.Text = selectedRecord["PhoneNumber"].ToString();
         }
 
-        private void SetRadioButtonsFromAmenityResults(DataTable amenitiesResults)
+        /// <summary>
+        /// Sets the Checkboxes based on a DataTable of amenities for the given currentHotelID
+        /// </summary>
+        /// <param name="amenitiesResults"></param>
+        private void SetCheckboxesFromAmenityResults(DataTable amenitiesResults)
         {
             // reset all the check boxes
             chkPool.Checked = false;
@@ -187,6 +183,44 @@ namespace HotelApp.MenuForms
             btnPrevious.Enabled = previousHotelID == null ? false : true;
             btnNext.Enabled = nextHotelID == null ? false : true;
         }
+
+        #endregion
+
+        #region Loading Information
+
+        /// <summary>
+        /// Load the information for the hotel currentHotelID into the form fields
+        /// </summary>
+        private void LoadHotelInformation()
+        {
+            // create an sql query that will return the the hotel information
+            string sqlHotelInformation =
+                $"SELECT HotelName, CivicNumber, StreetName, City, Province, PhoneNumber, PathToPicture FROM Hotel WHERE HotelID = {currentHotelID};";
+
+
+            // save results to a data row, since there should only be one record result
+            DataRow selectedRecord = DataAccess.GetData(sqlHotelInformation).Rows[0];
+
+            // display hotel information
+            DisplayHotelInformationFromRecord(selectedRecord);
+
+            // get amenities for the selected hotel. Save in a DataTable, as there could be multiple
+            // create sql query
+            string sqlAmenitiesQuery =
+                $"SELECT * FROM AmentitiesHotel WHERE HotelID = {currentHotelID}";
+
+            // save results as a datatable, as there could be multiple
+            DataTable amenitiesResults = DataAccess.GetData(sqlAmenitiesQuery);
+
+            // set radio buttons state
+            SetCheckboxesFromAmenityResults(amenitiesResults);
+
+            // set FirstPrevNextLast
+            SetFirstPrevNextLastHotelID();
+            // set nav button states
+            SetPrevNextButtonState();
+
+        }        
 
         /// <summary>
         /// Queries the database to set the first, previous, next, and last HotelID values
@@ -238,25 +272,6 @@ WHERE CurrentHotelID = {currentHotelID}
 
         }
 
-        private void DisplayHotelInformationFromRecord(DataRow selectedRecord)
-        {
-            // verify DataRow is valid
-            if(selectedRecord == null || selectedRecord["HotelName"] == null)
-            {
-                throw new Exception("A null or incorrect hotel record was passed into the DisplayHotelInformation method");
-            }
-
-            // populate form fields with information
-            cboHotel.SelectedValue = currentHotelID;
-
-            txtHotelName.Text = selectedRecord["HotelName"].ToString();
-            txtCivicNumber.Text = selectedRecord["CivicNumber"].ToString();
-            txtStreetName.Text = selectedRecord["StreetName"].ToString();
-            txtCity.Text = selectedRecord["City"].ToString();
-            txtProvince.Text = selectedRecord["Province"].ToString();
-            txtPhone.Text = selectedRecord["PhoneNumber"].ToString();
-        }
-
         /// <summary>
         /// Loads Hotel names and ID values into the dropdown
         /// </summary>
@@ -287,7 +302,7 @@ WHERE CurrentHotelID = {currentHotelID}
             object result = DataAccess.ExecuteScalar(sqlFirstHotelQuery);
 
             // throw exception if no result found
-            if(result == null || result == DBNull.Value)
+            if (result == null || result == DBNull.Value)
             {
                 throw new Exception("Database did not return a result for the first HotelID");
             }
@@ -296,6 +311,6 @@ WHERE CurrentHotelID = {currentHotelID}
             return Convert.ToInt32(result);
         }
 
-        
+        #endregion
     }
 }
