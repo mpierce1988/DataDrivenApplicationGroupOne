@@ -16,6 +16,7 @@ namespace HotelApp.MenuForms
         int selectedGuestID;
         int selectedHotelID;
         int selectedRoomTypeID;
+        int selectedRoomID;
         string currentAgentUserName;
         
         public CreateReservation(BookingManager form)
@@ -178,6 +179,14 @@ namespace HotelApp.MenuForms
             LoadGuestDetails();
         }
 
-       
+        private void cmbRoomNumber_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            selectedRoomID = (int)cmbRoomNumber.SelectedValue;
+        }
+
+        private void btnCreateBooking_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

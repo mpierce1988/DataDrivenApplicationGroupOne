@@ -57,14 +57,14 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.txtCompany = new System.Windows.Forms.TextBox();
+            this.label16 = new System.Windows.Forms.Label();
+            this.txtAgentName = new System.Windows.Forms.TextBox();
             this.txtAgentPhone = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.txtAgentEmail = new System.Windows.Forms.TextBox();
-            this.txtAgentName = new System.Windows.Forms.TextBox();
-            this.txtCompany = new System.Windows.Forms.TextBox();
-            this.label16 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -137,6 +137,7 @@
             this.btnCreateBooking.TabIndex = 42;
             this.btnCreateBooking.Text = "Create Booking";
             this.btnCreateBooking.UseVisualStyleBackColor = true;
+            this.btnCreateBooking.Click += new System.EventHandler(this.btnCreateBooking_Click);
             // 
             // txtGuestEmail
             // 
@@ -329,6 +330,7 @@
             this.cmbRoomNumber.Name = "cmbRoomNumber";
             this.cmbRoomNumber.Size = new System.Drawing.Size(362, 33);
             this.cmbRoomNumber.TabIndex = 46;
+            this.cmbRoomNumber.SelectionChangeCommitted += new System.EventHandler(this.cmbRoomNumber_SelectionChangeCommitted);
             // 
             // cmbRoomTypes
             // 
@@ -378,6 +380,34 @@
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Current Agent";
             // 
+            // txtCompany
+            // 
+            this.txtCompany.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCompany.Location = new System.Drawing.Point(470, 65);
+            this.txtCompany.Name = "txtCompany";
+            this.txtCompany.ReadOnly = true;
+            this.txtCompany.Size = new System.Drawing.Size(368, 26);
+            this.txtCompany.TabIndex = 48;
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label16.Location = new System.Drawing.Point(468, 42);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(95, 20);
+            this.label16.TabIndex = 47;
+            this.label16.Text = "Company*:";
+            // 
+            // txtAgentName
+            // 
+            this.txtAgentName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtAgentName.Location = new System.Drawing.Point(5, 65);
+            this.txtAgentName.Name = "txtAgentName";
+            this.txtAgentName.ReadOnly = true;
+            this.txtAgentName.Size = new System.Drawing.Size(368, 26);
+            this.txtAgentName.TabIndex = 46;
+            // 
             // txtAgentPhone
             // 
             this.txtAgentPhone.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -425,34 +455,6 @@
             this.txtAgentEmail.ReadOnly = true;
             this.txtAgentEmail.Size = new System.Drawing.Size(368, 26);
             this.txtAgentEmail.TabIndex = 5;
-            // 
-            // txtAgentName
-            // 
-            this.txtAgentName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAgentName.Location = new System.Drawing.Point(5, 65);
-            this.txtAgentName.Name = "txtAgentName";
-            this.txtAgentName.ReadOnly = true;
-            this.txtAgentName.Size = new System.Drawing.Size(368, 26);
-            this.txtAgentName.TabIndex = 46;
-            // 
-            // txtCompany
-            // 
-            this.txtCompany.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtCompany.Location = new System.Drawing.Point(470, 65);
-            this.txtCompany.Name = "txtCompany";
-            this.txtCompany.ReadOnly = true;
-            this.txtCompany.Size = new System.Drawing.Size(368, 26);
-            this.txtCompany.TabIndex = 48;
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.Location = new System.Drawing.Point(468, 42);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(95, 20);
-            this.label16.TabIndex = 47;
-            this.label16.Text = "Company*:";
             // 
             // CreateReservation
             // 
