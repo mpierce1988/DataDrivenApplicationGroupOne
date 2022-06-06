@@ -190,6 +190,25 @@ namespace HotelApp.MenuForms
         }
 
         #endregion
+
+        private void AddBooking()
+        {
+            string sqlCreateBooking = $@"INSERT INTO Booking (AgentID, RoomID, GuestID, ArrivalDate, DepartureDate)
+                                        VALUES
+                                        ({selectedAgentID}, {cmbRoomNumber.SelectedValue}, {cmbGuests.SelectedValue}, '{Convert.ToDateTime(dteArrival.Text)}', '{Convert.ToDateTime(dteDeparture.Text)}'); ";
+
+           int rowsAffected = DataAccess.ExecuteNonQuery(sqlCreateBooking);
+
+            if (rowsAffected == 1)
+            {
+                MessageBox.Show("Booking has been created!", "Success");
+            }
+            else
+            {
+                MessageBox.Show("Booking Failed!", "Failure");
+            }
+        }
+
         private void CreateReservation_Load(object sender, EventArgs e)
         {
             if(currentGuestID != 0 && currentHotelID != 0 && currentRoomTypeID != 0 && currentRoomID != 0)
@@ -271,7 +290,7 @@ namespace HotelApp.MenuForms
 
         private void btnCreateBooking_Click(object sender, EventArgs e)
         {
-
+            AddBooking();
         }
     }
 }
