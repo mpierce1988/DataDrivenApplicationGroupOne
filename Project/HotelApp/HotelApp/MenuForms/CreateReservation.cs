@@ -18,10 +18,13 @@ namespace HotelApp.MenuForms
         int selectedRoomTypeID;
         int selectedRoomID;
         string currentAgentUserName;
+        int selectedAgentID;
         int currentGuestID;
         int currentHotelID;
         int currentRoomTypeID;
         int currentRoomID;
+        string currentArrival;
+        string currentDeparture;
         
         public CreateReservation(BookingManager form)
         {
@@ -29,15 +32,16 @@ namespace HotelApp.MenuForms
             currentAgentUserName = form.currentAgent;
         }
 
-        public CreateReservation(BookingManager form, int guestID, int hotelID, int roomTypeID, int roomID)
+        public CreateReservation(int guestID, int hotelID, int roomTypeID, int roomID, int agentID, string arrival, string departure)
         {
             InitializeComponent();
-            currentAgentUserName = form.currentAgent;
             currentGuestID = guestID;
             currentHotelID = hotelID;
             currentRoomTypeID = roomTypeID;
             currentRoomID = roomID;
-
+            currentArrival = arrival;
+            currentDeparture = departure;
+            selectedAgentID = agentID;
         }
 
         #region LoadData
@@ -81,9 +85,48 @@ namespace HotelApp.MenuForms
             UIUtilities.BindListControl(cmbRoomNumber, "RoomID", "RoomNumber", dtAvailableRooms, true, "----Select a Room----");
         }
 
+        private void LoadBooking()
+        {
+            string sqlBooking = $"SELECT ArrivalDate, DepartureDate FROM Booking WHERE AgentID = {selectedAgentID} AND RoomID = {currentRoomID} AND GuestID = {currentGuestID};";
+
+            DataTable dtBooking = DataAccess.GetData(sqlBooking);
+
+            DataRow booking = dtBooking.Rows[0];
+
+            dteArrival.Text  = booking["ArrivalDate"].ToString();
+            dteDeparture.Text = booking["DepartureDate"].ToString();
+        }
+
         private void LoadAgent()
         {
-            string sqlAgent = $@"SELECT 
+            if(currentAgentUserName == null)
+            {
+                string sqlSelectedAgent = $@"SELECT 
+                                    AgentID,
+                                    (FirstName + ', ' + LastName) AS FullName,
+                                    Company,
+                                    Phone,
+                                    Email
+                                    FROM Agent
+                                    WHERE AgentID = {selectedAgentID};";
+
+
+                DataTable dtAgent = DataAccess.GetData(sqlSelectedAgent);
+
+                DataRow values = dtAgent.Rows[0];
+
+                txtAgentName.Text = values["FullName"].ToString();
+                txtAgentEmail.Text = values["Email"].ToString();
+                txtAgentPhone.Text = values["Phone"].ToString();
+                txtCompany.Text = values["Company"].ToString();
+
+                selectedAgentID = (int)values["AgentID"];
+
+            }
+            else
+            {
+                string sqlCurrentAgent = $@"SELECT 
+                    AgentID,
                     (FirstName + ', ' + LastName) AS FullName,
                     Company,
                     Phone,
@@ -91,14 +134,19 @@ namespace HotelApp.MenuForms
                     FROM Agent
                     WHERE UserName = '{currentAgentUserName}'";
 
-            DataTable dtAgent = DataAccess.GetData(sqlAgent);
+                DataTable dtAgent = DataAccess.GetData(sqlCurrentAgent);
 
-            DataRow values = dtAgent.Rows[0];
+                DataRow values = dtAgent.Rows[0];
 
-            txtAgentName.Text = values["FullName"].ToString();
-            txtAgentEmail.Text = values["Email"].ToString();
-            txtAgentPhone.Text = values["Phone"].ToString();
-            txtCompany.Text = values["Company"].ToString();
+                txtAgentName.Text = values["FullName"].ToString();
+                txtAgentEmail.Text = values["Email"].ToString();
+                txtAgentPhone.Text = values["Phone"].ToString();
+                txtCompany.Text = values["Company"].ToString();
+
+                selectedAgentID = (int)values["AgentID"];
+            }
+
+            
         }
 
 
@@ -140,12 +188,33 @@ namespace HotelApp.MenuForms
             txtGuestEmail.Text = Values["Email"].ToString();
             txtPhoneGuest.Text = Values["PhoneNumber"].ToString();
         }
+
         #endregion
         private void CreateReservation_Load(object sender, EventArgs e)
         {
             if(currentGuestID != 0 && currentHotelID != 0 && currentRoomTypeID != 0 && currentRoomID != 0)
             {
-                MessageBox.Show($"{currentGuestID} + {currentHotelID} + {currentRoomTypeID} + {currentRoomID}");
+                LoadHotels();
+                LoadGuests();
+                LoadAgent();
+                selectedGuestID = currentGuestID;
+                selectedHotelID = currentHotelID;
+                selectedRoomID = currentRoomID;
+                selectedRoomTypeID = currentRoomTypeID;
+
+                cmbGuests.SelectedValue = currentGuestID;
+                cmbHotel.SelectedValue = currentHotelID;
+
+
+                LoadGuestDetails();
+                LoadHotelDetails();
+                LoadRoomTypes();
+                LoadRooms();
+
+
+                cmbRoomTypes.SelectedValue = currentRoomTypeID;
+                cmbRoomNumber.SelectedValue = currentRoomID;
+                LoadBooking();
                 return;
             }
             LoadHotels();

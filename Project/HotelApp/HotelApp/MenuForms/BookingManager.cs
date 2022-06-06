@@ -13,15 +13,10 @@ namespace HotelApp.MenuForms
     public partial class BookingManager : Form
     {
         int currentHotelID = -1;
-        //public int currentGuestID;
-        //public int currentRoomID;
-        //public int currentRoomTypeID;
         int? nextHotelID;
         int? previousHotelID;
         int hotelCount;
         public string currentAgent;
-        //int firstHotelID = Convert.ToInt32(DataAccess.ExecuteScalar("SELECT TOP 1 HotelID FROM Hotel ORDER BY HotelID ASC"));
-        //int lastHotelID = Convert.ToInt32(DataAccess.ExecuteScalar("SELECT TOP 1 HotelID FROM Hotel ORDER BY HotelID DESC"));
         public BookingManager(MainForm form)
         {
             InitializeComponent();
@@ -51,6 +46,7 @@ namespace HotelApp.MenuForms
                                 Hotel.HotelID,
                                 Room.RoomID,
                                 Room.RoomTypeID,
+                                Booking.AgentID,
                                 HotelName AS [Hotel Name], 
                                 (Hotel.City + ', ' + Hotel.Province) AS [Location],
                                 Hotel.PhoneNumber AS [Hotel Phone],
@@ -74,10 +70,12 @@ namespace HotelApp.MenuForms
 
             dgvBookings.DataSource = dtBookingDetails;
 
-            //dgvBookings.Columns["GuestID"].Visible = false;
-            //dgvBookings.Columns["HotelID"].Visible = false;
-            //dgvBookings.Columns["RoomID"].Visible = false;
-            //dgvBookings.Columns["RoomTypeID"].Visible = false;
+            dgvBookings.Columns["GuestID"].Visible = false;
+            dgvBookings.Columns["HotelID"].Visible = false;
+            dgvBookings.Columns["RoomID"].Visible = false;
+            dgvBookings.Columns["RoomTypeID"].Visible = false;
+            dgvBookings.Columns["AgentID"].Visible = false;
+
 
 
             cmbHotel.SelectedValue = currentHotelID;
@@ -219,8 +217,11 @@ namespace HotelApp.MenuForms
             int currentHotelID = (int)currentRow.Cells["HotelID"].Value;
             int currentRoomTypeID = (int)currentRow.Cells["RoomTypeID"].Value;
             int currentRoomID = (int)currentRow.Cells["RoomID"].Value;
+            int currentAgentID = (int)currentRow.Cells["AgentID"].Value;
+            string currentArrival = currentRow.Cells["Arrival"].Value.ToString();
+            string currentDeparture = currentRow.Cells["Departure"].Value.ToString();
 
-            CreateReservation currentReservation = new CreateReservation(this, currentGuestID, currentHotelID, currentRoomTypeID, currentRoomID);
+            CreateReservation currentReservation = new CreateReservation(currentGuestID, currentHotelID, currentRoomTypeID, currentRoomID, currentAgentID, currentArrival, currentDeparture);
             currentReservation.ShowDialog();
         }
     }
