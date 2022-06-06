@@ -147,7 +147,7 @@ namespace HotelApp.MenuForms
                 }
                 else if(button.Text.ToLower() == "delete")
                 {
-                    MessageBox.Show("Delete functionality not implemented yet");
+                    RemoveHotelRecord();
                     Setup();
                 }
                 else
@@ -162,7 +162,7 @@ namespace HotelApp.MenuForms
                 MessageBox.Show(ex.Message, ex.GetType().ToString());
             }
         }
-
+        
 
         private void btnSave_Click(object sender, EventArgs e)
         {
@@ -179,16 +179,13 @@ namespace HotelApp.MenuForms
 
                 if(btn.Text.ToLower() == "save")
                 {
-
+                    ModifyHotelRecord();
+                    
                 }
                 else if(btn.Text.ToLower() == "create")
                 {
                     // create hotel from the values entered in the form
                     CreateHotel();
-                    // reload dropdown values so they include newly created hotel, and reload first
-                    // hotel information
-                    Setup();
-
                 }
                 else
                 {
@@ -200,8 +197,6 @@ namespace HotelApp.MenuForms
                 MessageBox.Show(ex.Message, ex.GetType().ToString());
             }
         }
-
-        
 
         /// <summary>
         /// Ensures the Hotel Fields are not empty
@@ -235,6 +230,29 @@ namespace HotelApp.MenuForms
                     // reset error provider
                     errorProvider1.SetError(textBox, "");
                 }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().ToString());
+            }
+        }
+
+        private void btnModify_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // verify a hotel is selected, not the blank row
+                if(cboHotel.SelectedValue == DBNull.Value)
+                {
+                    // show message instructing user to select a hotel
+                    MessageBox.Show("Please select a hotel to modify");
+                    return;
+                }
+
+                // set buttons state to Modify state
+                SetButtonsState(ButtonState.Modify);
+
 
             }
             catch (Exception ex)
@@ -339,8 +357,7 @@ namespace HotelApp.MenuForms
                 case ButtonState.Modify:
                     // Only enable save and cancel
                     // set save button text to "Save"
-                    SetNavState(false);
-                    cboHotel.SelectedValue = DBNull.Value;
+                    SetNavState(false);                    
                     cboHotel.Enabled = false;
 
                     btnSave.Enabled = true;
@@ -428,7 +445,267 @@ namespace HotelApp.MenuForms
 
         #endregion
 
+        #region Deleting Information
+
+        /// <summary>
+        /// Removes the hotel record, if there are not existing bookings for the hotel
+        /// </summary>
+        private void RemoveHotelRecord()
+        {
+            // check if there are existing future bookings associated with this hotel
+            // sql query that will return a count of bookings with this hotelID
+            int? hotelId = cboHotel.SelectedValue as int?;
+
+            if (!hotelId.HasValue)
+            {
+                return;
+            }
+
+            string sqlBookingsForHotel =
+                $@"SELECT COUNT(*) FROM Booking WHERE RoomID IN 
+(
+SELECT RoomID FROM Room WHERE HotelID = {hotelId.Value}
+
+) AND DepartureDate > SYSDATETIME()".Replace(Environment.NewLine, " ");
+
+            // save the # of rooms for this hotel to a variable
+            int? bookingsForHotel = DataAccess.ExecuteScalar(sqlBookingsForHotel) as int?;
+
+            // check if we got a valid result from the database
+            if (!bookingsForHotel.HasValue)
+            {
+               throw new Exception("Query to find associated bookings for this hotel has failed");
+            }
+
+            // if there are any rooms, cannot delete the hotel
+            if(bookingsForHotel.Value > 0)
+            {
+                MessageBox.Show("Cannot delete hotel with standing future bookings. Please remove all future bookings and try again");
+                
+                return;
+            }
+            // remove any remaining bookings for this hotel
+            RemoveBookingsForCurrentHotel();
+
+            // remove all rooms for this hotel
+            RemoveRoomsForCurrentHotel();
+            // remove all amenities
+            RemoveAllHotelAmenities(currentHotelID);
+            // remove this hotel
+            // create sql string to delete current record
+            string sqlDeleteHotel =
+                $"DELETE FROM Hotel WHERE HotelID = {currentHotelID}";
+
+            // execute delete and save rows affected
+            int rowsAffectedByDelete = DataAccess.ExecuteNonQuery(sqlDeleteHotel);
+
+            if (rowsAffectedByDelete == 0)
+            {
+                throw new Exception("Unable to completely delete this hotel from the database");
+            }
+
+            // show message telling user record was deleted successfully
+            MessageBox.Show("Record for " + txtHotelName.Text.Trim() + " was successfully deleted!");
+
+            // run setup to reload combo box and show first record
+            Setup();
+        }        
+
+        /// <summary>
+        /// Removes any rooms associated with the current hotel ID
+        /// </summary>
+        private void RemoveRoomsForCurrentHotel()
+        {
+            // create sql string to delete any rooms associated with hotel
+            string sqlRemoveHotelRooms =
+                 $@"DELETE FROM Room WHERE HotelID = {currentHotelID}";
+
+            // execute query and save results to an int
+            int rowsAffected = DataAccess.ExecuteNonQuery(sqlRemoveHotelRooms);
+        }
+
+        /// <summary>
+        /// Removes all bookings for the current Hotel
+        /// </summary>        
+        private void RemoveBookingsForCurrentHotel()
+        {
+            // create sql query to delete all booking records for a given hotelID
+            string sqlRemoveBookings =
+                $@"DELETE FROM Booking WHERE RoomID IN
+(
+SELECT RoomID FROM Room WHERE HotelID = {currentHotelID}
+
+) ".Replace(Environment.NewLine, " ");
+
+            // execute query and save rows affected as an int
+            int rowsAffected = DataAccess.ExecuteNonQuery(sqlRemoveBookings);
+        }
+
+        #endregion
+
         #region Modifying And Saving Information
+
+        /// <summary>
+        /// Modify the hotel record in currentHotelID with the values currently in the 
+        /// form fields
+        /// </summary>
+        private void ModifyHotelRecord()
+        {
+            // validate form fields are valid
+            if (!ValidateChildren(ValidationConstraints.Enabled))
+            {
+                MessageBox.Show("One or more fields are missing information. Please complete all fields and try again");
+                return;
+            }
+
+            // save field information to variables
+            // save information to variables
+            int hotelId = Convert.ToInt32(cboHotel.SelectedValue);
+            string hotelName = txtHotelName.Text.Trim();
+            string civicNumber = txtCivicNumber.Text.Trim();
+            string streetName = txtStreetName.Text.Trim();
+            string city = txtCity.Text.Trim();
+            string province = txtProvince.Text.Trim();
+            string phoneNumber = txtPhone.Text.Trim();
+            string pathToImage = "";
+
+            bool hasPool = chkPool.Checked;
+            bool hasBreakfast = chkBreakfast.Checked;
+            bool hasParking = chkParking.Checked;
+
+            // display message and return if this modification matches an existing record, including this hotel's original record
+            if(HasDuplicateRecord(hotelName, civicNumber, streetName, city, province, phoneNumber))
+            {
+                MessageBox.Show("This modification matches one or existing hotels. Please make a modification or select 'Cancel'");
+                return;
+            }
+
+            // create sql statement to update this record
+            string sqlUpdateHotelRecord =
+                $@"UPDATE Hotel 
+SET HotelName = '{hotelName}', 
+CivicNumber = '{civicNumber}', 
+StreetName = '{streetName}', 
+City = '{city}', 
+Province = '{province}', 
+PhoneNumber = '{phoneNumber}', 
+PathToPicture = '{pathToImage}'
+WHERE HotelID = {hotelId} ;".Replace(Environment.NewLine, " ");
+
+            // execute update and catch the # of rows affected
+            int? rowsUpdated = DataAccess.ExecuteNonQuery(sqlUpdateHotelRecord);
+
+            // if no result returned or no rows updated, something went wrong with the update
+            if(!rowsUpdated.HasValue || rowsUpdated.Value != 1)
+            {
+                throw new Exception("Unable to update this record in the database");
+            }
+
+            // clear out all records for this hotel in amentityHotel, then re-add them based
+            // on current checkbox values
+
+            RemoveAllHotelAmenities(hotelId);
+
+            AddHotelAmenitiesToRecord(hotelId);
+
+            // DIsplay message telling user the record was successfully updated
+            MessageBox.Show("Record for " + hotelName + " was successfully updated");
+
+            // run setup method to reload records with new information
+            Setup();
+        }
+
+        /// <summary>
+        /// Adds a value to the AmtitiesHotel table based on the value of the three Checkboxes
+        /// </summary>
+        /// <param name="hotelId"></param>
+        /// <exception cref="Exception"></exception>
+        private void AddHotelAmenitiesToRecord(int hotelId)
+        {
+            // add hotel amenities to hotel amenities table
+            // add amenityID of each amenity for this hotel to a list of amenityIDs
+            List<int> amenitiesToAdd = new List<int>();
+
+            if (chkParking.Checked)
+            {
+                amenitiesToAdd.Add(1);
+            }
+
+            if (chkPool.Checked)
+            {
+                amenitiesToAdd.Add(2);
+            }
+
+            if (chkBreakfast.Checked)
+            {
+                amenitiesToAdd.Add(3);
+            }
+
+
+            if (amenitiesToAdd.Count > 0)
+            {
+                // add each amentityID in the amenitiesToAdd list into the AmentitiesHotel table
+                foreach (int amenityID in amenitiesToAdd)
+                {
+                    string sqlInsertAmentityStatement = $"INSERT INTO AmentitiesHotel (HotelID, AmentityID) VALUES ({hotelId}, {amenityID})";
+                    int amentityRowsAffected = DataAccess.ExecuteNonQuery(sqlInsertAmentityStatement);
+                    if (amentityRowsAffected == 0)
+                    {
+                        throw new Exception("Failed to insert amentity for this hotel");
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Removes all entries for the given HotelId from the AmentitiesHotel table
+        /// </summary>
+        /// <param name="hotelId"></param>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        private int RemoveAllHotelAmenities(int hotelId)
+        {
+            // create sql query that will delete all hotel amenities records for the given hotelId
+            string sqlDeleteHotelAmenities =
+                $"DELETE FROM AmentitiesHotel WHERE HotelID = {hotelId}";
+
+            int? rowsUpdated = DataAccess.ExecuteNonQuery(sqlDeleteHotelAmenities);
+
+            if (!rowsUpdated.HasValue)
+            {
+                throw new Exception("Unable to remove hotel amenities from database.");
+            }
+
+            return rowsUpdated.Value;
+        }
+
+
+        /// <summary>
+        /// Checks if there is a Hotel record matching these parameters
+        /// </summary>
+        /// <param name="hotelName"></param>
+        /// <param name="civicNumber"></param>
+        /// <param name="streetName"></param>
+        /// <param name="city"></param>
+        /// <param name="province"></param>
+        /// <param name="phone"></param>
+        /// <returns></returns>
+        private bool HasDuplicateRecord(string hotelName, string civicNumber, string streetName, string city, string province, string phone)
+        {
+            bool result = false;
+            // check to make sure a record with this information does not already exist
+            string sqlDuplicateHotelCheck =
+                $"SELECT COUNT(*) FROM Hotel WHERE HotelName = '{hotelName}' AND CivicNumber = '{civicNumber}' AND StreetName = '{streetName}' AND City = '{city}' AND Province = '{province}' AND PhoneNumber = '{phone}'";
+
+            int? duplicateHotels = DataAccess.ExecuteScalar(sqlDuplicateHotelCheck) as int?;
+
+            if(duplicateHotels.HasValue && duplicateHotels > 0)
+            {
+                result = true;
+            }
+
+            return result;
+        }
 
         /// <summary>
         /// Create a new hotel entry out of the information entered in the form fields
@@ -456,23 +733,13 @@ namespace HotelApp.MenuForms
             bool hasBreakfast = chkBreakfast.Checked;
             bool hasParking = chkParking.Checked;
 
-            // check to make sure a record with this information does not already exist
-            string sqlDuplicateHotelCheck =
-                $"SELECT COUNT(*) FROM Hotel WHERE HotelName = '{hotelName}' AND CivicNumber = '{civicNumber}' AND StreetName = '{streetName}' AND City = '{city}' AND Province = '{province}' AND PhoneNumber = '{phoneNumber}'";
+            // check to make sure a record with this information does not already exist          
 
-            int? duplicateHotels = DataAccess.ExecuteScalar(sqlDuplicateHotelCheck) as int?;
-
-            if (!duplicateHotels.HasValue)
+            if (HasDuplicateRecord(hotelName, civicNumber, streetName, city, province, phoneNumber))
             {
-                MessageBox.Show("Cannot check for duplicate records. Aborting new record attempt.");
+                MessageBox.Show("A hotel with these details already exists in the system.");                
                 return;
-            }
-
-            if(duplicateHotels.Value > 0)
-            {
-                MessageBox.Show("A hotel with these details already exists in the system.");
-                return;
-            }
+            }        
 
             // create sql string to insert basic hotel info (without amenities)
             string sqlCreateHotel =
@@ -538,13 +805,15 @@ VALUES
 
             // Show message indicating successful creation of a new hotel
             MessageBox.Show($"{hotelName} was successfully added to the database");
+
+            // reload dropdown values so they include newly created hotel, and reload first
+            // hotel information
+            Setup();
         }
 
         #endregion
 
         #region Loading Information
-
-
 
         /// <summary>
         /// Load hotels from database into the dropdown, fetch the first hotel, and display it
@@ -684,6 +953,7 @@ WHERE CurrentHotelID = {currentHotelID}
             // convert result to int and return
             return Convert.ToInt32(result);
         }
+
 
 
 
