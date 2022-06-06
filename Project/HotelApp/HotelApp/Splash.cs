@@ -42,5 +42,10 @@ namespace HotelApp
                 MessageBox.Show(ex.Message, ex.GetType().ToString());
             }
         }
+
+        private void Splash_Load(object sender, EventArgs e)
+        {
+            lblOne.Text = $@"Welcome to {Application.ProductName}!";
+        }
     }
 }

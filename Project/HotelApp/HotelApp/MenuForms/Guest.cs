@@ -27,7 +27,6 @@ namespace HotelApp.MenuForms
 
         private int? nextGuestID;
 
-        private int totalGuest; 
 
         public Guest()
         {
@@ -72,10 +71,6 @@ namespace HotelApp.MenuForms
                 chkVip.Checked = Convert.ToBoolean(selectedGuest["IsVip"]);
             //}
 
-         
-            //Which item we are on in the count
-
-            SetToolStrip($"Displaying guest {currentRecord} of {dtGuests.Rows.Count - 1}", true);
 
             SetFirstLastPrevNextValues();
 
@@ -128,7 +123,7 @@ namespace HotelApp.MenuForms
                 Convert.ToInt32(resultRow["NextGuestID"]) : (int?)null;
 
             // set button states based on these values
-            //HandlePrevNextFirstLastButtonStates();
+            HandlePrevNextFirstLastButtonStates();
         }
 
 
@@ -287,6 +282,36 @@ namespace HotelApp.MenuForms
             txtProvince.ReadOnly = state;
         }
 
+        /// <summary>
+        /// Sets the Enabled state of the Previous and Next buttons 
+        /// based on the value (or lack of value) in previousAgentID and nextAgentID
+        /// </summary>
+        private void HandlePrevNextFirstLastButtonStates()
+        {
+
+            // enable first and last buttons
+            btnFirst.Enabled = true;
+            btnLast.Enabled = true;
+
+            if (previousGuestID == null)
+            {
+                btnPrevious.Enabled = false;
+            }
+            else
+            {
+                btnPrevious.Enabled = true;
+            }
+
+            if (nextGuestID == null)
+            {
+                btnNext.Enabled = false;
+            }
+            else
+            {
+                btnNext.Enabled = true;
+            }
+        }
+
         #endregion
 
         private void btnShowDetails_Click(object sender, EventArgs e)
@@ -319,8 +344,9 @@ namespace HotelApp.MenuForms
         {
             try
             {
+
                 // set combo box to blank row
-                cboChooseGuest.SelectedValue = DBNull.Value;
+                //cboChooseGuest.SelectedValue = DBNull.Value;
 
                 // clear text fields
                 txtFirstName.Text = "";
@@ -340,10 +366,10 @@ namespace HotelApp.MenuForms
                 btnModify.Enabled = false;
 
                 // disable dropdown
-                cboChooseGuest.Visible = false;
+                //cboChooseGuest.Visible = false;
 
                 // set combo box to blank
-                cboChooseGuest.SelectedValue = DBNull.Value;
+                //cboChooseGuest.SelectedValue = DBNull.Value;
 
                 // enable txtFirstName and LastName
                 txtFirstName.Enabled = true;
@@ -369,15 +395,18 @@ namespace HotelApp.MenuForms
         {
             try
             {
+
                 // enable nav buttons
                 SetNavButtonsEnabledState(true);
+
+                SetTextBoxesReadOnly(false); 
 
                 // enable modify button
                 btnModify.Enabled = true;
 
-                // cancel out any left over text in txtUsername
-                txtFirstName.Text = "";
-                txtLastName.Text = "";
+                //// cancel out any left over text in txtUsername
+                //txtFirstName.Text = "";
+                //txtLastName.Text = "";
 
                 DisableAllErrorMessages(); 
                 Setup();
@@ -400,7 +429,7 @@ namespace HotelApp.MenuForms
                 btnCancel.Enabled = true;
 
                 // disable dropdown
-                cboChooseGuest.Enabled = false;
+                //cboChooseGuest.Enabled = false;
 
                 // disable new button
                 btnAdd.Enabled = false;
@@ -520,7 +549,6 @@ namespace HotelApp.MenuForms
             MessageBox.Show("Guest information for " + cboChooseGuest.SelectedValue.ToString() + " was successfully updated.");
 
             // run setup to put back to browse state
-            LoadGuests();
             Setup();
 
         }
@@ -530,6 +558,8 @@ namespace HotelApp.MenuForms
         {
             try
             {
+                cboChooseGuest.Visible = true; 
+
                 // determine if this is an insert or an update
                 if (cboChooseGuest.SelectedValue == DBNull.Value)
                 {
@@ -540,6 +570,7 @@ namespace HotelApp.MenuForms
                 {
                     // this is an update
                     UpdateGuestRecord();
+                    
                 }
             }
             catch (Exception ex)
@@ -581,5 +612,6 @@ namespace HotelApp.MenuForms
         }
 
         #endregion
+
     }
 }
