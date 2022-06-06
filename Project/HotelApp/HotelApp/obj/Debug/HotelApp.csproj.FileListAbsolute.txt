@@ -36,3 +36,4 @@ C:\Users\ramil\Documents\1.SPRING TERM\1.Database Programming\Team_work\Project\
 C:\Users\ramil\Documents\1.SPRING TERM\1.Database Programming\Team_work\Project\HotelApp\HotelApp\obj\Debug\HotelApp.csproj.CoreCompileInputs.cache
 C:\Users\ramil\Documents\1.SPRING TERM\1.Database Programming\Team_work\Project\HotelApp\HotelApp\obj\Debug\HotelApp.exe
 C:\Users\ramil\Documents\1.SPRING TERM\1.Database Programming\Team_work\Project\HotelApp\HotelApp\obj\Debug\HotelApp.pdb
+C:\src\Spring 2022\Database Programming\DataDrivenApplicationGroupOne\Project\HotelApp\HotelApp\obj\Debug\HotelApp.Rooms.resources

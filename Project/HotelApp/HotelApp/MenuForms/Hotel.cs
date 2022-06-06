@@ -461,6 +461,17 @@ namespace HotelApp.MenuForms
                 return;
             }
 
+            // prompt user to confirm they wish to delete the hotel record and
+            // any related past bookings
+            DialogResult result = MessageBox.Show("Are you sure you wish to delete this hotel and any associated past bookings?", "Are you sure?", MessageBoxButtons.OKCancel);
+
+            // if user chooses cancel, cancel operation and return to Setup state
+            if(result == DialogResult.Cancel)
+            {
+                Setup();
+                return;
+            }
+
             string sqlBookingsForHotel =
                 $@"SELECT COUNT(*) FROM Booking WHERE RoomID IN 
 (
@@ -468,7 +479,7 @@ SELECT RoomID FROM Room WHERE HotelID = {hotelId.Value}
 
 ) AND DepartureDate > SYSDATETIME()".Replace(Environment.NewLine, " ");
 
-            // save the # of rooms for this hotel to a variable
+            // save the # of bookings for this hotel to a variable
             int? bookingsForHotel = DataAccess.ExecuteScalar(sqlBookingsForHotel) as int?;
 
             // check if we got a valid result from the database
@@ -477,7 +488,7 @@ SELECT RoomID FROM Room WHERE HotelID = {hotelId.Value}
                throw new Exception("Query to find associated bookings for this hotel has failed");
             }
 
-            // if there are any rooms, cannot delete the hotel
+            // if there are any future bookings, cannot delete the hotel
             if(bookingsForHotel.Value > 0)
             {
                 MessageBox.Show("Cannot delete hotel with standing future bookings. Please remove all future bookings and try again");
