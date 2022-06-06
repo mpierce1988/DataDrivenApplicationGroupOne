@@ -16,11 +16,13 @@ namespace HotelApp.MenuForms
         int? nextHotelID;
         int? previousHotelID;
         int hotelCount;
-        int firstHotelID = Convert.ToInt32(DataAccess.ExecuteScalar("SELECT TOP 1 HotelID FROM Hotel ORDER BY HotelID ASC"));
-        int lastHotelID = Convert.ToInt32(DataAccess.ExecuteScalar("SELECT TOP 1 HotelID FROM Hotel ORDER BY HotelID DESC"));
-        public BookingManager()
+        public string currentAgent;
+        //int firstHotelID = Convert.ToInt32(DataAccess.ExecuteScalar("SELECT TOP 1 HotelID FROM Hotel ORDER BY HotelID ASC"));
+        //int lastHotelID = Convert.ToInt32(DataAccess.ExecuteScalar("SELECT TOP 1 HotelID FROM Hotel ORDER BY HotelID DESC"));
+        public BookingManager(MainForm form)
         {
             InitializeComponent();
+            currentAgent = form.currentAgent;
         }
 
         private void AvailableBookings_Load(object sender, EventArgs e)
@@ -185,6 +187,12 @@ namespace HotelApp.MenuForms
         private void dgvBookings_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void btnAdd_Click(object sender, EventArgs e)
+        {
+            CreateReservation createReservation = new CreateReservation(this);
+            createReservation.ShowDialog();
         }
     }
 }

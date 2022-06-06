@@ -12,6 +12,7 @@ namespace HotelApp
 {
     public partial class Login : Form
     {
+        public string userLoggedIn;
         public Login()
         {
             InitializeComponent();
@@ -55,6 +56,7 @@ namespace HotelApp
                 {
                     // return DialogResult OK to proceed to MainForm
                     DialogResult=DialogResult.OK;
+                    userLoggedIn = txtUserName.Text;
                 }
                 else
                 {
