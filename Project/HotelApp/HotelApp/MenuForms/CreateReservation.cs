@@ -23,6 +23,7 @@ namespace HotelApp.MenuForms
         int currentHotelID;
         int currentRoomTypeID;
         int currentRoomID;
+        int currentBookingID;
         string currentArrival;
         string currentDeparture;
         
@@ -87,7 +88,7 @@ namespace HotelApp.MenuForms
 
         private void LoadBooking()
         {
-            string sqlBooking = $"SELECT ArrivalDate, DepartureDate FROM Booking WHERE AgentID = {selectedAgentID} AND RoomID = {currentRoomID} AND GuestID = {currentGuestID};";
+            string sqlBooking = $"SELECT BookingID, ArrivalDate, DepartureDate FROM Booking WHERE AgentID = {selectedAgentID} AND RoomID = {currentRoomID} AND GuestID = {currentGuestID};";
 
             DataTable dtBooking = DataAccess.GetData(sqlBooking);
 
@@ -95,6 +96,8 @@ namespace HotelApp.MenuForms
 
             dteArrival.Text  = booking["ArrivalDate"].ToString();
             dteDeparture.Text = booking["DepartureDate"].ToString();
+            currentBookingID = (int)booking["BookingID"];
+
         }
 
         private void LoadAgent()
@@ -191,55 +194,50 @@ namespace HotelApp.MenuForms
 
         #endregion
 
-        private void AddBooking()
-        {
-            string sqlCreateBooking = $@"INSERT INTO Booking (AgentID, RoomID, GuestID, ArrivalDate, DepartureDate)
-                                        VALUES
-                                        ({selectedAgentID}, {cmbRoomNumber.SelectedValue}, {cmbGuests.SelectedValue}, '{Convert.ToDateTime(dteArrival.Text)}', '{Convert.ToDateTime(dteDeparture.Text)}'); ";
-
-           int rowsAffected = DataAccess.ExecuteNonQuery(sqlCreateBooking);
-
-            if (rowsAffected == 1)
-            {
-                MessageBox.Show("Booking has been created!", "Success");
-            }
-            else
-            {
-                MessageBox.Show("Booking Failed!", "Failure");
-            }
-        }
+        
 
         private void CreateReservation_Load(object sender, EventArgs e)
         {
-            if(currentGuestID != 0 && currentHotelID != 0 && currentRoomTypeID != 0 && currentRoomID != 0)
+            if(isExistingBooking())
             {
                 LoadHotels();
                 LoadGuests();
                 LoadAgent();
-                selectedGuestID = currentGuestID;
-                selectedHotelID = currentHotelID;
-                selectedRoomID = currentRoomID;
-                selectedRoomTypeID = currentRoomTypeID;
+                ResetCurrentValues();
 
-                cmbGuests.SelectedValue = currentGuestID;
-                cmbHotel.SelectedValue = currentHotelID;
+                EnableFieldEdit(false);
+                btnCreateBooking.Text = "Modify";
 
-
-                LoadGuestDetails();
-                LoadHotelDetails();
-                LoadRoomTypes();
-                LoadRooms();
-
-
-                cmbRoomTypes.SelectedValue = currentRoomTypeID;
-                cmbRoomNumber.SelectedValue = currentRoomID;
-                LoadBooking();
                 return;
             }
             LoadHotels();
             LoadGuests();
             LoadAgent();
+            txtGuestName.Visible = false;
         }
+
+        private void ResetCurrentValues()
+        {
+            selectedGuestID = currentGuestID;
+            selectedHotelID = currentHotelID;
+            selectedRoomID = currentRoomID;
+            selectedRoomTypeID = currentRoomTypeID;
+
+            cmbGuests.SelectedValue = currentGuestID;
+            cmbHotel.SelectedValue = currentHotelID;
+
+
+            LoadGuestDetails();
+            LoadHotelDetails();
+            LoadRoomTypes();
+            LoadRooms();
+
+
+            cmbRoomTypes.SelectedValue = currentRoomTypeID;
+            cmbRoomNumber.SelectedValue = currentRoomID;
+            LoadBooking();
+        }
+
 
         private void cmbHotel_SelectionChangeCommitted(object sender, EventArgs e)
         {
@@ -252,6 +250,8 @@ namespace HotelApp.MenuForms
 
                 LoadHotelDetails();
                 LoadRoomTypes();
+            cmbRoomNumber.SelectedIndex = 0;
+            cmbRoomTypes.SelectedIndex = 0;
         }
 
         private void cmbRoomTypes_SelectionChangeCommitted(object sender, EventArgs e)
@@ -267,6 +267,8 @@ namespace HotelApp.MenuForms
             selectedRoomTypeID = (int)cmbRoomTypes.SelectedValue;
 
             LoadRooms();
+
+            cmbRoomNumber.SelectedIndex = 0;
         }
 
         private void cmbGuests_SelectionChangeCommitted(object sender, EventArgs e)
@@ -285,12 +287,129 @@ namespace HotelApp.MenuForms
 
         private void cmbRoomNumber_SelectionChangeCommitted(object sender, EventArgs e)
         {
+            if(cmbRoomNumber.SelectedValue == DBNull.Value)
+            {
+                return;
+            }
             selectedRoomID = (int)cmbRoomNumber.SelectedValue;
         }
 
         private void btnCreateBooking_Click(object sender, EventArgs e)
         {
+            ValidateModifyOrCreate();
+            if(btnCreateBooking.Text == "Modify")
+            {
+                EnableFieldEdit(true);
+                btnCreateBooking.Text = "Save";
+                btnDelete.Text = "Cancel";
+                return;
+            }
+            else if(btnCreateBooking.Text == "Save")
+            {
+                UpdateBooking();
+            }
             AddBooking();
         }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            if(btnDelete.Text == "Cancel")
+            {
+                if (isExistingBooking())
+                {
+                    ResetCurrentValues();
+                    EnableFieldEdit(false);
+                    btnCreateBooking.Text = "Modify";
+                    return;
+                }
+            }
+        }
+
+        private void AddBooking()
+        {
+            string sqlCreateBooking = $@"INSERT INTO Booking (AgentID, RoomID, GuestID, ArrivalDate, DepartureDate)
+                                        VALUES
+                                        ({selectedAgentID}, {cmbRoomNumber.SelectedValue}, {cmbGuests.SelectedValue}, '{Convert.ToDateTime(dteArrival.Text)}', '{Convert.ToDateTime(dteDeparture.Text)}'); ";
+
+            int rowsAffected = DataAccess.ExecuteNonQuery(sqlCreateBooking);
+
+            if (rowsAffected == 1)
+            {
+                MessageBox.Show("Booking has been created!", "Success");
+            }
+            else
+            {
+                MessageBox.Show("Booking Failed!", "Failure");
+            }
+        }
+
+        private void UpdateBooking()
+        {
+            string sqlModify = $@"UPDATE Booking 
+                                    SET 
+                                    RoomID = {cmbRoomNumber.SelectedValue}, 
+                                    ArrivalDate = '{dteArrival.Text}', 
+                                    DepartureDate = '{dteDeparture.Text}'
+                                    WHERE BookingID = {currentBookingID};";
+
+            int rowsAffected = DataAccess.ExecuteNonQuery(sqlModify);
+
+            if (rowsAffected == 0)
+            {
+                MessageBox.Show("Booking has been updated", "Success");
+            }
+            else
+            {
+                MessageBox.Show("Failed to update booking", "Failure");
+            }
+        }
+
+        private void ValidateModifyOrCreate()
+        {
+            if(cmbHotel.SelectedValue == DBNull.Value || cmbRoomNumber.SelectedValue == DBNull.Value || cmbRoomTypes.SelectedValue == DBNull.Value)
+            {
+                MessageBox.Show("You must make a selection for all fields", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            
+        }
+
+        private void EnableFieldEdit(bool state)
+        {
+            if (state == false)
+            {
+                cmbGuests.Visible = state;
+                cmbHotel.Visible = state;
+                cmbRoomNumber.Visible = state;
+                cmbRoomTypes.Visible = state;
+                txtGuestName.Text = cmbGuests.Text;
+                txtHotel.Text = cmbHotel.Text;
+                txtRoomNumber.Text = cmbRoomNumber.Text;
+                txtRoomType.Text = cmbRoomTypes.Text;
+                txtGuestName.Visible = true;
+                txtHotel.Visible = true;
+                txtRoomNumber.Visible = true;
+                txtRoomType.Visible = true;
+            }
+            else
+            {
+                cmbGuests.Visible = state;
+                cmbHotel.Visible = state;
+                cmbRoomNumber.Visible = state;
+                cmbRoomTypes.Visible = state;
+                txtGuestName.Visible = false;
+                txtHotel.Visible = false;
+                txtRoomNumber.Visible = false;
+                txtRoomType.Visible = false;
+            }
+
+        }
+
+        private bool isExistingBooking()
+        {
+            return (currentGuestID != 0 && currentHotelID != 0 && currentRoomTypeID != 0 && currentRoomID != 0);
+        }
+
+       
     }
 }

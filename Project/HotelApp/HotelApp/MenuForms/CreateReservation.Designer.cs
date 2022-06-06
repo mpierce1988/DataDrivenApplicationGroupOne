@@ -33,16 +33,18 @@
             this.dteArrival = new System.Windows.Forms.DateTimePicker();
             this.dteDeparture = new System.Windows.Forms.DateTimePicker();
             this.label6 = new System.Windows.Forms.Label();
-            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
             this.btnCreateBooking = new System.Windows.Forms.Button();
             this.txtGuestEmail = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.cmbGuests = new System.Windows.Forms.ComboBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.grpGuestDetails = new System.Windows.Forms.GroupBox();
+            this.txtGuestName = new System.Windows.Forms.TextBox();
             this.txtPhoneGuest = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.grpHotelDetails = new System.Windows.Forms.GroupBox();
+            this.txtHotel = new System.Windows.Forms.TextBox();
             this.txtAmentities = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.txtPhoneHotel = new System.Windows.Forms.TextBox();
@@ -51,12 +53,14 @@
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.txtLocation = new System.Windows.Forms.TextBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.grpRoomDetails = new System.Windows.Forms.GroupBox();
+            this.txtRoomNumber = new System.Windows.Forms.TextBox();
+            this.txtRoomType = new System.Windows.Forms.TextBox();
             this.cmbRoomNumber = new System.Windows.Forms.ComboBox();
             this.cmbRoomTypes = new System.Windows.Forms.ComboBox();
             this.label10 = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.grpAgent = new System.Windows.Forms.GroupBox();
             this.txtCompany = new System.Windows.Forms.TextBox();
             this.label16 = new System.Windows.Forms.Label();
             this.txtAgentName = new System.Windows.Forms.TextBox();
@@ -65,10 +69,10 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.txtAgentEmail = new System.Windows.Forms.TextBox();
-            this.groupBox1.SuspendLayout();
-            this.groupBox2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            this.groupBox4.SuspendLayout();
+            this.grpGuestDetails.SuspendLayout();
+            this.grpHotelDetails.SuspendLayout();
+            this.grpRoomDetails.SuspendLayout();
+            this.grpAgent.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -118,15 +122,16 @@
             this.label6.TabIndex = 12;
             this.label6.Text = "Departure Date*:";
             // 
-            // btnCancel
+            // btnDelete
             // 
-            this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCancel.Location = new System.Drawing.Point(322, 950);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(198, 74);
-            this.btnCancel.TabIndex = 41;
-            this.btnCancel.Text = "Cancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDelete.Location = new System.Drawing.Point(322, 950);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(198, 74);
+            this.btnDelete.TabIndex = 41;
+            this.btnDelete.Text = "Delete";
+            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // btnCreateBooking
             // 
@@ -178,21 +183,31 @@
             this.cmbGuests.TabIndex = 20;
             this.cmbGuests.SelectionChangeCommitted += new System.EventHandler(this.cmbGuests_SelectionChangeCommitted);
             // 
-            // groupBox1
+            // grpGuestDetails
             // 
-            this.groupBox1.Controls.Add(this.txtPhoneGuest);
-            this.groupBox1.Controls.Add(this.label9);
-            this.groupBox1.Controls.Add(this.cmbGuests);
-            this.groupBox1.Controls.Add(this.label3);
-            this.groupBox1.Controls.Add(this.label4);
-            this.groupBox1.Controls.Add(this.txtGuestEmail);
-            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox1.Location = new System.Drawing.Point(109, 75);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(420, 266);
-            this.groupBox1.TabIndex = 43;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Guest Details";
+            this.grpGuestDetails.Controls.Add(this.txtGuestName);
+            this.grpGuestDetails.Controls.Add(this.txtPhoneGuest);
+            this.grpGuestDetails.Controls.Add(this.label9);
+            this.grpGuestDetails.Controls.Add(this.cmbGuests);
+            this.grpGuestDetails.Controls.Add(this.label3);
+            this.grpGuestDetails.Controls.Add(this.label4);
+            this.grpGuestDetails.Controls.Add(this.txtGuestEmail);
+            this.grpGuestDetails.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpGuestDetails.Location = new System.Drawing.Point(109, 75);
+            this.grpGuestDetails.Name = "grpGuestDetails";
+            this.grpGuestDetails.Size = new System.Drawing.Size(420, 266);
+            this.grpGuestDetails.TabIndex = 43;
+            this.grpGuestDetails.TabStop = false;
+            this.grpGuestDetails.Text = "Guest Details";
+            // 
+            // txtGuestName
+            // 
+            this.txtGuestName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtGuestName.Location = new System.Drawing.Point(5, 64);
+            this.txtGuestName.Name = "txtGuestName";
+            this.txtGuestName.ReadOnly = true;
+            this.txtGuestName.Size = new System.Drawing.Size(368, 26);
+            this.txtGuestName.TabIndex = 46;
             // 
             // txtPhoneGuest
             // 
@@ -213,23 +228,33 @@
             this.label9.TabIndex = 44;
             this.label9.Text = "Phone:";
             // 
-            // groupBox2
+            // grpHotelDetails
             // 
-            this.groupBox2.Controls.Add(this.txtAmentities);
-            this.groupBox2.Controls.Add(this.label8);
-            this.groupBox2.Controls.Add(this.txtPhoneHotel);
-            this.groupBox2.Controls.Add(this.label12);
-            this.groupBox2.Controls.Add(this.cmbHotel);
-            this.groupBox2.Controls.Add(this.label13);
-            this.groupBox2.Controls.Add(this.label14);
-            this.groupBox2.Controls.Add(this.txtLocation);
-            this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox2.Location = new System.Drawing.Point(569, 75);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(420, 430);
-            this.groupBox2.TabIndex = 46;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Hotel Details";
+            this.grpHotelDetails.Controls.Add(this.txtHotel);
+            this.grpHotelDetails.Controls.Add(this.txtAmentities);
+            this.grpHotelDetails.Controls.Add(this.label8);
+            this.grpHotelDetails.Controls.Add(this.txtPhoneHotel);
+            this.grpHotelDetails.Controls.Add(this.label12);
+            this.grpHotelDetails.Controls.Add(this.cmbHotel);
+            this.grpHotelDetails.Controls.Add(this.label13);
+            this.grpHotelDetails.Controls.Add(this.label14);
+            this.grpHotelDetails.Controls.Add(this.txtLocation);
+            this.grpHotelDetails.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpHotelDetails.Location = new System.Drawing.Point(569, 75);
+            this.grpHotelDetails.Name = "grpHotelDetails";
+            this.grpHotelDetails.Size = new System.Drawing.Size(420, 430);
+            this.grpHotelDetails.TabIndex = 46;
+            this.grpHotelDetails.TabStop = false;
+            this.grpHotelDetails.Text = "Hotel Details";
+            // 
+            // txtHotel
+            // 
+            this.txtHotel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtHotel.Location = new System.Drawing.Point(9, 64);
+            this.txtHotel.Name = "txtHotel";
+            this.txtHotel.ReadOnly = true;
+            this.txtHotel.Size = new System.Drawing.Size(368, 26);
+            this.txtHotel.TabIndex = 47;
             // 
             // txtAmentities
             // 
@@ -309,26 +334,47 @@
             this.txtLocation.Size = new System.Drawing.Size(368, 26);
             this.txtLocation.TabIndex = 5;
             // 
-            // groupBox3
+            // grpRoomDetails
             // 
-            this.groupBox3.Controls.Add(this.cmbRoomNumber);
-            this.groupBox3.Controls.Add(this.cmbRoomTypes);
-            this.groupBox3.Controls.Add(this.label10);
-            this.groupBox3.Controls.Add(this.label11);
-            this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox3.Location = new System.Drawing.Point(109, 364);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(420, 214);
-            this.groupBox3.TabIndex = 46;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Room Details";
+            this.grpRoomDetails.Controls.Add(this.txtRoomNumber);
+            this.grpRoomDetails.Controls.Add(this.txtRoomType);
+            this.grpRoomDetails.Controls.Add(this.cmbRoomNumber);
+            this.grpRoomDetails.Controls.Add(this.cmbRoomTypes);
+            this.grpRoomDetails.Controls.Add(this.label10);
+            this.grpRoomDetails.Controls.Add(this.label11);
+            this.grpRoomDetails.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpRoomDetails.Location = new System.Drawing.Point(109, 364);
+            this.grpRoomDetails.Name = "grpRoomDetails";
+            this.grpRoomDetails.Size = new System.Drawing.Size(420, 214);
+            this.grpRoomDetails.TabIndex = 46;
+            this.grpRoomDetails.TabStop = false;
+            this.grpRoomDetails.Text = "Room Details";
+            // 
+            // txtRoomNumber
+            // 
+            this.txtRoomNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtRoomNumber.Location = new System.Drawing.Point(5, 145);
+            this.txtRoomNumber.Name = "txtRoomNumber";
+            this.txtRoomNumber.ReadOnly = true;
+            this.txtRoomNumber.Size = new System.Drawing.Size(368, 26);
+            this.txtRoomNumber.TabIndex = 51;
+            // 
+            // txtRoomType
+            // 
+            this.txtRoomType.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtRoomType.Location = new System.Drawing.Point(7, 64);
+            this.txtRoomType.Name = "txtRoomType";
+            this.txtRoomType.ReadOnly = true;
+            this.txtRoomType.Size = new System.Drawing.Size(368, 26);
+            this.txtRoomType.TabIndex = 50;
             // 
             // cmbRoomNumber
             // 
+            this.cmbRoomNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbRoomNumber.FormattingEnabled = true;
             this.cmbRoomNumber.Location = new System.Drawing.Point(7, 144);
             this.cmbRoomNumber.Name = "cmbRoomNumber";
-            this.cmbRoomNumber.Size = new System.Drawing.Size(362, 33);
+            this.cmbRoomNumber.Size = new System.Drawing.Size(362, 28);
             this.cmbRoomNumber.TabIndex = 46;
             this.cmbRoomNumber.SelectionChangeCommitted += new System.EventHandler(this.cmbRoomNumber_SelectionChangeCommitted);
             // 
@@ -362,23 +408,23 @@
             this.label11.TabIndex = 4;
             this.label11.Text = "Rooms Number*:";
             // 
-            // groupBox4
+            // grpAgent
             // 
-            this.groupBox4.Controls.Add(this.txtCompany);
-            this.groupBox4.Controls.Add(this.label16);
-            this.groupBox4.Controls.Add(this.txtAgentName);
-            this.groupBox4.Controls.Add(this.txtAgentPhone);
-            this.groupBox4.Controls.Add(this.label2);
-            this.groupBox4.Controls.Add(this.label5);
-            this.groupBox4.Controls.Add(this.label15);
-            this.groupBox4.Controls.Add(this.txtAgentEmail);
-            this.groupBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox4.Location = new System.Drawing.Point(109, 584);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(880, 208);
-            this.groupBox4.TabIndex = 46;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Current Agent";
+            this.grpAgent.Controls.Add(this.txtCompany);
+            this.grpAgent.Controls.Add(this.label16);
+            this.grpAgent.Controls.Add(this.txtAgentName);
+            this.grpAgent.Controls.Add(this.txtAgentPhone);
+            this.grpAgent.Controls.Add(this.label2);
+            this.grpAgent.Controls.Add(this.label5);
+            this.grpAgent.Controls.Add(this.label15);
+            this.grpAgent.Controls.Add(this.txtAgentEmail);
+            this.grpAgent.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpAgent.Location = new System.Drawing.Point(109, 584);
+            this.grpAgent.Name = "grpAgent";
+            this.grpAgent.Size = new System.Drawing.Size(880, 208);
+            this.grpAgent.TabIndex = 46;
+            this.grpAgent.TabStop = false;
+            this.grpAgent.Text = "Agent";
             // 
             // txtCompany
             // 
@@ -461,11 +507,11 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1099, 1064);
-            this.Controls.Add(this.groupBox4);
-            this.Controls.Add(this.groupBox3);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.btnCancel);
+            this.Controls.Add(this.grpAgent);
+            this.Controls.Add(this.grpRoomDetails);
+            this.Controls.Add(this.grpHotelDetails);
+            this.Controls.Add(this.grpGuestDetails);
+            this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnCreateBooking);
             this.Controls.Add(this.dteDeparture);
             this.Controls.Add(this.label6);
@@ -476,14 +522,14 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Hotel";
             this.Load += new System.EventHandler(this.CreateReservation_Load);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
+            this.grpGuestDetails.ResumeLayout(false);
+            this.grpGuestDetails.PerformLayout();
+            this.grpHotelDetails.ResumeLayout(false);
+            this.grpHotelDetails.PerformLayout();
+            this.grpRoomDetails.ResumeLayout(false);
+            this.grpRoomDetails.PerformLayout();
+            this.grpAgent.ResumeLayout(false);
+            this.grpAgent.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -496,16 +542,16 @@
         private System.Windows.Forms.DateTimePicker dteArrival;
         private System.Windows.Forms.DateTimePicker dteDeparture;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Button btnDelete;
         private System.Windows.Forms.Button btnCreateBooking;
         private System.Windows.Forms.TextBox txtGuestEmail;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox cmbGuests;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox grpGuestDetails;
         private System.Windows.Forms.TextBox txtPhoneGuest;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.GroupBox grpHotelDetails;
         private System.Windows.Forms.TextBox txtAmentities;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.TextBox txtPhoneHotel;
@@ -514,12 +560,12 @@
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.TextBox txtLocation;
-        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.GroupBox grpRoomDetails;
         private System.Windows.Forms.ComboBox cmbRoomTypes;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.ComboBox cmbRoomNumber;
-        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.GroupBox grpAgent;
         private System.Windows.Forms.TextBox txtAgentPhone;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label5;
@@ -528,5 +574,9 @@
         private System.Windows.Forms.TextBox txtCompany;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.TextBox txtAgentName;
+        private System.Windows.Forms.TextBox txtGuestName;
+        private System.Windows.Forms.TextBox txtHotel;
+        private System.Windows.Forms.TextBox txtRoomNumber;
+        private System.Windows.Forms.TextBox txtRoomType;
     }
 }
