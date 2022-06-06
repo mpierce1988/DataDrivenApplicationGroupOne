@@ -14,6 +14,7 @@ namespace HotelApp
     public partial class MainForm : Form
     {
         private int childFormNumber = 0;
+        public string currentAgent;
 
         public MainForm()
         {
@@ -53,6 +54,8 @@ namespace HotelApp
 
                 // open home page, by default
                 SwitchToForm(new Home(this));
+
+                currentAgent = frmLogin.userLoggedIn;
 
             }
             catch (Exception ex)
@@ -104,10 +107,10 @@ namespace HotelApp
                     requestedForm = new Guest();
                     break;
                 case "AVAILBOOKING":
-                    requestedForm = new BookingManager();
+                    requestedForm = new BookingManager(this);
                     break;
                 case "CANCELBOOKING":
-                    requestedForm = new BookingManager();
+                    requestedForm = new BookingManager(this);
                     break;
                 case "HOME":
                     requestedForm = new Home(this);
