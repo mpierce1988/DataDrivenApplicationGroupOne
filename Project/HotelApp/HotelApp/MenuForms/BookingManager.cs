@@ -13,6 +13,9 @@ namespace HotelApp.MenuForms
     public partial class BookingManager : Form
     {
         int currentHotelID = -1;
+        //public int currentGuestID;
+        //public int currentRoomID;
+        //public int currentRoomTypeID;
         int? nextHotelID;
         int? previousHotelID;
         int hotelCount;
@@ -44,28 +47,38 @@ namespace HotelApp.MenuForms
         private void LoadBookingDetails()
         {
             string sqlBookingDetails = $@"SELECT 
-                        HotelName AS [Hotel Name], 
-                        (Hotel.City + ', ' + Hotel.Province) AS [Location],
-                        Hotel.PhoneNumber AS [Hotel Phone],
-                        ArrivalDate AS Arrival,
-                        DepartureDate AS Departure,
-                        (Guest.FirstName + ', ' + Guest.LastName) AS [Booked by],
-                        Guest.PhoneNumber AS [Guest Phone],
-                        Guest.Email AS [Guest Email],
-                        (Agent.FirstName + ', ' + Agent.LastName) AS [Booking Agent],
-                        Agent.Phone AS [Agent Phone],
-                        Agent.Email AS [Agent Email]
-                        FROM Hotel 
-                        INNER JOIN Room ON Hotel.HotelID = Room.HotelID 
-                        INNER JOIN Booking ON Room.RoomID = Booking.RoomID 
-                        INNER JOIN Agent ON Agent.AgentID = Booking.AgentID 
-                        INNER JOIN Guest ON Guest.GuestID = Booking.GuestID
-                        WHERE Hotel.HotelID = {currentHotelID}
-                        ORDER BY ArrivalDate , DepartureDate DESC;";
+                                Guest.GuestID,
+                                Hotel.HotelID,
+                                Room.RoomID,
+                                Room.RoomTypeID,
+                                HotelName AS [Hotel Name], 
+                                (Hotel.City + ', ' + Hotel.Province) AS [Location],
+                                Hotel.PhoneNumber AS [Hotel Phone],
+                                ArrivalDate AS Arrival,
+                                DepartureDate AS Departure,
+                                (Guest.FirstName + ', ' + Guest.LastName) AS [Booked by],
+                                Guest.PhoneNumber AS [Guest Phone],
+                                Guest.Email AS [Guest Email],
+                                (Agent.FirstName + ', ' + Agent.LastName) AS [Booking Agent],
+                                Agent.Phone AS [Agent Phone],
+                                Agent.Email AS [Agent Email]
+                                FROM Hotel 
+                                INNER JOIN Room ON Hotel.HotelID = Room.HotelID 
+                                INNER JOIN Booking ON Room.RoomID = Booking.RoomID 
+                                INNER JOIN Agent ON Agent.AgentID = Booking.AgentID 
+                                INNER JOIN Guest ON Guest.GuestID = Booking.GuestID
+                                WHERE Hotel.HotelID = {currentHotelID}
+                                ORDER BY ArrivalDate , DepartureDate DESC;";
 
             DataTable dtBookingDetails = DataAccess.GetData(sqlBookingDetails);
 
             dgvBookings.DataSource = dtBookingDetails;
+
+            //dgvBookings.Columns["GuestID"].Visible = false;
+            //dgvBookings.Columns["HotelID"].Visible = false;
+            //dgvBookings.Columns["RoomID"].Visible = false;
+            //dgvBookings.Columns["RoomTypeID"].Visible = false;
+
 
             cmbHotel.SelectedValue = currentHotelID;
         }
@@ -193,6 +206,22 @@ namespace HotelApp.MenuForms
         {
             CreateReservation createReservation = new CreateReservation(this);
             createReservation.ShowDialog();
+        }
+
+        private void btnModify_Click(object sender, EventArgs e)
+        {
+            if (dgvBookings.CurrentRow == null)
+                return;
+
+            DataGridViewRow currentRow = dgvBookings.CurrentRow;
+
+            int currentGuestID = (int)currentRow.Cells["GuestID"].Value;
+            int currentHotelID = (int)currentRow.Cells["HotelID"].Value;
+            int currentRoomTypeID = (int)currentRow.Cells["RoomTypeID"].Value;
+            int currentRoomID = (int)currentRow.Cells["RoomID"].Value;
+
+            CreateReservation currentReservation = new CreateReservation(this, currentGuestID, currentHotelID, currentRoomTypeID, currentRoomID);
+            currentReservation.ShowDialog();
         }
     }
 }

@@ -18,6 +18,10 @@ namespace HotelApp.MenuForms
         int selectedRoomTypeID;
         int selectedRoomID;
         string currentAgentUserName;
+        int currentGuestID;
+        int currentHotelID;
+        int currentRoomTypeID;
+        int currentRoomID;
         
         public CreateReservation(BookingManager form)
         {
@@ -25,11 +29,18 @@ namespace HotelApp.MenuForms
             currentAgentUserName = form.currentAgent;
         }
 
-        //public CreateReservation(BookingManager bookingManager, int currentHotelID)
-        //{
-        //    InitializeComponent();
-        //}
+        public CreateReservation(BookingManager form, int guestID, int hotelID, int roomTypeID, int roomID)
+        {
+            InitializeComponent();
+            currentAgentUserName = form.currentAgent;
+            currentGuestID = guestID;
+            currentHotelID = hotelID;
+            currentRoomTypeID = roomTypeID;
+            currentRoomID = roomID;
 
+        }
+
+        #region LoadData
         private void LoadHotels()
         {
             string sqlHotels = "SELECT HotelID, HotelName FROM Hotel ORDER BY HotelName ASC;";
@@ -129,9 +140,14 @@ namespace HotelApp.MenuForms
             txtGuestEmail.Text = Values["Email"].ToString();
             txtPhoneGuest.Text = Values["PhoneNumber"].ToString();
         }
-
+        #endregion
         private void CreateReservation_Load(object sender, EventArgs e)
         {
+            if(currentGuestID != 0 && currentHotelID != 0 && currentRoomTypeID != 0 && currentRoomID != 0)
+            {
+                MessageBox.Show($"{currentGuestID} + {currentHotelID} + {currentRoomTypeID} + {currentRoomID}");
+                return;
+            }
             LoadHotels();
             LoadGuests();
             LoadAgent();
