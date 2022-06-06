@@ -13,10 +13,16 @@ namespace HotelApp
 {
     public partial class Rooms : Form
     {
-        
+        int? hotelID;
         public Rooms()
         {
             InitializeComponent();
+        }
+
+        public Rooms(int incomingHotelID)
+        {
+            InitializeComponent();
+            hotelID = incomingHotelID;
         }
 
         #region Event Handlers
@@ -25,6 +31,13 @@ namespace HotelApp
             try
             {
                 LoadHotelDropdown();
+
+                // if local hotelID is set, set to that hotel
+                if (hotelID.HasValue)
+                {
+                    cboHotel.SelectedValue = hotelID.Value;
+                    LoadRoomInformationIntoDGV((int)cboHotel.SelectedValue);
+                }
             }
             catch (Exception ex)
             {
@@ -69,6 +82,21 @@ WHERE HotelID = {hotelID}".Replace(Environment.NewLine, " ");
 
             // assign result to dgv
             dgvRooms.DataSource = roomsResult;
+
+            // create new column for Room Type drop down box
+            DataGridViewColumn comboBoxColumn = new DataGridViewComboBoxColumn();
+            comboBoxColumn.Name = "RoomTypeColumn";
+            comboBoxColumn.Width = 100;
+            comboBoxColumn.HeaderText = "Room Type";
+            // add to dgv
+            dgvRooms.Columns.Add(comboBoxColumn);
+
+            // loop through rows in dgv and add room type combo box
+
+            foreach (DataGridViewRow item in collection)
+            {
+
+            }
         }
 
         /// <summary>
