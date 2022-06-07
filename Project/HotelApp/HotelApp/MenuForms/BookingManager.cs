@@ -168,12 +168,13 @@ namespace HotelApp.MenuForms
             try
             {
                 //If the currentHotelID is not equal to null convert into a an int otherwise set the value to 0.
-                currentHotelID = cmbHotel.SelectedValue != null
+                currentHotelID = cmbHotel.SelectedValue != DBNull.Value
                     ? Convert.ToInt32(cmbHotel.SelectedValue)
                     : 0;
 
                 if (currentHotelID == 0)
                 {
+                    dgvBookings.DataSource = null;
                     return;
                 }
                 else
