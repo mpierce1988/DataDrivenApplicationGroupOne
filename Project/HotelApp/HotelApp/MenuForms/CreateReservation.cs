@@ -108,7 +108,7 @@ namespace HotelApp.MenuForms
         /// </summary>
         private void LoadBooking()
         {
-            string sqlBooking = $"SELECT BookingID, ArrivalDate, DepartureDate FROM Booking WHERE AgentID = {selectedAgentID} AND RoomID = {currentRoomID} AND GuestID = {currentGuestID};";
+            string sqlBooking = $"SELECT BookingID, ArrivalDate, DepartureDate FROM Booking WHERE AgentID = {selectedAgentID} AND RoomID = {selectedRoomID} AND GuestID = {selectedGuestID};";
 
             DataTable dtBooking = DataAccess.GetData(sqlBooking);
 
