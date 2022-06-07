@@ -35,6 +35,9 @@ namespace HotelApp.MenuForms
             {
                 Setup();
 
+                // set status display to show current user
+                UIUtilities.DisplayInStatusStrip(0, $" User {AuthenticationHelper.UserName} logged in.");
+
             }
             catch (Exception ex)
             {
@@ -481,6 +484,9 @@ WHERE CurrentAgentID = {currentAgentID};
             nextAgentID = resultRow["NextAgentID"] != DBNull.Value ?
                 Convert.ToInt32(resultRow["NextAgentID"]) : (int?)null;
 
+            // display current position in status display 2
+            UIUtilities.DisplayInStatusStrip(1, $"Agent record {currentPosition} of {totalAgents}");
+
             // set button states based on these values
             HandlePrevNextFirstLastButtonStates();
         }
@@ -633,12 +639,23 @@ VALUES
                     throw new ArgumentException("A non-textbox has called the NotEmptyValidation method");
                 }
 
+                // error message to display. Empty string will disable error provider
                 string errorMsg = "";
 
+                // display error and cancel validation if field is empty
                 if (textBox.Text.Trim() == "")
                 {
                     errorMsg = "This field is required";
                     e.Cancel = true;
+
+                    // display error in display 3
+                    UIUtilities.DisplayInStatusStrip(2, "Required field is empty.", Color.Red);
+
+                }
+                else
+                {
+                    // reset error in display 3
+                    UIUtilities.DisplayInStatusStrip(2, "", Color.Black);
                 }
 
                 errorProvider1.SetError(textBox, errorMsg);
@@ -678,8 +695,15 @@ VALUES
                     errorProvider1.SetError(txtUsername, "This username is already taken.");
                     // flag validation as failed
                     e.Cancel = true;
+                    // display error in display 3
+                    UIUtilities.DisplayInStatusStrip(2, "This username is already taken", Color.Red);
 
                     return;
+                }
+                else
+                {
+                    // reset error in display 3
+                    UIUtilities.DisplayInStatusStrip(2, "", Color.Black);
                 }
 
                 // by this point, there should be no errors for username. reset error provider
@@ -703,12 +727,25 @@ VALUES
                     msg = "Please enter a password in both boxes";
                     e.Cancel = true;
 
+                    // display error in display 3
+                    UIUtilities.DisplayInStatusStrip(2, "Please enter a password in both boxes.", Color.Red);
+
                 }
                 // if the text boxes do not match, throw an error on both text boxes
                 else if (txtPassword1.Text.Trim() != txtPassword2.Text.Trim())
                 {
                     msg = "The passwords entered in both boxes must match";
                     e.Cancel = true;
+
+                    // display error in display 3
+                    UIUtilities.DisplayInStatusStrip(2, "The passwords entered in both boxes must match.", Color.Red);
+
+                }
+                else
+                {
+                    // reset error in display 3
+                    UIUtilities.DisplayInStatusStrip(2, "", Color.Black);
+
                 }
 
                 // set error providers

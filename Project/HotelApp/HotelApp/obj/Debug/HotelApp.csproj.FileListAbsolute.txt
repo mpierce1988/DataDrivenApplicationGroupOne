@@ -3,14 +3,22 @@ C:\src\Spring 2022\Database Programming\DataDrivenApplicationGroupOne\Project\Ho
 C:\src\Spring 2022\Database Programming\DataDrivenApplicationGroupOne\Project\HotelApp\HotelApp\bin\Debug\HotelApp.pdb
 C:\src\Spring 2022\Database Programming\DataDrivenApplicationGroupOne\Project\HotelApp\HotelApp\obj\Debug\HotelApp.csproj.AssemblyReference.cache
 C:\src\Spring 2022\Database Programming\DataDrivenApplicationGroupOne\Project\HotelApp\HotelApp\obj\Debug\HotelApp.csproj.SuggestedBindingRedirects.cache
+C:\src\Spring 2022\Database Programming\DataDrivenApplicationGroupOne\Project\HotelApp\HotelApp\obj\Debug\HotelApp.Home.resources
 C:\src\Spring 2022\Database Programming\DataDrivenApplicationGroupOne\Project\HotelApp\HotelApp\obj\Debug\HotelApp.Login.resources
 C:\src\Spring 2022\Database Programming\DataDrivenApplicationGroupOne\Project\HotelApp\HotelApp\obj\Debug\HotelApp.MainForm.resources
+C:\src\Spring 2022\Database Programming\DataDrivenApplicationGroupOne\Project\HotelApp\HotelApp\obj\Debug\HotelApp.MenuForms.Agent.resources
+C:\src\Spring 2022\Database Programming\DataDrivenApplicationGroupOne\Project\HotelApp\HotelApp\obj\Debug\HotelApp.MenuForms.BookingManager.resources
+C:\src\Spring 2022\Database Programming\DataDrivenApplicationGroupOne\Project\HotelApp\HotelApp\obj\Debug\HotelApp.MenuForms.Hotel.resources
+C:\src\Spring 2022\Database Programming\DataDrivenApplicationGroupOne\Project\HotelApp\HotelApp\obj\Debug\HotelApp.MenuForms.Guest.resources
+C:\src\Spring 2022\Database Programming\DataDrivenApplicationGroupOne\Project\HotelApp\HotelApp\obj\Debug\HotelApp.MenuForms.CreateReservation.resources
+C:\src\Spring 2022\Database Programming\DataDrivenApplicationGroupOne\Project\HotelApp\HotelApp\obj\Debug\HotelApp.Rooms.resources
 C:\src\Spring 2022\Database Programming\DataDrivenApplicationGroupOne\Project\HotelApp\HotelApp\obj\Debug\HotelApp.Properties.Resources.resources
 C:\src\Spring 2022\Database Programming\DataDrivenApplicationGroupOne\Project\HotelApp\HotelApp\obj\Debug\HotelApp.Splash.resources
 C:\src\Spring 2022\Database Programming\DataDrivenApplicationGroupOne\Project\HotelApp\HotelApp\obj\Debug\HotelApp.csproj.GenerateResource.cache
 C:\src\Spring 2022\Database Programming\DataDrivenApplicationGroupOne\Project\HotelApp\HotelApp\obj\Debug\HotelApp.csproj.CoreCompileInputs.cache
 C:\src\Spring 2022\Database Programming\DataDrivenApplicationGroupOne\Project\HotelApp\HotelApp\obj\Debug\HotelApp.exe
 C:\src\Spring 2022\Database Programming\DataDrivenApplicationGroupOne\Project\HotelApp\HotelApp\obj\Debug\HotelApp.pdb
+<<<<<<< HEAD
 C:\src\Spring 2022\Database Programming\DataDrivenApplicationGroupOne\Project\HotelApp\HotelApp\obj\Debug\HotelApp.MenuForms.Agent.resources
 C:\src\Spring 2022\Database Programming\DataDrivenApplicationGroupOne\Project\HotelApp\HotelApp\obj\Debug\HotelApp.MenuForms.Guest.resources
 C:\src\Spring 2022\Database Programming\DataDrivenApplicationGroupOne\Project\HotelApp\HotelApp\obj\Debug\HotelApp.MenuForms.Hotel.resources
@@ -61,3 +69,5 @@ C:\Users\sebro\OneDrive\Desktop\NBCC\Term 3\Database Programming\Project\DataDri
 >>>>>>> development_recovery_two
 C:\Users\sebro\OneDrive\Desktop\NBCC\Term 3\Database Programming\Project\DataDrivenApplicationGroupOne\Project\HotelApp\HotelApp\obj\Debug\HotelApp.Rooms.resources
 C:\Users\ramil\Documents\1.SPRING TERM\1.Database Programming\Team_work\Project\HotelApp\HotelApp\obj\Debug\HotelApp.Rooms.resources
+=======
+>>>>>>> development_recovery_two

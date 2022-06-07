@@ -35,6 +35,7 @@ namespace HotelApp.MenuForms
             try
             {
                 Setup();
+                UIUtilities.DisplayInStatusStrip(0, $"User {AuthenticationHelper.UserName} is logged in");
             }
             catch (Exception ex) 
             {
@@ -273,6 +274,17 @@ namespace HotelApp.MenuForms
 
                 rooms.ShowDialog();
 
+                if(rooms.DialogResult == DialogResult.OK)
+                {
+                    // reload current hotelinformation after changing rooms
+                    LoadHotelInformation();
+
+                    // reset status label 2
+                    UIUtilities.DisplayInStatusStrip(1, $"Currently viewing record {currentPosition} or {totalHotels}");
+                }
+
+
+
             }
             catch (Exception ex)
             {
@@ -335,6 +347,7 @@ namespace HotelApp.MenuForms
         /// <param name="buttonState"></param>
         private void SetButtonsState(ButtonState buttonState)
         {
+            // sets the Enabled value of all the Nav buttons to the given value
             void SetNavState(bool state)
             {
                 btnPrevious.Enabled = state;
@@ -342,6 +355,7 @@ namespace HotelApp.MenuForms
                 btnFirst.Enabled = state;
                 btnLast.Enabled = state;                
             }
+
             switch (buttonState)
             {
                 case ButtonState.Browse:
@@ -356,6 +370,8 @@ namespace HotelApp.MenuForms
                     btnAdd.Enabled = true;
                     btnModify.Enabled = true;
                     cboHotel.Enabled = true;
+
+                    UIUtilities.DisplayInStatusStrip(0, "Browsing Hotel Records");
                     break;
                 case ButtonState.Add:
                     // only enable Save and Cancel
@@ -373,6 +389,8 @@ namespace HotelApp.MenuForms
 
                     btnAdd.Enabled = false;
                     btnModify.Enabled = false;
+                    UIUtilities.DisplayInStatusStrip(0, "Adding a Hotel Record");
+                    UIUtilities.DisplayInStatusStrip(1, "");
                     break;
                 case ButtonState.Modify:
                     // Only enable save and cancel
@@ -385,9 +403,11 @@ namespace HotelApp.MenuForms
                     btnCancelDelete.Enabled = true;
 
                     btnCancelDelete.Text = "Cancel";
+                    UIUtilities.DisplayInStatusStrip(1, "");
 
                     btnAdd.Enabled = false;
                     btnModify.Enabled = false;
+                    UIUtilities.DisplayInStatusStrip(0, "Modifying a Hotel Record");
 
                     break;
                 case ButtonState.Delete:
@@ -889,6 +909,24 @@ VALUES
             // set radio buttons state
             SetCheckboxesFromAmenityResults(amenitiesResults);
 
+            // get number of rooms associated with this hotel
+            // create sql query to get number of rooms
+            string sqlNumRooms =
+                $"SELECT COUNT(RoomID) FROM Room WHERE HotelID = {currentHotelID}";
+
+            // save result to an int
+            int? numRooms = DataAccess.ExecuteScalar(sqlNumRooms) as int?;
+
+            
+            // null check
+            if (!numRooms.HasValue)
+            {
+                numRooms = 0;
+            }
+
+            // display number of rooms in txt field
+            txtRoomsAvailable.Text = numRooms.ToString();
+
             // set FirstPrevNextLast
             SetFirstPrevNextLastHotelID();
             // set nav button states
@@ -925,6 +963,7 @@ WHERE CurrentHotelID = {currentHotelID}
             firstHotelID = Convert.ToInt32(resultRecord["FirstHotelID"]);
             lastHotelID = Convert.ToInt32(resultRecord["LastHotelID"]);
             currentPosition = Convert.ToInt32(resultRecord["CurrentPosition"]);
+            totalHotels = Convert.ToInt32(resultRecord["TotalHotels"]);
 
             if(resultRecord["PreviousHotelID"] == null || resultRecord["PreviousHotelID"] == DBNull.Value)
             {
@@ -943,6 +982,9 @@ WHERE CurrentHotelID = {currentHotelID}
             {
                 nextHotelID = Convert.ToInt32(resultRecord["NextHotelID"]);
             }
+
+            // set second status label
+            UIUtilities.DisplayInStatusStrip(1, $"Currently viewing record {currentPosition} or {totalHotels}");
 
         }
 
