@@ -40,28 +40,26 @@
             // 
             // grpMaintenance
             // 
-            this.grpMaintenance.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(136)))), ((int)(((byte)(223)))), ((int)(((byte)(242)))));
+            this.grpMaintenance.BackColor = System.Drawing.Color.White;
             this.grpMaintenance.Controls.Add(this.btnGuest);
             this.grpMaintenance.Controls.Add(this.btnAgent);
             this.grpMaintenance.Controls.Add(this.btnHotel);
-            this.grpMaintenance.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpMaintenance.Location = new System.Drawing.Point(38, 37);
-            this.grpMaintenance.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.grpMaintenance.Font = new System.Drawing.Font("Marlett", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpMaintenance.Location = new System.Drawing.Point(28, 30);
             this.grpMaintenance.Name = "grpMaintenance";
-            this.grpMaintenance.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.grpMaintenance.Size = new System.Drawing.Size(392, 396);
+            this.grpMaintenance.Size = new System.Drawing.Size(294, 322);
             this.grpMaintenance.TabIndex = 5;
             this.grpMaintenance.TabStop = false;
             this.grpMaintenance.Text = "Maintenance";
             // 
             // btnGuest
             // 
-            this.btnGuest.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(207)))), ((int)(((byte)(99)))));
+            this.btnGuest.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(118)))), ((int)(((byte)(217)))));
             this.btnGuest.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnGuest.Location = new System.Drawing.Point(43, 281);
-            this.btnGuest.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnGuest.ForeColor = System.Drawing.Color.White;
+            this.btnGuest.Location = new System.Drawing.Point(32, 228);
             this.btnGuest.Name = "btnGuest";
-            this.btnGuest.Size = new System.Drawing.Size(301, 74);
+            this.btnGuest.Size = new System.Drawing.Size(226, 60);
             this.btnGuest.TabIndex = 2;
             this.btnGuest.Tag = "Guest";
             this.btnGuest.Text = "Edit/Add Guests";
@@ -70,12 +68,12 @@
             // 
             // btnAgent
             // 
-            this.btnAgent.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(207)))), ((int)(((byte)(99)))));
+            this.btnAgent.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(118)))), ((int)(((byte)(217)))));
             this.btnAgent.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAgent.Location = new System.Drawing.Point(43, 154);
-            this.btnAgent.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnAgent.ForeColor = System.Drawing.Color.White;
+            this.btnAgent.Location = new System.Drawing.Point(32, 125);
             this.btnAgent.Name = "btnAgent";
-            this.btnAgent.Size = new System.Drawing.Size(301, 74);
+            this.btnAgent.Size = new System.Drawing.Size(226, 60);
             this.btnAgent.TabIndex = 1;
             this.btnAgent.Tag = "Agent";
             this.btnAgent.Text = "Edit/Add Agents";
@@ -84,12 +82,12 @@
             // 
             // btnHotel
             // 
-            this.btnHotel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(207)))), ((int)(((byte)(99)))));
+            this.btnHotel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(118)))), ((int)(((byte)(217)))));
             this.btnHotel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnHotel.Location = new System.Drawing.Point(43, 27);
-            this.btnHotel.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnHotel.ForeColor = System.Drawing.Color.White;
+            this.btnHotel.Location = new System.Drawing.Point(32, 22);
             this.btnHotel.Name = "btnHotel";
-            this.btnHotel.Size = new System.Drawing.Size(301, 74);
+            this.btnHotel.Size = new System.Drawing.Size(226, 60);
             this.btnHotel.TabIndex = 0;
             this.btnHotel.Tag = "Hotel";
             this.btnHotel.Text = "Edit/Add Hotels";
@@ -99,12 +97,10 @@
             // grpBookings
             // 
             this.grpBookings.Controls.Add(this.button3);
-            this.grpBookings.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpBookings.Location = new System.Drawing.Point(509, 37);
-            this.grpBookings.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.grpBookings.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpBookings.Location = new System.Drawing.Point(382, 30);
             this.grpBookings.Name = "grpBookings";
-            this.grpBookings.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.grpBookings.Size = new System.Drawing.Size(395, 134);
+            this.grpBookings.Size = new System.Drawing.Size(296, 109);
             this.grpBookings.TabIndex = 6;
             this.grpBookings.TabStop = false;
             this.grpBookings.Text = "Bookings";
@@ -114,10 +110,9 @@
             this.button3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(118)))), ((int)(((byte)(217)))));
             this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button3.ForeColor = System.Drawing.Color.White;
-            this.button3.Location = new System.Drawing.Point(48, 27);
-            this.button3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button3.Location = new System.Drawing.Point(36, 22);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(301, 74);
+            this.button3.Size = new System.Drawing.Size(226, 60);
             this.button3.TabIndex = 0;
             this.button3.Tag = "AvailBooking";
             this.button3.Text = "Booking Manager";
@@ -126,13 +121,12 @@
             // 
             // Home
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1067, 554);
+            this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.grpBookings);
             this.Controls.Add(this.grpMaintenance);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Home";
             this.Text = "Home";
             this.grpMaintenance.ResumeLayout(false);

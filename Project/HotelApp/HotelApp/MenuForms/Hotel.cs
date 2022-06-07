@@ -363,6 +363,7 @@ namespace HotelApp.MenuForms
 
                     btnSave.Enabled = false;
                     btnSave.Text = "Save";
+                    btnSave.ForeColor = Color.White;
 
                     btnCancelDelete.Enabled = true;
                     btnCancelDelete.Text = "Delete";                    
@@ -382,6 +383,7 @@ namespace HotelApp.MenuForms
 
                     btnSave.Enabled = true;
                     btnSave.Text = "Create";
+                    btnSave.ForeColor = Color.White;
 
                     btnCancelDelete.Enabled = true;
 
@@ -400,6 +402,7 @@ namespace HotelApp.MenuForms
 
                     btnSave.Enabled = true;
                     btnSave.Text = "Save";
+                    btnSave.ForeColor = Color.White;
                     btnCancelDelete.Enabled = true;
 
                     btnCancelDelete.Text = "Cancel";
@@ -1033,6 +1036,5 @@ WHERE CurrentHotelID = {currentHotelID}
 
 
         #endregion
-        
     }
 }
