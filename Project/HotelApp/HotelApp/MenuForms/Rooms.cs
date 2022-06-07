@@ -229,6 +229,9 @@ WHERE HotelID = {hotelID}".Replace(Environment.NewLine, " ");
             // hide roomTypeID column
             dgvRooms.Columns["RoomTypeID"].Visible = false;
 
+            // autosize columns
+            dgvRooms.AutoResizeColumns();
+
             
         }
 
@@ -422,9 +425,12 @@ WHERE HotelID = {hotelID}".Replace(Environment.NewLine, " ");
             if(rowsAffected.HasValue || rowsAffected.Value > 0)
             {
                 MessageBox.Show("You have successfully created a new room!");
+                UIUtilities.DisplayInStatusStrip(1, "Successfully created a new room.");
             }
 
             SetupBrowse();
+
+            
         }
 
         private void ModifyRoomType()
@@ -460,6 +466,7 @@ WHERE HotelID = {hotelID}".Replace(Environment.NewLine, " ");
             if(rowsAffected == 1)
             {
                 MessageBox.Show("Room record successfully updated!");
+                UIUtilities.DisplayInStatusStrip(1, "Successfully modified a room.");
             }
 
             SetupBrowse();

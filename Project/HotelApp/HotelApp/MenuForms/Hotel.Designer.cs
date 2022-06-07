@@ -60,6 +60,8 @@
             this.label11 = new System.Windows.Forms.Label();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
             this.btnRoom = new System.Windows.Forms.Button();
+            this.txtRoomsAvailable = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -397,7 +399,7 @@
             // 
             // btnRoom
             // 
-            this.btnRoom.Location = new System.Drawing.Point(49, 278);
+            this.btnRoom.Location = new System.Drawing.Point(153, 268);
             this.btnRoom.Name = "btnRoom";
             this.btnRoom.Size = new System.Drawing.Size(196, 58);
             this.btnRoom.TabIndex = 84;
@@ -405,12 +407,32 @@
             this.btnRoom.UseVisualStyleBackColor = true;
             this.btnRoom.Click += new System.EventHandler(this.btnRoom_Click);
             // 
+            // txtRoomsAvailable
+            // 
+            this.txtRoomsAvailable.Location = new System.Drawing.Point(234, 193);
+            this.txtRoomsAvailable.Name = "txtRoomsAvailable";
+            this.txtRoomsAvailable.ReadOnly = true;
+            this.txtRoomsAvailable.Size = new System.Drawing.Size(136, 22);
+            this.txtRoomsAvailable.TabIndex = 85;
+            this.txtRoomsAvailable.TabStop = false;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(114, 196);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(114, 16);
+            this.label12.TabIndex = 86;
+            this.label12.Text = "Rooms Available:";
+            // 
             // Hotel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
             this.ClientSize = new System.Drawing.Size(1303, 844);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.txtRoomsAvailable);
             this.Controls.Add(this.btnRoom);
             this.Controls.Add(this.chkBreakfast);
             this.Controls.Add(this.label11);
@@ -484,5 +506,7 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.ErrorProvider errorProvider1;
         private System.Windows.Forms.Button btnRoom;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox txtRoomsAvailable;
     }
 }
