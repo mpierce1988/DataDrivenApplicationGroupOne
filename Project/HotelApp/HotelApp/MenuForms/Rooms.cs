@@ -229,6 +229,9 @@ WHERE HotelID = {hotelID}".Replace(Environment.NewLine, " ");
             // hide roomTypeID column
             dgvRooms.Columns["RoomTypeID"].Visible = false;
 
+            // autosize columns
+            dgvRooms.AutoResizeColumns();
+
             
         }
 
