@@ -29,7 +29,9 @@ namespace HotelApp.MenuForms
         }
 
 
-
+        /// <summary>
+        /// Loads sql query table hotel into the cmbHotel combo box
+        /// </summary>
         private void LoadHotels()
         {
             string sqlHotel = "SELECT HotelID, HotelName FROM Hotel ORDER BY HotelName ASC;";
@@ -39,6 +41,10 @@ namespace HotelApp.MenuForms
             UIUtilities.BindListControl(cmbHotel, "HotelID", "HotelName", dtHotel, true, "----Select a hotel----");
         }
 
+        /// <summary>
+        /// Retrieves info from Hotel, Room, Booking, Agent, Guest tables and loads it into the data grid view 
+        /// based on the hotel that was selected in the cmbHotel combo box.
+        /// </summary>
         private void LoadBookingDetails()
         {
             string sqlBookingDetails = $@"SELECT 
@@ -70,6 +76,7 @@ namespace HotelApp.MenuForms
 
             dgvBookings.DataSource = dtBookingDetails;
 
+            //Hiding the ID's that I pulled so the user cannot see them.
             dgvBookings.Columns["GuestID"].Visible = false;
             dgvBookings.Columns["HotelID"].Visible = false;
             dgvBookings.Columns["RoomID"].Visible = false;
@@ -82,7 +89,9 @@ namespace HotelApp.MenuForms
         }
 
 
-
+        /// <summary>
+        /// Loads the next and previous hotelID's as well as the row cound into variables.
+        /// </summary>
         private void LoadNavigation()
         {
             string sqlNavigation = $@"SELECT nav.NextHotelID, nav.PreviousHotelID, nav.RowNumber
@@ -112,13 +121,11 @@ namespace HotelApp.MenuForms
 
             hotelCount = Convert.ToInt32(selectedRow["RowNumber"]);
 
-            //firstHotelID = Convert.ToInt32(selectedRow["FirstHotelID"]);
-
-            //lastHotelID = Convert.ToInt32(selectedRow["LastHotelID"]);
         }
 
         private void cmbHotel_SelectionChangeCommitted(object sender, EventArgs e)
         {
+            //If the currentHotelID is not equal to null convert into a an int otherwise set the value to 0.
             currentHotelID = cmbHotel.SelectedValue != null 
                 ? Convert.ToInt32(cmbHotel.SelectedValue) 
                 : 0;
@@ -129,12 +136,17 @@ namespace HotelApp.MenuForms
             }
             else
             {
+                //if a value was assigned to the variable currentHotelID go ahead and load booking details.
                 LoadBookingDetails();
             }
-
             LoadNavigation();
         }
 
+        /// <summary>
+        /// Loads the first hotel in the list.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnFirst_Click(object sender, EventArgs e)
         {
             cmbHotel.SelectedIndex = 1;
@@ -143,6 +155,11 @@ namespace HotelApp.MenuForms
             LoadBookingDetails();
         }
 
+        /// <summary>
+        /// Loads the last hotel in the list.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnLast_Click(object sender, EventArgs e)
         {
             cmbHotel.SelectedIndex = cmbHotel.Items.Count - 1;
@@ -151,8 +168,14 @@ namespace HotelApp.MenuForms
             LoadBookingDetails();
         }
 
+        /// <summary>
+        /// Loads the previous hotel in the list.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnPrevious_Click(object sender, EventArgs e)
         {
+            //Prevents error if user clicks previous button before selecting a hotel from the list.
             if (currentHotelID == -1)
             {
                 cmbHotel.SelectedIndex = 1;
@@ -163,7 +186,7 @@ namespace HotelApp.MenuForms
 
             LoadNavigation();
 
-
+            //If the previous hotelID is null display a message and stop it from loading.
             if (previousHotelID == null)
             {
                 MessageBox.Show("First hotel is currently being displayed");
@@ -174,8 +197,14 @@ namespace HotelApp.MenuForms
 
         }
 
+        /// <summary>
+        /// Loads the next hotel in the list.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnNext_Click(object sender, EventArgs e)
         {
+            //Prevents error if user clicks next button before selecting a hotel from the list.
             if (currentHotelID == -1)
             {
                 cmbHotel.SelectedIndex = cmbHotel.Items.Count - 1;
@@ -186,6 +215,7 @@ namespace HotelApp.MenuForms
 
             LoadNavigation();
 
+            //If the enxt hotelID is null display a message and stop it form loading.
             if (nextHotelID == null)
             {
                 MessageBox.Show("Last hotel is currently being displayed");
@@ -202,6 +232,7 @@ namespace HotelApp.MenuForms
 
         private void btnAdd_Click(object sender, EventArgs e)
         {
+            //Load reservation form without any data.
             CreateReservation createReservation = new CreateReservation(this);
             createReservation.ShowDialog();
         }
@@ -209,8 +240,12 @@ namespace HotelApp.MenuForms
         private void btnModify_Click(object sender, EventArgs e)
         {
             if (dgvBookings.CurrentRow == null)
+            {
+                MessageBox.Show("You must first select a booking to modify from the list.");
                 return;
+            }
 
+            //Retrieving ID's required to keep track of booking details to pre load the reservation form when modifying.
             DataGridViewRow currentRow = dgvBookings.CurrentRow;
 
             int currentGuestID = (int)currentRow.Cells["GuestID"].Value;
@@ -221,6 +256,7 @@ namespace HotelApp.MenuForms
             string currentArrival = currentRow.Cells["Arrival"].Value.ToString();
             string currentDeparture = currentRow.Cells["Departure"].Value.ToString();
 
+            //passing data into reservation form.
             CreateReservation currentReservation = new CreateReservation(currentGuestID, currentHotelID, currentRoomTypeID, currentRoomID, currentAgentID, currentArrival, currentDeparture);
 
             currentReservation.ShowDialog();
