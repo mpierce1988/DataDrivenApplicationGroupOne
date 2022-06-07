@@ -261,6 +261,26 @@ namespace HotelApp.MenuForms
             }
         }
 
+        
+        private void btnRoom_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // open room form as a dialog, passing in 
+                // this hotelID as a value
+
+                Rooms rooms = new Rooms(currentHotelID);
+
+                rooms.ShowDialog();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().ToString());
+            }
+        }
+
+
         #endregion
 
         #region UI Helpers
@@ -969,8 +989,8 @@ WHERE CurrentHotelID = {currentHotelID}
 
 
 
-        #endregion
 
+        #endregion
         
     }
 }
