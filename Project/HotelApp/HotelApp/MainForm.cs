@@ -109,9 +109,6 @@ namespace HotelApp
                 case "AVAILBOOKING":
                     requestedForm = new BookingManager(this);
                     break;
-                case "CANCELBOOKING":
-                    requestedForm = new BookingManager(this);
-                    break;
                 case "HOME":
                     requestedForm = new Home(this);
                     break;
