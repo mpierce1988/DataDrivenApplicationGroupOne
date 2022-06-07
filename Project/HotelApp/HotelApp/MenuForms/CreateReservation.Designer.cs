@@ -69,6 +69,8 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.txtAgentEmail = new System.Windows.Forms.TextBox();
+            this.txtArrival = new System.Windows.Forms.TextBox();
+            this.txtDeparture = new System.Windows.Forms.TextBox();
             this.grpGuestDetails.SuspendLayout();
             this.grpHotelDetails.SuspendLayout();
             this.grpRoomDetails.SuspendLayout();
@@ -502,11 +504,31 @@
             this.txtAgentEmail.Size = new System.Drawing.Size(368, 26);
             this.txtAgentEmail.TabIndex = 5;
             // 
+            // txtArrival
+            // 
+            this.txtArrival.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtArrival.Location = new System.Drawing.Point(136, 859);
+            this.txtArrival.Name = "txtArrival";
+            this.txtArrival.ReadOnly = true;
+            this.txtArrival.Size = new System.Drawing.Size(368, 26);
+            this.txtArrival.TabIndex = 49;
+            // 
+            // txtDeparture
+            // 
+            this.txtDeparture.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtDeparture.Location = new System.Drawing.Point(600, 859);
+            this.txtDeparture.Name = "txtDeparture";
+            this.txtDeparture.ReadOnly = true;
+            this.txtDeparture.Size = new System.Drawing.Size(368, 26);
+            this.txtDeparture.TabIndex = 50;
+            // 
             // CreateReservation
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1099, 1064);
+            this.Controls.Add(this.txtDeparture);
+            this.Controls.Add(this.txtArrival);
             this.Controls.Add(this.grpAgent);
             this.Controls.Add(this.grpRoomDetails);
             this.Controls.Add(this.grpHotelDetails);
@@ -578,5 +600,7 @@
         private System.Windows.Forms.TextBox txtHotel;
         private System.Windows.Forms.TextBox txtRoomNumber;
         private System.Windows.Forms.TextBox txtRoomType;
+        private System.Windows.Forms.TextBox txtArrival;
+        private System.Windows.Forms.TextBox txtDeparture;
     }
 }

@@ -203,11 +203,11 @@ namespace HotelApp.MenuForms
                 LoadHotels();
                 LoadGuests();
                 LoadAgent();
-                ResetCurrentValues();
+                LoadFromBookingManager();
 
                 EnableFieldEdit(false);
                 btnCreateBooking.Text = "Modify";
-
+                cmbGuests.Visible = false;
                 return;
             }
             LoadHotels();
@@ -216,7 +216,7 @@ namespace HotelApp.MenuForms
             txtGuestName.Visible = false;
         }
 
-        private void ResetCurrentValues()
+        private void LoadFromBookingManager()
         {
             selectedGuestID = currentGuestID;
             selectedHotelID = currentHotelID;
@@ -236,6 +236,8 @@ namespace HotelApp.MenuForms
             cmbRoomTypes.SelectedValue = currentRoomTypeID;
             cmbRoomNumber.SelectedValue = currentRoomID;
             LoadBooking();
+
+            cmbGuests.Visible = false;
         }
 
 
@@ -296,20 +298,27 @@ namespace HotelApp.MenuForms
 
         private void btnCreateBooking_Click(object sender, EventArgs e)
         {
-            ValidateModifyOrCreate();
-            if(btnCreateBooking.Text == "Modify")
+            if (ValidateModifyOrCreate())
             {
-                EnableFieldEdit(true);
-                btnCreateBooking.Text = "Save";
-                btnDelete.Text = "Cancel";
+                if (btnCreateBooking.Text == "Modify")
+                {
+                    EnableFieldEdit(true);
+                    btnCreateBooking.Text = "Save";
+                    btnDelete.Text = "Cancel";
+                    return;
+                }
+                else if (btnCreateBooking.Text == "Save")
+                {
+                    UpdateBooking();
+                    return;
+                }
+                AddBooking();
+            }
+            else
+            {
                 return;
             }
-            else if(btnCreateBooking.Text == "Save")
-            {
-                UpdateBooking();
-                return;
-            }
-            AddBooking();
+            
         }
 
         private void btnDelete_Click(object sender, EventArgs e)
@@ -318,7 +327,8 @@ namespace HotelApp.MenuForms
             {
                 if (isExistingBooking())
                 {
-                    ResetCurrentValues();
+                    //this resets the form back to the values obtained from the booking manager.
+                    LoadFromBookingManager();
                     EnableFieldEdit(false);
                     btnCreateBooking.Text = "Modify";
                     return;
@@ -360,13 +370,18 @@ namespace HotelApp.MenuForms
             }
         }
 
-        private void ValidateModifyOrCreate()
+        private bool ValidateModifyOrCreate()
         {
             if(cmbHotel.SelectedValue == DBNull.Value || cmbRoomNumber.SelectedValue == DBNull.Value || cmbRoomTypes.SelectedValue == DBNull.Value)
             {
                 MessageBox.Show("You must make a selection for all fields", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                return false;
             }
+            else
+            {
+                return true;
+            }
+            
             
         }
 
@@ -374,29 +389,36 @@ namespace HotelApp.MenuForms
         {
             if (state == false)
             {
-                cmbGuests.Visible = state;
                 cmbHotel.Visible = state;
                 cmbRoomNumber.Visible = state;
                 cmbRoomTypes.Visible = state;
+                dteArrival.Visible = state;
+                dteDeparture.Visible = state;
                 txtGuestName.Text = cmbGuests.Text;
                 txtHotel.Text = cmbHotel.Text;
                 txtRoomNumber.Text = cmbRoomNumber.Text;
                 txtRoomType.Text = cmbRoomTypes.Text;
+                txtArrival.Text = dteArrival.Text;
+                txtDeparture.Text = dteDeparture.Text;
                 txtGuestName.Visible = true;
                 txtHotel.Visible = true;
                 txtRoomNumber.Visible = true;
                 txtRoomType.Visible = true;
+                txtArrival.Visible = true;
+                txtDeparture.Visible = true;
             }
             else
             {
-                cmbGuests.Visible = state;
                 cmbHotel.Visible = state;
                 cmbRoomNumber.Visible = state;
                 cmbRoomTypes.Visible = state;
-                txtGuestName.Visible = false;
+                dteArrival.Visible = state;
+                dteDeparture.Visible = state;
                 txtHotel.Visible = false;
                 txtRoomNumber.Visible = false;
                 txtRoomType.Visible = false;
+                txtArrival.Visible = false;
+                txtDeparture.Visible = false;
             }
 
         }
