@@ -226,6 +226,9 @@ WHERE HotelID = {hotelID}".Replace(Environment.NewLine, " ");
             // assign result to dgv
             dgvRooms.DataSource = roomsResult;
 
+            // hide roomTypeID column
+            dgvRooms.Columns["RoomTypeID"].Visible = false;
+
             
         }
 
