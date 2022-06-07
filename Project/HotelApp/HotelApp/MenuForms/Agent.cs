@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -517,6 +518,7 @@ WHERE CurrentAgentID = {currentAgentID};
         /// </summary>
         private void UpdateAgentRecord()
         {
+            
             // validate form first
             if (!ValidateChildren(ValidationConstraints.Enabled))
             {
@@ -760,5 +762,37 @@ VALUES
         }
 
         #endregion
+
+
+        /// <summary>
+        /// Validate the email is proper
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EmailValidation(object sender, CancelEventArgs e)
+        {
+            try
+            {
+
+                string emailAddress = ((TextBox)sender).Text;
+                try
+                {
+                    MailAddress m = new MailAddress(emailAddress);
+
+                    // valid email
+                    errorProvider1.SetError((TextBox)sender, "");
+                }
+                catch (Exception ex)
+                {
+                    // invalid email
+                    e.Cancel = true;
+                    errorProvider1.SetError((TextBox)sender, "Please enter a valid email address");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().ToString());
+            }
+        }
     }
 }
