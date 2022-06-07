@@ -307,6 +307,7 @@ namespace HotelApp.MenuForms
             else if(btnCreateBooking.Text == "Save")
             {
                 UpdateBooking();
+                return;
             }
             AddBooking();
         }
@@ -345,16 +346,11 @@ namespace HotelApp.MenuForms
 
         private void UpdateBooking()
         {
-            string sqlModify = $@"UPDATE Booking 
-                                    SET 
-                                    RoomID = {cmbRoomNumber.SelectedValue}, 
-                                    ArrivalDate = '{dteArrival.Text}', 
-                                    DepartureDate = '{dteDeparture.Text}'
-                                    WHERE BookingID = {currentBookingID};";
+            string sqlModify = $"UPDATE Booking SET RoomID = {cmbRoomNumber.SelectedValue}, ArrivalDate = '{Convert.ToDateTime(dteArrival.Text)}', DepartureDate = '{Convert.ToDateTime(dteDeparture.Text)}' WHERE BookingID = {currentBookingID};";
 
             int rowsAffected = DataAccess.ExecuteNonQuery(sqlModify);
 
-            if (rowsAffected == 0)
+            if (rowsAffected == 1)
             {
                 MessageBox.Show("Booking has been updated", "Success");
             }
