@@ -42,7 +42,7 @@
             // 
             this.lblOne.AutoSize = true;
             this.lblOne.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblOne.ForeColor = System.Drawing.Color.DodgerBlue;
+            this.lblOne.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(18)))), ((int)(((byte)(217)))));
             this.lblOne.Location = new System.Drawing.Point(12, 294);
             this.lblOne.Name = "lblOne";
             this.lblOne.Size = new System.Drawing.Size(0, 29);
@@ -81,9 +81,10 @@
             // lblTwo
             // 
             this.lblTwo.AutoSize = true;
-            this.lblTwo.Location = new System.Drawing.Point(14, 349);
+            this.lblTwo.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTwo.Location = new System.Drawing.Point(14, 358);
             this.lblTwo.Name = "lblTwo";
-            this.lblTwo.Size = new System.Drawing.Size(44, 16);
+            this.lblTwo.Size = new System.Drawing.Size(50, 16);
             this.lblTwo.TabIndex = 3;
             this.lblTwo.Text = "label1";
             // 
@@ -91,6 +92,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(452, 405);
             this.Controls.Add(this.lblTwo);
             this.Controls.Add(this.pictureBox1);
