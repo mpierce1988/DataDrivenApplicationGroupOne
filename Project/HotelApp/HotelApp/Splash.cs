@@ -45,7 +45,17 @@ namespace HotelApp
 
         private void Splash_Load(object sender, EventArgs e)
         {
-            lblOne.Text = $@"Welcome to {Application.ProductName}!";
+            try
+            {
+                // set display messages
+                lblOne.Text = $@"Welcome to {Application.ProductName}!";
+                lblTwo.Text = $"Version {Application.ProductVersion}";
+                
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().ToString());
+            }
         }
     }
 }
