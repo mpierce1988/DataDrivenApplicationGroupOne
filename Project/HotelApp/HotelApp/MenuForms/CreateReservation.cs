@@ -78,11 +78,11 @@ namespace HotelApp.MenuForms
         /// </summary>
         private void LoadRoomTypes()
         {
-            string sqlRoomTypes = $@"SELECT Room.RoomTypeID, (RoomTypeName + ' - ' + RoomTypeDescription) AS RoomDesc 
+            string sqlRoomTypes = $@"SELECT DISTINCT Room.RoomTypeID, (RoomTypeName + ' - ' + RoomTypeDescription) AS RoomDesc 
                                 FROM RoomType
                                 INNER JOIN Room ON RoomType.RoomTypeID = Room.RoomTypeID
-                                WHERE HotelID = {selectedHotelID}
-                                ORDER BY RoomTypeDescription; ";
+                                WHERE HotelID = {selectedHotelID}; ";
+                                //ORDER BY RoomTypeDescription; ";
 
             DataTable dtRoomTypes = DataAccess.GetData(sqlRoomTypes);
 
@@ -94,11 +94,13 @@ namespace HotelApp.MenuForms
         /// </summary>
         private void LoadRooms()
         {
-            string sqlAvailableRooms = $"SELECT RoomID, ('Room #' + CONVERT(VARCHAR(10), RoomID)) AS RoomNumber FROM Room WHERE RoomTypeID = {selectedRoomTypeID};";
+            //string sqlAvailableRooms = $"SELECT RoomID, ('Room #' + CONVERT(VARCHAR(10), RoomID)) AS RoomNumber FROM Room WHERE RoomTypeID = {selectedRoomTypeID} AND HotelID = {currentHotelID};";
+            string sqlAvailableRooms =
+                $@"SELECT RoomID, RoomID AS RoomDescriptiom FROM Room WHERE RoomTypeID = {selectedRoomTypeID} AND HotelID = {selectedHotelID}";
 
             DataTable dtAvailableRooms = DataAccess.GetData(sqlAvailableRooms);
 
-            UIUtilities.BindListControl(cmbRoomNumber, "RoomID", "RoomNumber", dtAvailableRooms, true, "----Select a Room----");
+            UIUtilities.BindListControl(cmbRoomNumber, "RoomID", dtAvailableRooms);
         }
 
         /// <summary>
@@ -269,7 +271,7 @@ namespace HotelApp.MenuForms
 
                 EnableFieldEdit(false);
                 btnCreateBooking.Text = "Modify";
-                btnDelete.Enabled = false;
+                btnDelete.Enabled = true;
                 cmbGuests.Visible = false;
                 return;
             }
@@ -296,7 +298,7 @@ namespace HotelApp.MenuForms
                 if (cmbHotel.SelectedIndex == 0)
                 {
                     cmbRoomTypes.SelectedValue = DBNull.Value;
-                    cmbRoomNumber.SelectedValue = DBNull.Value;
+                    //cmbRoomNumber.SelectedValue = DBNull.Value;
                     cmbRoomTypes.Enabled = false;
                     cmbRoomNumber.Enabled = false;
                     return;
@@ -340,7 +342,7 @@ namespace HotelApp.MenuForms
 
                 LoadRooms();
 
-                cmbRoomNumber.SelectedIndex = 0;
+                //cmbRoomNumber.SelectedIndex = 0;
             }
             catch (Exception ex)
             {
@@ -449,13 +451,15 @@ namespace HotelApp.MenuForms
             {
                 if (btnDelete.Text == "Cancel")
                 {
+                    
                     if (isExistingBooking())
                     {
                         //this resets the form back to the values obtained from the booking manager.
                         LoadFromBookingManager();
                         EnableFieldEdit(false);
                         btnCreateBooking.Text = "Modify";
-                        btnDelete.Enabled = false;
+                        btnDelete.Enabled = true;
+                        btnDelete.Text = "Delete";
                         return;
                     }
                 }
@@ -477,6 +481,7 @@ namespace HotelApp.MenuForms
                     if (result == DialogResult.Yes)
                     {
                         DeleteBooking();
+                        
                     }
                     else
                     {
@@ -502,6 +507,32 @@ namespace HotelApp.MenuForms
         {
             if(UIUtilities.ValidateDate(Convert.ToDateTime(dteArrival.Text)) && UIUtilities.ValidateDate(Convert.ToDateTime(dteDeparture.Text)))
             {
+                // check if a previous booking for this date and room exist
+                // create sql state that will return num of bookings with this room and date
+                string sqlCheckForExistingBooking =
+                    $@"SELECT COUNT(*) FROM Booking 
+WHERE ArrivalDate <= '{dteArrival.Value}' 
+AND DepartureDate >= '{dteArrival.Value}' 
+AND RoomID = {selectedRoomID}".Replace(Environment.NewLine, " ");
+
+                // run query. save results to an int
+                int? bookingsForThisRoomDate = DataAccess.ExecuteScalar(sqlCheckForExistingBooking) as int?;
+
+                // null check result
+                if (!bookingsForThisRoomDate.HasValue)
+                {
+                    throw new Exception("Could not retrieve other bookings related to this room and date.");
+                }
+
+                // if there are other bookings for this room and date, show message
+                // and do not create booking
+                if(bookingsForThisRoomDate.Value > 0)
+                {
+                    MessageBox.Show("Cannot create this booking because a previous booking exists for this room and date");
+                    
+                    return;
+                }
+
                 string sqlCreateBooking = $@"INSERT INTO Booking (AgentID, RoomID, GuestID, ArrivalDate, DepartureDate)
                                         VALUES
                                         ({selectedAgentID}, {cmbRoomNumber.SelectedValue}, {cmbGuests.SelectedValue}, '{Convert.ToDateTime(dteArrival.Text)}', '{Convert.ToDateTime(dteDeparture.Text)}'); ";
@@ -511,6 +542,7 @@ namespace HotelApp.MenuForms
                 if (rowsAffected == 1)
                 {
                     MessageBox.Show("Booking has been created!", "Success");
+                    this.Close();
                 }
                 else
                 {
@@ -538,6 +570,7 @@ namespace HotelApp.MenuForms
             if (rowsAffected == 1)
             {
                 MessageBox.Show("Booking has been updated", "Success");
+                this.Close();
             }
             else
             {
@@ -642,5 +675,9 @@ namespace HotelApp.MenuForms
 
         #endregion
 
+        private void txtRoomNumber_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

@@ -156,6 +156,8 @@ namespace HotelApp.MenuForms
             CreateReservation currentReservation = new CreateReservation(currentGuestID, currentHotelID, currentRoomTypeID, currentRoomID, currentAgentID, currentArrival, currentDeparture);
 
             currentReservation.ShowDialog();
+
+            LoadBookingDetails();
         }
 
         #endregion
@@ -325,6 +327,8 @@ namespace HotelApp.MenuForms
                 //Load reservation form without any data.
                 CreateReservation createReservation = new CreateReservation(this);
                 createReservation.ShowDialog();
+                
+                LoadBookingDetails();
             }
             catch (Exception ex)
             {
