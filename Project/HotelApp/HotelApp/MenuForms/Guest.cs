@@ -45,6 +45,17 @@ namespace HotelApp.MenuForms
 
             UIUtilities.BindListControl(cboChooseGuest, "GuestID", "FullName", dtGuests, true, "");
 
+
+            // disable save and cancel
+            btnSave.Enabled = false;
+            btnCancel.Enabled = false;
+
+            // enable add and modify
+            btnAdd.Enabled = true;
+            btnModify.Enabled = true;
+
+            // set fields to read only
+            SetTextBoxesReadOnly(true);
         }
 
         private void LoadGuestDetails()
@@ -346,7 +357,7 @@ namespace HotelApp.MenuForms
             {
 
                 // set combo box to blank row
-                //cboChooseGuest.SelectedValue = DBNull.Value;
+                cboChooseGuest.SelectedValue = DBNull.Value;
 
                 // clear text fields
                 txtFirstName.Text = "";
@@ -364,6 +375,11 @@ namespace HotelApp.MenuForms
 
                 // disable modify button
                 btnModify.Enabled = false;
+
+                // enable save and cancel button
+                btnSave.Enabled = true;
+                btnCancel.Enabled = true;
+                
 
                 // disable dropdown
                 //cboChooseGuest.Visible = false;
@@ -433,6 +449,10 @@ namespace HotelApp.MenuForms
 
                 // disable new button
                 btnAdd.Enabled = false;
+
+                // enable save and cancel button
+                btnSave.Enabled = true;
+                btnCancel.Enabled = true;
 
                 // disable modify button
                 btnModify.Enabled = false;
@@ -535,7 +555,7 @@ namespace HotelApp.MenuForms
             string sqlUpdateGuest =
                 $@"UPDATE Guest SET FirstName = '{updatedFirstName}', LastName = '{updatedLastName}', CivicNumber = '{updatedCivicNumber}',
                                                   StreetName = '{updateStreetName}', City = '{updateCity}', Province = '{updateProvince}', 
-                                                  Phone = '{updatedPhone}', Email = '{updatedEmail}' WHERE AgentID = {selectedGuestID} ;";
+                                                  PhoneNumber = '{updatedPhone}', Email = '{updatedEmail}' WHERE GuestID = {selectedGuestID} ;";
 
             int rowsUpdated = DataAccess.ExecuteNonQuery(sqlUpdateGuest);
 
@@ -572,6 +592,8 @@ namespace HotelApp.MenuForms
                     UpdateGuestRecord();
                     
                 }
+
+                LoadGuests();
             }
             catch (Exception ex)
             {
@@ -617,6 +639,14 @@ namespace HotelApp.MenuForms
         {
             try
             {
+
+                if (GuestHasBookings())
+                {
+                    // show message
+                    MessageBox.Show("Cannot delete this guest because they have bookings. Please delete their bookings before deleting the guest.");
+                    return;
+                }
+
                 // save information into variable
                 int guestId = Convert.ToInt32(cboChooseGuest.SelectedValue);
                 string deleteQuery =
@@ -639,6 +669,32 @@ namespace HotelApp.MenuForms
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, ex.GetType().ToString());
+            }
+        }
+
+        private bool GuestHasBookings()
+        {
+            // sql statement to get number of bookings this guest has
+            string sqlBookingsForGuest =
+                $"SELECT COUNT(*) FROM Booking WHERE GuestID = {currentGuestID}";
+            
+
+            // save results as an int
+            int? bookingsForGuest = DataAccess.ExecuteScalar(sqlBookingsForGuest) as int?;
+
+            // null check
+            if (!bookingsForGuest.HasValue)
+            {
+                throw new Exception("Unable to retrieve bookings related to this guest");
+            }
+
+            if(bookingsForGuest.Value > 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }
