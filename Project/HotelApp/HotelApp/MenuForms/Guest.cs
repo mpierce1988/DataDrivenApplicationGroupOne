@@ -613,5 +613,33 @@ namespace HotelApp.MenuForms
 
         #endregion
 
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // save information into variable
+                int guestId = Convert.ToInt32(cboChooseGuest.SelectedValue);
+                string deleteQuery =
+                    $"DELETE FROM Guest WHERE GuestID = {guestId}";
+
+                int rowsAffected = DataAccess.ExecuteNonQuery(deleteQuery);
+
+                if (rowsAffected == 1)
+                {
+                    MessageBox.Show("Guest was successfully deleted! This form will now close...", "Delete Successful");
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Guest failed to delete!", "Error");
+                    return;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().ToString());
+            }
+        }
     }
 }

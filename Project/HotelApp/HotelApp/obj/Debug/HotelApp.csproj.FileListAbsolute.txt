@@ -60,3 +60,4 @@ C:\Users\sebro\OneDrive\Desktop\NBCC\Term 3\Database Programming\Project\DataDri
 C:\Users\sebro\OneDrive\Desktop\NBCC\Term 3\Database Programming\Project\DataDrivenApplicationGroupOne\Project\HotelApp\HotelApp\obj\Debug\HotelApp.pdb
 >>>>>>> development_recovery_two
 C:\Users\sebro\OneDrive\Desktop\NBCC\Term 3\Database Programming\Project\DataDrivenApplicationGroupOne\Project\HotelApp\HotelApp\obj\Debug\HotelApp.Rooms.resources
+C:\Users\ramil\Documents\1.SPRING TERM\1.Database Programming\Team_work\Project\HotelApp\HotelApp\obj\Debug\HotelApp.Rooms.resources
