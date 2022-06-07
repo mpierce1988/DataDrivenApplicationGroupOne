@@ -491,20 +491,30 @@ namespace HotelApp.MenuForms
         /// </summary>
         private void CreateBooking()
         {
-            string sqlCreateBooking = $@"INSERT INTO Booking (AgentID, RoomID, GuestID, ArrivalDate, DepartureDate)
+            if(UIUtilities.ValidateDate(Convert.ToDateTime(dteArrival.Text)) && UIUtilities.ValidateDate(Convert.ToDateTime(dteDeparture.Text)))
+            {
+                string sqlCreateBooking = $@"INSERT INTO Booking (AgentID, RoomID, GuestID, ArrivalDate, DepartureDate)
                                         VALUES
                                         ({selectedAgentID}, {cmbRoomNumber.SelectedValue}, {cmbGuests.SelectedValue}, '{Convert.ToDateTime(dteArrival.Text)}', '{Convert.ToDateTime(dteDeparture.Text)}'); ";
 
-            int rowsAffected = DataAccess.ExecuteNonQuery(sqlCreateBooking);
+                int rowsAffected = DataAccess.ExecuteNonQuery(sqlCreateBooking);
 
-            if (rowsAffected == 1)
-            {
-                MessageBox.Show("Booking has been created!", "Success");
+                if (rowsAffected == 1)
+                {
+                    MessageBox.Show("Booking has been created!", "Success");
+                }
+                else
+                {
+                    MessageBox.Show("Booking Failed!", "Failure");
+                }
             }
             else
             {
-                MessageBox.Show("Booking Failed!", "Failure");
+                MessageBox.Show("You must select a date in the future.", "Cannot book on a past date");
+                return;
             }
+
+
         }
 
         /// <summary>

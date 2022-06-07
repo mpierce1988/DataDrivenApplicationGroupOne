@@ -68,6 +68,10 @@ namespace HotelApp
         }
 
      
+        public static bool ValidateDate(DateTime value)
+        {
+           return value > DateTime.Now ? true : false;
+        }
 
         #endregion
     }
