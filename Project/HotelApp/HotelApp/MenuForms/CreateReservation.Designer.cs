@@ -390,7 +390,6 @@
             this.txtRoomNumber.ReadOnly = true;
             this.txtRoomNumber.Size = new System.Drawing.Size(489, 26);
             this.txtRoomNumber.TabIndex = 51;
-            this.txtRoomNumber.TextChanged += new System.EventHandler(this.txtRoomNumber_TextChanged);
             // 
             // txtRoomType
             // 
