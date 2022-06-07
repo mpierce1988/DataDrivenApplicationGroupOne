@@ -71,6 +71,7 @@ namespace HotelApp
             progressBar.Value = progressBar.Maximum;
         }
 
+<<<<<<< HEAD
         /// <summary>
         /// Sets a reference the parent MDI container MainForm for use in 
         /// UI Utility methods such as DisplayInStatusStrip
@@ -151,6 +152,12 @@ namespace HotelApp
                     mainForm.toolStripStatusLabel2.ForeColor = color;
                     break;
             }
+=======
+     
+        public static bool ValidateDate(DateTime value)
+        {
+           return value > DateTime.Now ? true : false;
+>>>>>>> seb_branch
         }
 
         #endregion
