@@ -52,10 +52,15 @@ namespace HotelApp
                 // otherwise, show this mdi container MainForm
                 this.Show();
 
+                // register with UIUTilities
+                UIUtilities.SetMainFormForUIUtilities(this);
+
                 // open home page, by default
                 SwitchToForm(new Home(this));
 
                 currentAgent = frmLogin.userLoggedIn;
+
+                
 
             }
             catch (Exception ex)
@@ -214,6 +219,12 @@ namespace HotelApp
                 {
                     childForm.Activate();
                     childForm.BringToFront();
+
+                    // clear status display of any left over messages
+                    UIUtilities.DisplayInStatusStrip(0, "");
+                    UIUtilities.DisplayInStatusStrip(1, "");
+                    UIUtilities.DisplayInStatusStrip(2, "");
+
                     return;
                 }
             }
@@ -222,8 +233,16 @@ namespace HotelApp
             requestedForm.MdiParent = this;
             // set to maximized
             requestedForm.WindowState = FormWindowState.Maximized;
+
+            
+            // clear status display of any left over messages
+            UIUtilities.DisplayInStatusStrip(0, "");
+            UIUtilities.DisplayInStatusStrip(1, "");
+            UIUtilities.DisplayInStatusStrip(2, "");
+
             requestedForm.Show();
 
+            
             
         }
 
