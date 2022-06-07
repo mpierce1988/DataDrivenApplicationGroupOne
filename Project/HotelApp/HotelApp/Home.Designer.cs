@@ -33,7 +33,6 @@
             this.btnAgent = new System.Windows.Forms.Button();
             this.btnHotel = new System.Windows.Forms.Button();
             this.grpBookings = new System.Windows.Forms.GroupBox();
-            this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.grpMaintenance.SuspendLayout();
             this.grpBookings.SuspendLayout();
@@ -87,26 +86,14 @@
             // 
             // grpBookings
             // 
-            this.grpBookings.Controls.Add(this.button2);
             this.grpBookings.Controls.Add(this.button3);
             this.grpBookings.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grpBookings.Location = new System.Drawing.Point(449, 30);
             this.grpBookings.Name = "grpBookings";
-            this.grpBookings.Size = new System.Drawing.Size(296, 448);
+            this.grpBookings.Size = new System.Drawing.Size(296, 254);
             this.grpBookings.TabIndex = 6;
             this.grpBookings.TabStop = false;
             this.grpBookings.Text = "Bookings";
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(36, 194);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(226, 60);
-            this.button2.TabIndex = 1;
-            this.button2.Tag = "CancelBooking";
-            this.button2.Text = "Cancel Booking";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.HandleButtonClick);
             // 
             // button3
             // 
@@ -115,7 +102,7 @@
             this.button3.Size = new System.Drawing.Size(226, 60);
             this.button3.TabIndex = 0;
             this.button3.Tag = "AvailBooking";
-            this.button3.Text = "View Available Bookings";
+            this.button3.Text = "Booking Manager";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.HandleButtonClick);
             // 
@@ -141,7 +128,6 @@
         private System.Windows.Forms.Button btnAgent;
         private System.Windows.Forms.Button btnHotel;
         private System.Windows.Forms.GroupBox grpBookings;
-        private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
     }
 }

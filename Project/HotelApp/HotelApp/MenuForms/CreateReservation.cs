@@ -207,6 +207,7 @@ namespace HotelApp.MenuForms
 
                 EnableFieldEdit(false);
                 btnCreateBooking.Text = "Modify";
+                btnDelete.Enabled = false;
                 cmbGuests.Visible = false;
                 return;
             }
@@ -214,6 +215,10 @@ namespace HotelApp.MenuForms
             LoadGuests();
             LoadAgent();
             txtGuestName.Visible = false;
+            EnableFieldEdit(true);
+            btnDelete.Text = "Reset";
+            cmbRoomTypes.Enabled = false;
+            cmbRoomNumber.Enabled = false;
         }
 
         private void LoadFromBookingManager()
@@ -248,12 +253,12 @@ namespace HotelApp.MenuForms
                 return;
             }
 
-                selectedHotelID = (int)cmbHotel.SelectedValue;
+            selectedHotelID = (int)cmbHotel.SelectedValue;
 
-                LoadHotelDetails();
-                LoadRoomTypes();
-            cmbRoomNumber.SelectedIndex = 0;
+            LoadHotelDetails();
+            LoadRoomTypes();
             cmbRoomTypes.SelectedIndex = 0;
+            cmbRoomTypes.Enabled = true;
         }
 
         private void cmbRoomTypes_SelectionChangeCommitted(object sender, EventArgs e)
@@ -261,6 +266,7 @@ namespace HotelApp.MenuForms
             if( cmbRoomTypes.SelectedIndex == 0)
             {
                 cmbRoomNumber.Enabled = false;
+                cmbRoomNumber.SelectedValue = DBNull.Value;
                 return;
             }
 
@@ -305,6 +311,7 @@ namespace HotelApp.MenuForms
                     EnableFieldEdit(true);
                     btnCreateBooking.Text = "Save";
                     btnDelete.Text = "Cancel";
+                    btnDelete.Enabled = true;
                     return;
                 }
                 else if (btnCreateBooking.Text == "Save")
@@ -331,8 +338,34 @@ namespace HotelApp.MenuForms
                     LoadFromBookingManager();
                     EnableFieldEdit(false);
                     btnCreateBooking.Text = "Modify";
+                    btnDelete.Enabled = false;
                     return;
                 }
+            }
+            else if(btnDelete.Text == "Reset")
+            {
+                cmbGuests.SelectedValue = DBNull.Value;
+                cmbHotel.SelectedValue = DBNull.Value;
+                cmbRoomNumber.SelectedValue = DBNull.Value;
+                cmbRoomTypes.SelectedValue = DBNull.Value;
+                dteArrival.Text = DateTime.Now.ToString();
+                dteDeparture.Text = DateTime.Now.ToString();
+
+                cmbRoomTypes.Enabled = false;
+                cmbRoomNumber.Enabled = false;
+            }
+            else
+            {
+              DialogResult result = MessageBox.Show("Are you sure you wish to delete this record?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+                if(result == DialogResult.Yes)
+                {
+                    DeleteBooking();
+                }
+                else
+                {
+                    MessageBox.Show("Booking was not deleted.", "Canceled Delete");
+                }
+                
             }
         }
 
@@ -367,6 +400,24 @@ namespace HotelApp.MenuForms
             else
             {
                 MessageBox.Show("Failed to update booking", "Failure");
+            }
+        }
+
+        private void DeleteBooking()
+        {
+            string sqlDelete = $"DELETE FROM Booking WHERE BookingID = {currentBookingID};";
+
+            int rowsAffected = DataAccess.ExecuteNonQuery(sqlDelete);
+
+            if(rowsAffected == 1)
+            {
+                MessageBox.Show("Booking was successfully deleted! This form will now close...", "Delete Successful");
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Booking failed to delete!", "Error");
+                return;
             }
         }
 
@@ -428,6 +479,6 @@ namespace HotelApp.MenuForms
             return (currentGuestID != 0 && currentHotelID != 0 && currentRoomTypeID != 0 && currentRoomID != 0);
         }
 
-       
+        
     }
 }

@@ -222,6 +222,7 @@ namespace HotelApp.MenuForms
             string currentDeparture = currentRow.Cells["Departure"].Value.ToString();
 
             CreateReservation currentReservation = new CreateReservation(currentGuestID, currentHotelID, currentRoomTypeID, currentRoomID, currentAgentID, currentArrival, currentDeparture);
+
             currentReservation.ShowDialog();
         }
     }
