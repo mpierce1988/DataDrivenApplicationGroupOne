@@ -991,7 +991,6 @@ WHERE CurrentHotelID = {currentHotelID}
 
 
         #endregion
-
         
     }
 }

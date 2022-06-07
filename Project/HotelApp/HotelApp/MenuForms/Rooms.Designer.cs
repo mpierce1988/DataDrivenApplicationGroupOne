@@ -38,6 +38,7 @@
             this.txtDescription = new System.Windows.Forms.TextBox();
             this.lblSelectedRoomType = new System.Windows.Forms.Label();
             this.btnCancelDelete = new System.Windows.Forms.Button();
+            this.btnClose = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRooms)).BeginInit();
             this.SuspendLayout();
             // 
@@ -140,11 +141,22 @@
             this.btnCancelDelete.UseVisualStyleBackColor = true;
             this.btnCancelDelete.Click += new System.EventHandler(this.btnCancelDelete_Click);
             // 
+            // btnClose
+            // 
+            this.btnClose.Location = new System.Drawing.Point(348, 442);
+            this.btnClose.Name = "btnClose";
+            this.btnClose.Size = new System.Drawing.Size(114, 59);
+            this.btnClose.TabIndex = 10;
+            this.btnClose.Text = "Close";
+            this.btnClose.UseVisualStyleBackColor = true;
+            this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            // 
             // Rooms
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 525);
+            this.Controls.Add(this.btnClose);
             this.Controls.Add(this.btnCancelDelete);
             this.Controls.Add(this.lblSelectedRoomType);
             this.Controls.Add(this.txtDescription);
@@ -156,6 +168,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cboHotel);
             this.Name = "Rooms";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Rooms";
             this.Load += new System.EventHandler(this.Rooms_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvRooms)).EndInit();
@@ -176,5 +189,6 @@
         private System.Windows.Forms.TextBox txtDescription;
         private System.Windows.Forms.Label lblSelectedRoomType;
         private System.Windows.Forms.Button btnCancelDelete;
+        private System.Windows.Forms.Button btnClose;
     }
 }

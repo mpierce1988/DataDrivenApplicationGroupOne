@@ -466,6 +466,19 @@ WHERE HotelID = {hotelID}".Replace(Environment.NewLine, " ");
         }
 
         #endregion
+
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DialogResult = DialogResult.OK;
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().ToString());
+            }
+        }
     }
 
 }
