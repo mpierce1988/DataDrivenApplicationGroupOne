@@ -71,18 +71,6 @@ namespace HotelApp
             progressBar.Value = progressBar.Maximum;
         }
 
-<<<<<<< HEAD
-        /// <summary>
-        /// Sets a reference the parent MDI container MainForm for use in 
-        /// UI Utility methods such as DisplayInStatusStrip
-        /// </summary>
-        /// <param name="theMainForm"></param>
-        public static void SetMainFormForUIUtilities(MainForm theMainForm)
-        {
-            mainForm = theMainForm;
-        }
-
-
         /// <summary>
         /// Displays a message in one of the three toolstrips on the MainForm MDI container
         /// </summary>
@@ -91,13 +79,13 @@ namespace HotelApp
         public static void DisplayInStatusStrip(int labelNum, string msg)
         {
             // make sure we have a reference to the MainForm
-            if(mainForm == null)
+            if (mainForm == null)
             {
                 return;
             }
 
             // make sure labelNum is zero, one or two
-            if(labelNum > 2 || labelNum < 0)
+            if (labelNum > 2 || labelNum < 0)
             {
                 return;
             }
@@ -152,12 +140,22 @@ namespace HotelApp
                     mainForm.toolStripStatusLabel2.ForeColor = color;
                     break;
             }
-=======
+        }
+
+        /// <summary>
+        /// Sets a reference the parent MDI container MainForm for use in 
+        /// UI Utility methods such as DisplayInStatusStrip
+        /// </summary>
+        /// <param name="theMainForm"></param>
+        public static void SetMainFormForUIUtilities(MainForm theMainForm)
+        {
+            mainForm = theMainForm;
+        }
+
      
         public static bool ValidateDate(DateTime value)
         {
            return value > DateTime.Now ? true : false;
->>>>>>> seb_branch
         }
 
         #endregion
