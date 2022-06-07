@@ -295,6 +295,10 @@ namespace HotelApp.MenuForms
             {
                 if (cmbHotel.SelectedIndex == 0)
                 {
+                    cmbRoomTypes.SelectedValue = DBNull.Value;
+                    cmbRoomNumber.SelectedValue = DBNull.Value;
+                    cmbRoomTypes.Enabled = false;
+                    cmbRoomNumber.Enabled = false;
                     return;
                 }
 
@@ -303,7 +307,9 @@ namespace HotelApp.MenuForms
                 LoadHotelDetails();
                 LoadRoomTypes();
                 cmbRoomTypes.SelectedIndex = 0;
+                cmbRoomNumber.SelectedValue = 0;
                 cmbRoomTypes.Enabled = true;
+                cmbRoomNumber.Enabled = false;
             }
             catch (Exception ex)
             {
@@ -409,6 +415,9 @@ namespace HotelApp.MenuForms
                         btnCreateBooking.Text = "Save";
                         btnDelete.Text = "Cancel";
                         btnDelete.Enabled = true;
+                        cmbRoomTypes.SelectedValue = DBNull.Value;
+                        cmbRoomNumber.SelectedValue = DBNull.Value;
+                        cmbRoomNumber.Enabled = false;
                         return;
                     }
                     else if (btnCreateBooking.Text == "Save")
@@ -491,20 +500,30 @@ namespace HotelApp.MenuForms
         /// </summary>
         private void CreateBooking()
         {
-            string sqlCreateBooking = $@"INSERT INTO Booking (AgentID, RoomID, GuestID, ArrivalDate, DepartureDate)
+            if(UIUtilities.ValidateDate(Convert.ToDateTime(dteArrival.Text)) && UIUtilities.ValidateDate(Convert.ToDateTime(dteDeparture.Text)))
+            {
+                string sqlCreateBooking = $@"INSERT INTO Booking (AgentID, RoomID, GuestID, ArrivalDate, DepartureDate)
                                         VALUES
                                         ({selectedAgentID}, {cmbRoomNumber.SelectedValue}, {cmbGuests.SelectedValue}, '{Convert.ToDateTime(dteArrival.Text)}', '{Convert.ToDateTime(dteDeparture.Text)}'); ";
 
-            int rowsAffected = DataAccess.ExecuteNonQuery(sqlCreateBooking);
+                int rowsAffected = DataAccess.ExecuteNonQuery(sqlCreateBooking);
 
-            if (rowsAffected == 1)
-            {
-                MessageBox.Show("Booking has been created!", "Success");
+                if (rowsAffected == 1)
+                {
+                    MessageBox.Show("Booking has been created!", "Success");
+                }
+                else
+                {
+                    MessageBox.Show("Booking Failed!", "Failure");
+                }
             }
             else
             {
-                MessageBox.Show("Booking Failed!", "Failure");
+                MessageBox.Show("You must select a date in the future.", "Cannot book on a past date");
+                return;
             }
+
+
         }
 
         /// <summary>
