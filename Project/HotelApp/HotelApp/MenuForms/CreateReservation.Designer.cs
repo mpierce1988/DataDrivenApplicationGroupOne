@@ -92,7 +92,7 @@
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(117, 543);
+            this.label7.Location = new System.Drawing.Point(124, 546);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(105, 17);
             this.label7.TabIndex = 8;
@@ -101,7 +101,7 @@
             // dteArrival
             // 
             this.dteArrival.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dteArrival.Location = new System.Drawing.Point(121, 568);
+            this.dteArrival.Location = new System.Drawing.Point(128, 571);
             this.dteArrival.Name = "dteArrival";
             this.dteArrival.Size = new System.Drawing.Size(368, 23);
             this.dteArrival.TabIndex = 11;
@@ -109,7 +109,7 @@
             // dteDeparture
             // 
             this.dteDeparture.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dteDeparture.Location = new System.Drawing.Point(597, 568);
+            this.dteDeparture.Location = new System.Drawing.Point(597, 571);
             this.dteDeparture.Name = "dteDeparture";
             this.dteDeparture.Size = new System.Drawing.Size(366, 23);
             this.dteDeparture.TabIndex = 13;
@@ -118,7 +118,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(593, 543);
+            this.label6.Location = new System.Drawing.Point(593, 546);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(131, 17);
             this.label6.TabIndex = 12;
@@ -127,7 +127,7 @@
             // btnDelete
             // 
             this.btnDelete.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnDelete.Location = new System.Drawing.Point(376, 615);
+            this.btnDelete.Location = new System.Drawing.Point(376, 621);
             this.btnDelete.Name = "btnDelete";
             this.btnDelete.Size = new System.Drawing.Size(142, 42);
             this.btnDelete.TabIndex = 41;
@@ -138,7 +138,7 @@
             // btnCreateBooking
             // 
             this.btnCreateBooking.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnCreateBooking.Location = new System.Drawing.Point(577, 615);
+            this.btnCreateBooking.Location = new System.Drawing.Point(577, 621);
             this.btnCreateBooking.Name = "btnCreateBooking";
             this.btnCreateBooking.Size = new System.Drawing.Size(142, 42);
             this.btnCreateBooking.TabIndex = 42;
@@ -149,7 +149,7 @@
             // txtGuestEmail
             // 
             this.txtGuestEmail.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtGuestEmail.Location = new System.Drawing.Point(9, 99);
+            this.txtGuestEmail.Location = new System.Drawing.Point(21, 101);
             this.txtGuestEmail.Name = "txtGuestEmail";
             this.txtGuestEmail.ReadOnly = true;
             this.txtGuestEmail.Size = new System.Drawing.Size(368, 23);
@@ -159,7 +159,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(5, 78);
+            this.label4.Location = new System.Drawing.Point(17, 80);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(52, 17);
             this.label4.TabIndex = 4;
@@ -169,7 +169,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(5, 26);
+            this.label3.Location = new System.Drawing.Point(17, 28);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(108, 17);
             this.label3.TabIndex = 2;
@@ -179,7 +179,7 @@
             // 
             this.cmbGuests.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbGuests.FormattingEnabled = true;
-            this.cmbGuests.Location = new System.Drawing.Point(8, 47);
+            this.cmbGuests.Location = new System.Drawing.Point(20, 49);
             this.cmbGuests.Name = "cmbGuests";
             this.cmbGuests.Size = new System.Drawing.Size(368, 24);
             this.cmbGuests.TabIndex = 20;
@@ -194,7 +194,7 @@
             this.grpGuestDetails.Controls.Add(this.label3);
             this.grpGuestDetails.Controls.Add(this.label4);
             this.grpGuestDetails.Controls.Add(this.txtGuestEmail);
-            this.grpGuestDetails.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpGuestDetails.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grpGuestDetails.Location = new System.Drawing.Point(109, 35);
             this.grpGuestDetails.Name = "grpGuestDetails";
             this.grpGuestDetails.Size = new System.Drawing.Size(420, 195);
@@ -205,7 +205,7 @@
             // txtGuestName
             // 
             this.txtGuestName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtGuestName.Location = new System.Drawing.Point(7, 48);
+            this.txtGuestName.Location = new System.Drawing.Point(19, 50);
             this.txtGuestName.Name = "txtGuestName";
             this.txtGuestName.ReadOnly = true;
             this.txtGuestName.Size = new System.Drawing.Size(368, 23);
@@ -214,7 +214,7 @@
             // txtPhoneGuest
             // 
             this.txtPhoneGuest.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPhoneGuest.Location = new System.Drawing.Point(8, 155);
+            this.txtPhoneGuest.Location = new System.Drawing.Point(20, 157);
             this.txtPhoneGuest.Name = "txtPhoneGuest";
             this.txtPhoneGuest.ReadOnly = true;
             this.txtPhoneGuest.Size = new System.Drawing.Size(367, 23);
@@ -224,7 +224,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(4, 132);
+            this.label9.Location = new System.Drawing.Point(16, 134);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(59, 17);
             this.label9.TabIndex = 44;
@@ -241,10 +241,10 @@
             this.grpHotelDetails.Controls.Add(this.label13);
             this.grpHotelDetails.Controls.Add(this.label14);
             this.grpHotelDetails.Controls.Add(this.txtLocation);
-            this.grpHotelDetails.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpHotelDetails.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grpHotelDetails.Location = new System.Drawing.Point(569, 35);
             this.grpHotelDetails.Name = "grpHotelDetails";
-            this.grpHotelDetails.Size = new System.Drawing.Size(420, 352);
+            this.grpHotelDetails.Size = new System.Drawing.Size(420, 356);
             this.grpHotelDetails.TabIndex = 46;
             this.grpHotelDetails.TabStop = false;
             this.grpHotelDetails.Text = "Hotel Details";
@@ -252,7 +252,7 @@
             // txtHotel
             // 
             this.txtHotel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtHotel.Location = new System.Drawing.Point(9, 62);
+            this.txtHotel.Location = new System.Drawing.Point(28, 47);
             this.txtHotel.Name = "txtHotel";
             this.txtHotel.ReadOnly = true;
             this.txtHotel.Size = new System.Drawing.Size(368, 23);
@@ -261,7 +261,7 @@
             // txtAmentities
             // 
             this.txtAmentities.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAmentities.Location = new System.Drawing.Point(11, 206);
+            this.txtAmentities.Location = new System.Drawing.Point(30, 191);
             this.txtAmentities.Name = "txtAmentities";
             this.txtAmentities.ReadOnly = true;
             this.txtAmentities.Size = new System.Drawing.Size(367, 23);
@@ -271,7 +271,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(7, 185);
+            this.label8.Location = new System.Drawing.Point(26, 170);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(78, 17);
             this.label8.TabIndex = 48;
@@ -281,7 +281,7 @@
             // txtPhoneHotel
             // 
             this.txtPhoneHotel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPhoneHotel.Location = new System.Drawing.Point(11, 158);
+            this.txtPhoneHotel.Location = new System.Drawing.Point(30, 143);
             this.txtPhoneHotel.Name = "txtPhoneHotel";
             this.txtPhoneHotel.ReadOnly = true;
             this.txtPhoneHotel.Size = new System.Drawing.Size(367, 23);
@@ -291,7 +291,7 @@
             // 
             this.label12.AutoSize = true;
             this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(7, 137);
+            this.label12.Location = new System.Drawing.Point(26, 122);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(59, 17);
             this.label12.TabIndex = 44;
@@ -301,7 +301,7 @@
             // 
             this.cmbHotel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbHotel.FormattingEnabled = true;
-            this.cmbHotel.Location = new System.Drawing.Point(9, 62);
+            this.cmbHotel.Location = new System.Drawing.Point(28, 47);
             this.cmbHotel.Name = "cmbHotel";
             this.cmbHotel.Size = new System.Drawing.Size(368, 24);
             this.cmbHotel.TabIndex = 20;
@@ -311,7 +311,7 @@
             // 
             this.label13.AutoSize = true;
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(6, 41);
+            this.label13.Location = new System.Drawing.Point(25, 26);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(57, 17);
             this.label13.TabIndex = 2;
@@ -321,7 +321,7 @@
             // 
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(6, 89);
+            this.label14.Location = new System.Drawing.Point(25, 74);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(75, 17);
             this.label14.TabIndex = 4;
@@ -330,7 +330,7 @@
             // txtLocation
             // 
             this.txtLocation.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtLocation.Location = new System.Drawing.Point(10, 110);
+            this.txtLocation.Location = new System.Drawing.Point(29, 95);
             this.txtLocation.Name = "txtLocation";
             this.txtLocation.ReadOnly = true;
             this.txtLocation.Size = new System.Drawing.Size(368, 23);
@@ -345,7 +345,7 @@
             this.grpRoomDetails.Controls.Add(this.label10);
             this.grpRoomDetails.Controls.Add(this.label11);
             this.grpRoomDetails.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpRoomDetails.Location = new System.Drawing.Point(109, 227);
+            this.grpRoomDetails.Location = new System.Drawing.Point(109, 231);
             this.grpRoomDetails.Name = "grpRoomDetails";
             this.grpRoomDetails.Size = new System.Drawing.Size(420, 160);
             this.grpRoomDetails.TabIndex = 46;
@@ -355,7 +355,7 @@
             // txtRoomNumber
             // 
             this.txtRoomNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtRoomNumber.Location = new System.Drawing.Point(6, 114);
+            this.txtRoomNumber.Location = new System.Drawing.Point(18, 113);
             this.txtRoomNumber.Name = "txtRoomNumber";
             this.txtRoomNumber.ReadOnly = true;
             this.txtRoomNumber.Size = new System.Drawing.Size(368, 23);
@@ -364,7 +364,7 @@
             // txtRoomType
             // 
             this.txtRoomType.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtRoomType.Location = new System.Drawing.Point(7, 52);
+            this.txtRoomType.Location = new System.Drawing.Point(19, 51);
             this.txtRoomType.Name = "txtRoomType";
             this.txtRoomType.ReadOnly = true;
             this.txtRoomType.Size = new System.Drawing.Size(368, 23);
@@ -374,7 +374,7 @@
             // 
             this.cmbRoomNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbRoomNumber.FormattingEnabled = true;
-            this.cmbRoomNumber.Location = new System.Drawing.Point(11, 113);
+            this.cmbRoomNumber.Location = new System.Drawing.Point(23, 112);
             this.cmbRoomNumber.Name = "cmbRoomNumber";
             this.cmbRoomNumber.Size = new System.Drawing.Size(362, 24);
             this.cmbRoomNumber.TabIndex = 46;
@@ -384,7 +384,7 @@
             // 
             this.cmbRoomTypes.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbRoomTypes.FormattingEnabled = true;
-            this.cmbRoomTypes.Location = new System.Drawing.Point(6, 51);
+            this.cmbRoomTypes.Location = new System.Drawing.Point(18, 50);
             this.cmbRoomTypes.Name = "cmbRoomTypes";
             this.cmbRoomTypes.Size = new System.Drawing.Size(368, 24);
             this.cmbRoomTypes.TabIndex = 20;
@@ -394,7 +394,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label10.Location = new System.Drawing.Point(3, 30);
+            this.label10.Location = new System.Drawing.Point(15, 29);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(101, 17);
             this.label10.TabIndex = 2;
@@ -404,7 +404,7 @@
             // 
             this.label11.AutoSize = true;
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(6, 93);
+            this.label11.Location = new System.Drawing.Point(18, 92);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(129, 17);
             this.label11.TabIndex = 4;
@@ -420,8 +420,8 @@
             this.grpAgent.Controls.Add(this.label5);
             this.grpAgent.Controls.Add(this.label15);
             this.grpAgent.Controls.Add(this.txtAgentEmail);
-            this.grpAgent.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpAgent.Location = new System.Drawing.Point(109, 394);
+            this.grpAgent.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpAgent.Location = new System.Drawing.Point(109, 397);
             this.grpAgent.Name = "grpAgent";
             this.grpAgent.Size = new System.Drawing.Size(880, 135);
             this.grpAgent.TabIndex = 46;
@@ -450,7 +450,7 @@
             // txtAgentName
             // 
             this.txtAgentName.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAgentName.Location = new System.Drawing.Point(7, 46);
+            this.txtAgentName.Location = new System.Drawing.Point(18, 46);
             this.txtAgentName.Name = "txtAgentName";
             this.txtAgentName.ReadOnly = true;
             this.txtAgentName.Size = new System.Drawing.Size(368, 23);
@@ -479,7 +479,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(5, 23);
+            this.label5.Location = new System.Drawing.Point(16, 23);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(107, 17);
             this.label5.TabIndex = 2;
@@ -489,7 +489,7 @@
             // 
             this.label15.AutoSize = true;
             this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(8, 77);
+            this.label15.Location = new System.Drawing.Point(15, 77);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(52, 17);
             this.label15.TabIndex = 4;
@@ -498,7 +498,7 @@
             // txtAgentEmail
             // 
             this.txtAgentEmail.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAgentEmail.Location = new System.Drawing.Point(12, 98);
+            this.txtAgentEmail.Location = new System.Drawing.Point(19, 98);
             this.txtAgentEmail.Name = "txtAgentEmail";
             this.txtAgentEmail.ReadOnly = true;
             this.txtAgentEmail.Size = new System.Drawing.Size(368, 23);
@@ -507,7 +507,7 @@
             // txtArrival
             // 
             this.txtArrival.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtArrival.Location = new System.Drawing.Point(121, 568);
+            this.txtArrival.Location = new System.Drawing.Point(128, 571);
             this.txtArrival.Name = "txtArrival";
             this.txtArrival.ReadOnly = true;
             this.txtArrival.Size = new System.Drawing.Size(368, 23);
@@ -516,7 +516,7 @@
             // txtDeparture
             // 
             this.txtDeparture.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtDeparture.Location = new System.Drawing.Point(597, 568);
+            this.txtDeparture.Location = new System.Drawing.Point(597, 571);
             this.txtDeparture.Name = "txtDeparture";
             this.txtDeparture.ReadOnly = true;
             this.txtDeparture.Size = new System.Drawing.Size(368, 23);

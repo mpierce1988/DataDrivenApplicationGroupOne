@@ -29,6 +29,7 @@ namespace HotelApp.MenuForms
             LoadHotels();
         }
 
+        #region Load Data
 
         /// <summary>
         /// Loads sql query table hotel into the cmbHotel combo box
@@ -124,6 +125,42 @@ namespace HotelApp.MenuForms
 
         }
 
+        /// <summary>
+        /// Retrieves and passed ID's from dgv into reservation form. used on modify button click and cell double click.
+        /// </summary>
+        private void ModifySelectedRecord()
+        {
+            if (dgvBookings.CurrentRow == null)
+            {
+                MessageBox.Show("You must first select a booking to modify from the list.", "No selection", default, MessageBoxIcon.Error);
+                return;
+            }
+
+            //Retrieving ID's required to keep track of booking details to pre load the reservation form when modifying.
+            DataGridViewRow currentRow = dgvBookings.CurrentRow;
+
+            if (currentRow.Cells.Count == 0)
+            {
+                MessageBox.Show("Please select a valid booking.", "Invalid selection", default, MessageBoxIcon.Error);
+                return;
+            }
+            int currentGuestID = (int)currentRow.Cells["GuestID"].Value;
+            int currentHotelID = (int)currentRow.Cells["HotelID"].Value;
+            int currentRoomTypeID = (int)currentRow.Cells["RoomTypeID"].Value;
+            int currentRoomID = (int)currentRow.Cells["RoomID"].Value;
+            int currentAgentID = (int)currentRow.Cells["AgentID"].Value;
+            string currentArrival = currentRow.Cells["Arrival"].Value.ToString();
+            string currentDeparture = currentRow.Cells["Departure"].Value.ToString();
+
+            //passing data into reservation form.
+            CreateReservation currentReservation = new CreateReservation(currentGuestID, currentHotelID, currentRoomTypeID, currentRoomID, currentAgentID, currentArrival, currentDeparture);
+
+            currentReservation.ShowDialog();
+        }
+
+        #endregion
+
+        #region Event Handler
         private void cmbHotel_SelectionChangeCommitted(object sender, EventArgs e)
         {
             try
@@ -310,37 +347,7 @@ namespace HotelApp.MenuForms
             }
         }
 
-        /// <summary>
-        /// Retrieves and passed ID's from dgv into reservation form.
-        /// </summary>
-        private void ModifySelectedRecord()
-        {
-            if (dgvBookings.CurrentRow == null)
-            {
-                MessageBox.Show("You must first select a booking to modify from the list.", "No selection", default, MessageBoxIcon.Error);
-                return;
-            }
+        #endregion
 
-            //Retrieving ID's required to keep track of booking details to pre load the reservation form when modifying.
-            DataGridViewRow currentRow = dgvBookings.CurrentRow;
-
-            if(currentRow.Cells.Count == 0)
-            {
-                MessageBox.Show("Please select a valid booking.", "Invalid selection", default, MessageBoxIcon.Error);
-                return;
-            }
-            int currentGuestID = (int)currentRow.Cells["GuestID"].Value;
-            int currentHotelID = (int)currentRow.Cells["HotelID"].Value;
-            int currentRoomTypeID = (int)currentRow.Cells["RoomTypeID"].Value;
-            int currentRoomID = (int)currentRow.Cells["RoomID"].Value;
-            int currentAgentID = (int)currentRow.Cells["AgentID"].Value;
-            string currentArrival = currentRow.Cells["Arrival"].Value.ToString();
-            string currentDeparture = currentRow.Cells["Departure"].Value.ToString();
-
-            //passing data into reservation form.
-            CreateReservation currentReservation = new CreateReservation(currentGuestID, currentHotelID, currentRoomTypeID, currentRoomID, currentAgentID, currentArrival, currentDeparture);
-
-            currentReservation.ShowDialog();
-        }
     }
 }

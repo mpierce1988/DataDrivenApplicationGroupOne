@@ -220,11 +220,40 @@ namespace HotelApp.MenuForms
             txtPhoneGuest.Text = Values["PhoneNumber"].ToString();
         }
 
+        /// <summary>
+        /// Get values from the booking manager and assign them to selected variables. 
+        /// Then load details for each table into their fields calling the created methods and assinging selected value on combo boxes.
+        /// </summary>
+        private void LoadFromBookingManager()
+        {
+            selectedGuestID = currentGuestID;
+            selectedHotelID = currentHotelID;
+            selectedRoomID = currentRoomID;
+            selectedRoomTypeID = currentRoomTypeID;
+
+            cmbGuests.SelectedValue = currentGuestID;
+            cmbHotel.SelectedValue = currentHotelID;
+
+
+            LoadGuestDetails();
+            LoadHotelDetails();
+            LoadRoomTypes();
+            LoadRooms();
+
+
+            cmbRoomTypes.SelectedValue = currentRoomTypeID;
+            cmbRoomNumber.SelectedValue = currentRoomID;
+            LoadBooking();
+
+            cmbGuests.Visible = false;
+        }
+
         #endregion
 
-        
+        #region Event Handler
+
         /// <summary>
-        /// When form loads load dara into combo boxes. If booking is pre-existing allow for modification/deletion of 
+        /// When form loads load data into combo boxes. If booking is pre-existing allow for modification/deletion of 
         /// pre existing fields otherwise start a fresh form with create function.
         /// </summary>
         /// <param name="sender"></param>
@@ -253,33 +282,7 @@ namespace HotelApp.MenuForms
             cmbRoomTypes.Enabled = false;
             cmbRoomNumber.Enabled = false;
         }
-        /// <summary>
-        /// Get values from the booking manager and assign them to selected variables. 
-        /// Then load details for each table into their fields calling the created methods and assinging selected value on combo boxes.
-        /// </summary>
-        private void LoadFromBookingManager()
-        {
-            selectedGuestID = currentGuestID;
-            selectedHotelID = currentHotelID;
-            selectedRoomID = currentRoomID;
-            selectedRoomTypeID = currentRoomTypeID;
 
-            cmbGuests.SelectedValue = currentGuestID;
-            cmbHotel.SelectedValue = currentHotelID;
-
-
-            LoadGuestDetails();
-            LoadHotelDetails();
-            LoadRoomTypes();
-            LoadRooms();
-
-
-            cmbRoomTypes.SelectedValue = currentRoomTypeID;
-            cmbRoomNumber.SelectedValue = currentRoomID;
-            LoadBooking();
-
-            cmbGuests.Visible = false;
-        }
 
         /// <summary>
         /// Tracks which hotel was selected in the fropdown and loads the related paramaters.
@@ -413,7 +416,7 @@ namespace HotelApp.MenuForms
                         UpdateBooking();
                         return;
                     }
-                    AddBooking();
+                    CreateBooking();
                 }
                 else
                 {
@@ -478,10 +481,15 @@ namespace HotelApp.MenuForms
             }
 
         }
+
+        #endregion
+
+        #region CReate, Update, Delete
+
         /// <summary>
         /// Adds a booking to the database based on user selection and gives user a notification on success/failure.
         /// </summary>
-        private void AddBooking()
+        private void CreateBooking()
         {
             string sqlCreateBooking = $@"INSERT INTO Booking (AgentID, RoomID, GuestID, ArrivalDate, DepartureDate)
                                         VALUES
@@ -538,6 +546,10 @@ namespace HotelApp.MenuForms
                 return;
             }
         }
+
+        #endregion
+
+        #region Validation
 
         /// <summary>
         /// Checks to make sure not of the required values are null and returns a bool based on pass or fail.
@@ -609,6 +621,7 @@ namespace HotelApp.MenuForms
             return (currentGuestID != 0 && currentHotelID != 0 && currentRoomTypeID != 0 && currentRoomID != 0);
         }
 
-        
+        #endregion
+
     }
 }
