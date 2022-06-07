@@ -35,6 +35,7 @@ namespace HotelApp.MenuForms
             try
             {
                 Setup();
+                UIUtilities.DisplayInStatusStrip(0, $"User {AuthenticationHelper.UserName} is logged in");
             }
             catch (Exception ex) 
             {
@@ -272,6 +273,17 @@ namespace HotelApp.MenuForms
                 Rooms rooms = new Rooms(currentHotelID);
 
                 rooms.ShowDialog();
+
+                if(rooms.DialogResult == DialogResult.OK)
+                {
+                    // reload current hotelinformation after changing rooms
+                    LoadHotelInformation();
+
+                    // reset status label 2
+                    UIUtilities.DisplayInStatusStrip(1, $"Currently viewing record {currentPosition} or {totalHotels}");
+                }
+
+
 
             }
             catch (Exception ex)
@@ -896,6 +908,24 @@ VALUES
 
             // set radio buttons state
             SetCheckboxesFromAmenityResults(amenitiesResults);
+
+            // get number of rooms associated with this hotel
+            // create sql query to get number of rooms
+            string sqlNumRooms =
+                $"SELECT COUNT(RoomID) FROM Room WHERE HotelID = {currentHotelID}";
+
+            // save result to an int
+            int? numRooms = DataAccess.ExecuteScalar(sqlNumRooms) as int?;
+
+            
+            // null check
+            if (!numRooms.HasValue)
+            {
+                numRooms = 0;
+            }
+
+            // display number of rooms in txt field
+            txtRoomsAvailable.Text = numRooms.ToString();
 
             // set FirstPrevNextLast
             SetFirstPrevNextLastHotelID();
