@@ -295,6 +295,10 @@ namespace HotelApp.MenuForms
             {
                 if (cmbHotel.SelectedIndex == 0)
                 {
+                    cmbRoomTypes.SelectedValue = DBNull.Value;
+                    cmbRoomNumber.SelectedValue = DBNull.Value;
+                    cmbRoomTypes.Enabled = false;
+                    cmbRoomNumber.Enabled = false;
                     return;
                 }
 
@@ -303,7 +307,9 @@ namespace HotelApp.MenuForms
                 LoadHotelDetails();
                 LoadRoomTypes();
                 cmbRoomTypes.SelectedIndex = 0;
+                cmbRoomNumber.SelectedValue = 0;
                 cmbRoomTypes.Enabled = true;
+                cmbRoomNumber.Enabled = false;
             }
             catch (Exception ex)
             {
@@ -409,6 +415,9 @@ namespace HotelApp.MenuForms
                         btnCreateBooking.Text = "Save";
                         btnDelete.Text = "Cancel";
                         btnDelete.Enabled = true;
+                        cmbRoomTypes.SelectedValue = DBNull.Value;
+                        cmbRoomNumber.SelectedValue = DBNull.Value;
+                        cmbRoomNumber.Enabled = false;
                         return;
                     }
                     else if (btnCreateBooking.Text == "Save")
