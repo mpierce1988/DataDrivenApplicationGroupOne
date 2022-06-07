@@ -57,6 +57,9 @@ namespace HotelApp
 
                 currentAgent = frmLogin.userLoggedIn;
 
+                // register with UIUTilities
+                UIUtilities.SetMainFormForUIUtilities(this);
+
             }
             catch (Exception ex)
             {

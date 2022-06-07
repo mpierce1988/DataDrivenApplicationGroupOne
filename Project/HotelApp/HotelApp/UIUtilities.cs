@@ -11,6 +11,9 @@ namespace HotelApp
 {
     public static class UIUtilities
     {
+
+        private static MainForm mainForm;
+
         #region Static Methods
 
         /// <summary>
@@ -67,7 +70,44 @@ namespace HotelApp
             progressBar.Value = progressBar.Maximum;
         }
 
-     
+        /// <summary>
+        /// Sets a reference the parent MDI container MainForm for use in 
+        /// UI Utility methods such as DisplayInStatusStrip
+        /// </summary>
+        /// <param name="theMainForm"></param>
+        public static void SetMainFormForUIUtilities(MainForm theMainForm)
+        {
+            mainForm = theMainForm;
+        }
+
+        public static void DisplayInStatusStrip(int labelNum, string msg)
+        {
+            // make sure we have a reference to the MainForm
+            if(mainForm == null)
+            {
+                return;
+            }
+
+            // make sure labelNum is zero, one or two
+            if(labelNum > 2 || labelNum < 0)
+            {
+                return;
+            }
+
+            // set display message depending on labelNum
+            switch (labelNum)
+            {
+                case 0:
+                    mainForm.toolStripStatusLabel.Text = msg;
+                    break;
+                case 1:
+                    mainForm.toolStripStatusLabel1.Text = msg;
+                    break;
+                case 2:
+                    mainForm.toolStripStatusLabel2.Text = msg;
+                    break;
+            }
+        }
 
         #endregion
     }
