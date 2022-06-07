@@ -23,15 +23,19 @@ namespace HotelApp.MenuForms
         int currentHotelID;
         int currentRoomTypeID;
         int currentRoomID;
+        int currentBookingID;
         string currentArrival;
         string currentDeparture;
         
+        //Retrieves the username that was used to login. Functions using a chain
+        //of child/parent forms and passing in data from the login form to here.
         public CreateReservation(BookingManager form)
         {
             InitializeComponent();
             currentAgentUserName = form.currentAgent;
         }
 
+        //Retrieves the ID's that were passed in by the booking manager form and assigns it to variables.
         public CreateReservation(int guestID, int hotelID, int roomTypeID, int roomID, int agentID, string arrival, string departure)
         {
             InitializeComponent();
@@ -45,6 +49,9 @@ namespace HotelApp.MenuForms
         }
 
         #region LoadData
+        /// <summary>
+        /// Loads the hotels into the hotel combo box.
+        /// </summary>
         private void LoadHotels()
         {
             string sqlHotels = "SELECT HotelID, HotelName FROM Hotel ORDER BY HotelName ASC;";
@@ -54,6 +61,9 @@ namespace HotelApp.MenuForms
             UIUtilities.BindListControl(cmbHotel, "HotelID", "HotelName", dtHotels, true, "----Select a hotel----");
         }
 
+        /// <summary>
+        /// Loads the registered guests into the combo box.
+        /// </summary>
         private void LoadGuests()
         {
             string sqlGuests = "SELECT GuestID, (FirstName + ', ' + LastName) AS FullName FROM Guest ORDER BY FullName;";
@@ -63,6 +73,9 @@ namespace HotelApp.MenuForms
             UIUtilities.BindListControl(cmbGuests, "GuestID", "FullName", dtGuests, true, "----Select a Guest----");
         }
 
+        /// <summary>
+        /// Loads available room types into the combo box based on which hotel was picked
+        /// </summary>
         private void LoadRoomTypes()
         {
             string sqlRoomTypes = $@"SELECT Room.RoomTypeID, (RoomTypeName + ' - ' + RoomTypeDescription) AS RoomDesc 
@@ -76,6 +89,9 @@ namespace HotelApp.MenuForms
             UIUtilities.BindListControl(cmbRoomTypes, "RoomTypeID", "RoomDesc", dtRoomTypes, true, "----Select a RoomType----");
         }
 
+        /// <summary>
+        /// Load available rooms based on which room type was picked.
+        /// </summary>
         private void LoadRooms()
         {
             string sqlAvailableRooms = $"SELECT RoomID, ('Room #' + CONVERT(VARCHAR(10), RoomID)) AS RoomNumber FROM Room WHERE RoomTypeID = {selectedRoomTypeID};";
@@ -85,9 +101,12 @@ namespace HotelApp.MenuForms
             UIUtilities.BindListControl(cmbRoomNumber, "RoomID", "RoomNumber", dtAvailableRooms, true, "----Select a Room----");
         }
 
+        /// <summary>
+        /// Loads the booking based on selection made in booking manager
+        /// </summary>
         private void LoadBooking()
         {
-            string sqlBooking = $"SELECT ArrivalDate, DepartureDate FROM Booking WHERE AgentID = {selectedAgentID} AND RoomID = {currentRoomID} AND GuestID = {currentGuestID};";
+            string sqlBooking = $"SELECT BookingID, ArrivalDate, DepartureDate FROM Booking WHERE AgentID = {selectedAgentID} AND RoomID = {currentRoomID} AND GuestID = {currentGuestID};";
 
             DataTable dtBooking = DataAccess.GetData(sqlBooking);
 
@@ -95,8 +114,15 @@ namespace HotelApp.MenuForms
 
             dteArrival.Text  = booking["ArrivalDate"].ToString();
             dteDeparture.Text = booking["DepartureDate"].ToString();
+            currentBookingID = (int)booking["BookingID"];
+
         }
 
+        /// <summary>
+        /// Checks to see if a username was passed in. If username is empty 
+        /// means agent must be taken from booking manager otherwise assign logged in
+        /// agent.
+        /// </summary>
         private void LoadAgent()
         {
             if(currentAgentUserName == null)
@@ -149,7 +175,9 @@ namespace HotelApp.MenuForms
             
         }
 
-
+        /// <summary>
+        /// Loads the hotels details into textboxes baed on which hotel is selected.
+        /// </summary>
         private void LoadHotelDetails()
         {
             string sqlHotelDetails = $@"SELECT 
@@ -172,6 +200,9 @@ namespace HotelApp.MenuForms
             txtAmentities.Text = values["AmentityName"].ToString();
         }
 
+        /// <summary>
+        /// Loads the guest details for the selected guest
+        /// </summary>
         private void LoadGuestDetails()
         {
             string sqlGuestDetails = $@"SELECT 
@@ -189,15 +220,282 @@ namespace HotelApp.MenuForms
             txtPhoneGuest.Text = Values["PhoneNumber"].ToString();
         }
 
+        /// <summary>
+        /// Get values from the booking manager and assign them to selected variables. 
+        /// Then load details for each table into their fields calling the created methods and assinging selected value on combo boxes.
+        /// </summary>
+        private void LoadFromBookingManager()
+        {
+            selectedGuestID = currentGuestID;
+            selectedHotelID = currentHotelID;
+            selectedRoomID = currentRoomID;
+            selectedRoomTypeID = currentRoomTypeID;
+
+            cmbGuests.SelectedValue = currentGuestID;
+            cmbHotel.SelectedValue = currentHotelID;
+
+
+            LoadGuestDetails();
+            LoadHotelDetails();
+            LoadRoomTypes();
+            LoadRooms();
+
+
+            cmbRoomTypes.SelectedValue = currentRoomTypeID;
+            cmbRoomNumber.SelectedValue = currentRoomID;
+            LoadBooking();
+
+            cmbGuests.Visible = false;
+        }
+
         #endregion
 
-        private void AddBooking()
+        #region Event Handler
+
+        /// <summary>
+        /// When form loads load data into combo boxes. If booking is pre-existing allow for modification/deletion of 
+        /// pre existing fields otherwise start a fresh form with create function.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CreateReservation_Load(object sender, EventArgs e)
+        {
+            if(isExistingBooking())
+            {
+                LoadHotels();
+                LoadGuests();
+                LoadAgent();
+                LoadFromBookingManager();
+
+                EnableFieldEdit(false);
+                btnCreateBooking.Text = "Modify";
+                btnDelete.Enabled = false;
+                cmbGuests.Visible = false;
+                return;
+            }
+            LoadHotels();
+            LoadGuests();
+            LoadAgent();
+            txtGuestName.Visible = false;
+            EnableFieldEdit(true);
+            btnDelete.Text = "Reset";
+            cmbRoomTypes.Enabled = false;
+            cmbRoomNumber.Enabled = false;
+        }
+
+
+        /// <summary>
+        /// Tracks which hotel was selected in the fropdown and loads the related paramaters.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cmbHotel_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            try
+            {
+                if (cmbHotel.SelectedIndex == 0)
+                {
+                    return;
+                }
+
+                selectedHotelID = (int)cmbHotel.SelectedValue;
+
+                LoadHotelDetails();
+                LoadRoomTypes();
+                cmbRoomTypes.SelectedIndex = 0;
+                cmbRoomTypes.Enabled = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().ToString(), default, MessageBoxIcon.Error);
+            }
+
+        }
+
+        /// <summary>
+        /// Keeps tracks of which room type was selected and sets the value accordingly.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cmbRoomTypes_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            try
+            {
+                if (cmbRoomTypes.SelectedIndex == 0)
+                {
+                    cmbRoomNumber.Enabled = false;
+                    cmbRoomNumber.SelectedValue = DBNull.Value;
+                    return;
+                }
+
+                cmbRoomNumber.Enabled = true;
+
+                selectedRoomTypeID = (int)cmbRoomTypes.SelectedValue;
+
+                LoadRooms();
+
+                cmbRoomNumber.SelectedIndex = 0;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().ToString(), default, MessageBoxIcon.Error);
+            }
+
+        }
+
+        /// <summary>
+        /// Changes the guest details based on which guest is selected in the dropdown.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cmbGuests_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            try
+            {
+                if (cmbGuests.SelectedIndex == 0)
+                {
+                    txtGuestEmail.Text = "";
+                    txtPhoneGuest.Text = "";
+                    return;
+                }
+
+                selectedGuestID = (int)cmbGuests.SelectedValue;
+
+                LoadGuestDetails();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().ToString(), default, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// keeps track of the selected room, avoids null.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void cmbRoomNumber_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            try
+            {
+                if (cmbRoomNumber.SelectedValue == DBNull.Value)
+                {
+                    return;
+                }
+                selectedRoomID = (int)cmbRoomNumber.SelectedValue;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().ToString(), default, MessageBoxIcon.Error);
+            }
+
+        }
+
+        /// <summary>
+        /// Enables the editing fields on first click and changes button text. Allows modifying existing
+        /// records and adding new ones by calling methods.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnCreateBooking_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (ValidateModifyOrCreate())
+                {
+                    if (btnCreateBooking.Text == "Modify")
+                    {
+                        EnableFieldEdit(true);
+                        btnCreateBooking.Text = "Save";
+                        btnDelete.Text = "Cancel";
+                        btnDelete.Enabled = true;
+                        return;
+                    }
+                    else if (btnCreateBooking.Text == "Save")
+                    {
+                        UpdateBooking();
+                        return;
+                    }
+                    CreateBooking();
+                }
+                else
+                {
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().ToString(), default, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// Button can cancel pending modifications, reset the form when creating new reservations or delete bookings.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (btnDelete.Text == "Cancel")
+                {
+                    if (isExistingBooking())
+                    {
+                        //this resets the form back to the values obtained from the booking manager.
+                        LoadFromBookingManager();
+                        EnableFieldEdit(false);
+                        btnCreateBooking.Text = "Modify";
+                        btnDelete.Enabled = false;
+                        return;
+                    }
+                }
+                else if (btnDelete.Text == "Reset")
+                {
+                    cmbGuests.SelectedValue = DBNull.Value;
+                    cmbHotel.SelectedValue = DBNull.Value;
+                    cmbRoomNumber.SelectedValue = DBNull.Value;
+                    cmbRoomTypes.SelectedValue = DBNull.Value;
+                    dteArrival.Text = DateTime.Now.ToString();
+                    dteDeparture.Text = DateTime.Now.ToString();
+
+                    cmbRoomTypes.Enabled = false;
+                    cmbRoomNumber.Enabled = false;
+                }
+                else
+                {
+                    DialogResult result = MessageBox.Show("Are you sure you wish to delete this record?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+                    if (result == DialogResult.Yes)
+                    {
+                        DeleteBooking();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Booking was not deleted.", "Canceled Delete");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, ex.GetType().ToString(), default, MessageBoxIcon.Error);
+            }
+
+        }
+
+        #endregion
+
+        #region CReate, Update, Delete
+
+        /// <summary>
+        /// Adds a booking to the database based on user selection and gives user a notification on success/failure.
+        /// </summary>
+        private void CreateBooking()
         {
             string sqlCreateBooking = $@"INSERT INTO Booking (AgentID, RoomID, GuestID, ArrivalDate, DepartureDate)
                                         VALUES
                                         ({selectedAgentID}, {cmbRoomNumber.SelectedValue}, {cmbGuests.SelectedValue}, '{Convert.ToDateTime(dteArrival.Text)}', '{Convert.ToDateTime(dteDeparture.Text)}'); ";
 
-           int rowsAffected = DataAccess.ExecuteNonQuery(sqlCreateBooking);
+            int rowsAffected = DataAccess.ExecuteNonQuery(sqlCreateBooking);
 
             if (rowsAffected == 1)
             {
@@ -209,88 +507,121 @@ namespace HotelApp.MenuForms
             }
         }
 
-        private void CreateReservation_Load(object sender, EventArgs e)
+        /// <summary>
+        /// Updates the existing booking that was selected in booking manager and notifies user with a message of success/failure.
+        /// </summary>
+        private void UpdateBooking()
         {
-            if(currentGuestID != 0 && currentHotelID != 0 && currentRoomTypeID != 0 && currentRoomID != 0)
+            string sqlModify = $"UPDATE Booking SET RoomID = {cmbRoomNumber.SelectedValue}, ArrivalDate = '{Convert.ToDateTime(dteArrival.Text)}', DepartureDate = '{Convert.ToDateTime(dteDeparture.Text)}' WHERE BookingID = {currentBookingID};";
+
+            int rowsAffected = DataAccess.ExecuteNonQuery(sqlModify);
+
+            if (rowsAffected == 1)
             {
-                LoadHotels();
-                LoadGuests();
-                LoadAgent();
-                selectedGuestID = currentGuestID;
-                selectedHotelID = currentHotelID;
-                selectedRoomID = currentRoomID;
-                selectedRoomTypeID = currentRoomTypeID;
+                MessageBox.Show("Booking has been updated", "Success");
+            }
+            else
+            {
+                MessageBox.Show("Failed to update booking", "Failure");
+            }
+        }
 
-                cmbGuests.SelectedValue = currentGuestID;
-                cmbHotel.SelectedValue = currentHotelID;
+        /// <summary>
+        ///Deletes the existing booking that was selected in booking manager and notifies user with a message of success/failure.
+        /// </summary>
+        private void DeleteBooking()
+        {
+            string sqlDelete = $"DELETE FROM Booking WHERE BookingID = {currentBookingID};";
 
+            int rowsAffected = DataAccess.ExecuteNonQuery(sqlDelete);
 
-                LoadGuestDetails();
-                LoadHotelDetails();
-                LoadRoomTypes();
-                LoadRooms();
-
-
-                cmbRoomTypes.SelectedValue = currentRoomTypeID;
-                cmbRoomNumber.SelectedValue = currentRoomID;
-                LoadBooking();
+            if(rowsAffected == 1)
+            {
+                MessageBox.Show("Booking was successfully deleted! This form will now close...", "Delete Successful");
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Booking failed to delete!", "Error");
                 return;
             }
-            LoadHotels();
-            LoadGuests();
-            LoadAgent();
         }
 
-        private void cmbHotel_SelectionChangeCommitted(object sender, EventArgs e)
+        #endregion
+
+        #region Validation
+
+        /// <summary>
+        /// Checks to make sure not of the required values are null and returns a bool based on pass or fail.
+        /// </summary>
+        /// <returns></returns>
+        private bool ValidateModifyOrCreate()
         {
-            if(cmbHotel.SelectedIndex == 0)
+            if(cmbHotel.SelectedValue == DBNull.Value || cmbRoomNumber.SelectedValue == DBNull.Value || cmbRoomTypes.SelectedValue == DBNull.Value)
             {
-                return;
+                MessageBox.Show("You must make a selection for all fields", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+            
+            
+        }
+        /// <summary>
+        /// Enable/Disable user's ability to edit fields based on passed in bool state.
+        /// </summary>
+        /// <param name="state"></param>
+        private void EnableFieldEdit(bool state)
+        {
+            if (state == false)
+            {
+                cmbHotel.Visible = state;
+                cmbRoomNumber.Visible = state;
+                cmbRoomTypes.Visible = state;
+                dteArrival.Visible = state;
+                dteDeparture.Visible = state;
+                txtGuestName.Text = cmbGuests.Text;
+                txtHotel.Text = cmbHotel.Text;
+                txtRoomNumber.Text = cmbRoomNumber.Text;
+                txtRoomType.Text = cmbRoomTypes.Text;
+                txtArrival.Text = dteArrival.Text;
+                txtDeparture.Text = dteDeparture.Text;
+                txtGuestName.Visible = true;
+                txtHotel.Visible = true;
+                txtRoomNumber.Visible = true;
+                txtRoomType.Visible = true;
+                txtArrival.Visible = true;
+                txtDeparture.Visible = true;
+            }
+            else
+            {
+                cmbHotel.Visible = state;
+                cmbRoomNumber.Visible = state;
+                cmbRoomTypes.Visible = state;
+                dteArrival.Visible = state;
+                dteDeparture.Visible = state;
+                txtHotel.Visible = false;
+                txtRoomNumber.Visible = false;
+                txtRoomType.Visible = false;
+                txtArrival.Visible = false;
+                txtDeparture.Visible = false;
             }
 
-                selectedHotelID = (int)cmbHotel.SelectedValue;
-
-                LoadHotelDetails();
-                LoadRoomTypes();
         }
 
-        private void cmbRoomTypes_SelectionChangeCommitted(object sender, EventArgs e)
+        /// <summary>
+        /// Checks to see if user is trying to pull existing info from
+        /// booking manager or trying to start a new booking.
+        /// </summary>
+        /// <returns></returns>
+        private bool isExistingBooking()
         {
-            if( cmbRoomTypes.SelectedIndex == 0)
-            {
-                cmbRoomNumber.Enabled = false;
-                return;
-            }
-
-            cmbRoomNumber.Enabled = true;
-
-            selectedRoomTypeID = (int)cmbRoomTypes.SelectedValue;
-
-            LoadRooms();
+            return (currentGuestID != 0 && currentHotelID != 0 && currentRoomTypeID != 0 && currentRoomID != 0);
         }
 
-        private void cmbGuests_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-            if(cmbGuests.SelectedIndex == 0)
-            {
-                txtGuestEmail.Text = "";
-                txtPhoneGuest.Text = "";
-                return;
-            }
+        #endregion
 
-            selectedGuestID = (int)cmbGuests.SelectedValue;
-
-            LoadGuestDetails();
-        }
-
-        private void cmbRoomNumber_SelectionChangeCommitted(object sender, EventArgs e)
-        {
-            selectedRoomID = (int)cmbRoomNumber.SelectedValue;
-        }
-
-        private void btnCreateBooking_Click(object sender, EventArgs e)
-        {
-            AddBooking();
-        }
     }
 }

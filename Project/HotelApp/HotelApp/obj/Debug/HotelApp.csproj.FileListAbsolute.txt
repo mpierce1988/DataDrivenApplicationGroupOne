@@ -36,6 +36,9 @@ C:\Users\ramil\Documents\1.SPRING TERM\1.Database Programming\Team_work\Project\
 C:\Users\ramil\Documents\1.SPRING TERM\1.Database Programming\Team_work\Project\HotelApp\HotelApp\obj\Debug\HotelApp.csproj.CoreCompileInputs.cache
 C:\Users\ramil\Documents\1.SPRING TERM\1.Database Programming\Team_work\Project\HotelApp\HotelApp\obj\Debug\HotelApp.exe
 C:\Users\ramil\Documents\1.SPRING TERM\1.Database Programming\Team_work\Project\HotelApp\HotelApp\obj\Debug\HotelApp.pdb
+<<<<<<< HEAD
+C:\src\Spring 2022\Database Programming\DataDrivenApplicationGroupOne\Project\HotelApp\HotelApp\obj\Debug\HotelApp.Rooms.resources
+=======
 C:\Users\sebro\OneDrive\Desktop\NBCC\Term 3\Database Programming\Project\DataDrivenApplicationGroupOne\Project\HotelApp\HotelApp\bin\Debug\HotelApp.exe.config
 C:\Users\sebro\OneDrive\Desktop\NBCC\Term 3\Database Programming\Project\DataDrivenApplicationGroupOne\Project\HotelApp\HotelApp\bin\Debug\HotelApp.exe
 C:\Users\sebro\OneDrive\Desktop\NBCC\Term 3\Database Programming\Project\DataDrivenApplicationGroupOne\Project\HotelApp\HotelApp\bin\Debug\HotelApp.pdb
@@ -55,3 +58,5 @@ C:\Users\sebro\OneDrive\Desktop\NBCC\Term 3\Database Programming\Project\DataDri
 C:\Users\sebro\OneDrive\Desktop\NBCC\Term 3\Database Programming\Project\DataDrivenApplicationGroupOne\Project\HotelApp\HotelApp\obj\Debug\HotelApp.csproj.CoreCompileInputs.cache
 C:\Users\sebro\OneDrive\Desktop\NBCC\Term 3\Database Programming\Project\DataDrivenApplicationGroupOne\Project\HotelApp\HotelApp\obj\Debug\HotelApp.exe
 C:\Users\sebro\OneDrive\Desktop\NBCC\Term 3\Database Programming\Project\DataDrivenApplicationGroupOne\Project\HotelApp\HotelApp\obj\Debug\HotelApp.pdb
+>>>>>>> development_recovery_two
+C:\Users\sebro\OneDrive\Desktop\NBCC\Term 3\Database Programming\Project\DataDrivenApplicationGroupOne\Project\HotelApp\HotelApp\obj\Debug\HotelApp.Rooms.resources
