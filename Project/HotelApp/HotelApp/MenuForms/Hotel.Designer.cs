@@ -32,7 +32,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.cboHotel = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.label7 = new System.Windows.Forms.Label();
             this.txtPhone = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
@@ -60,7 +59,7 @@
             this.chkBreakfast = new System.Windows.Forms.CheckBox();
             this.label11 = new System.Windows.Forms.Label();
             this.errorProvider1 = new System.Windows.Forms.ErrorProvider(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.btnRoom = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -97,15 +96,6 @@
             this.label1.Size = new System.Drawing.Size(150, 25);
             this.label1.TabIndex = 6;
             this.label1.Text = "Choose Hotel:";
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Location = new System.Drawing.Point(51, 98);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(4);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(519, 262);
-            this.pictureBox1.TabIndex = 8;
-            this.pictureBox1.TabStop = false;
             // 
             // label7
             // 
@@ -405,12 +395,23 @@
             // 
             this.errorProvider1.ContainerControl = this;
             // 
+            // btnRoom
+            // 
+            this.btnRoom.Location = new System.Drawing.Point(49, 278);
+            this.btnRoom.Name = "btnRoom";
+            this.btnRoom.Size = new System.Drawing.Size(196, 58);
+            this.btnRoom.TabIndex = 84;
+            this.btnRoom.Text = "View Rooms";
+            this.btnRoom.UseVisualStyleBackColor = true;
+            this.btnRoom.Click += new System.EventHandler(this.btnRoom_Click);
+            // 
             // Hotel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnableAllowFocusChange;
             this.ClientSize = new System.Drawing.Size(1303, 844);
+            this.Controls.Add(this.btnRoom);
             this.Controls.Add(this.chkBreakfast);
             this.Controls.Add(this.label11);
             this.Controls.Add(this.btnCancelDelete);
@@ -437,7 +438,6 @@
             this.Controls.Add(this.label5);
             this.Controls.Add(this.txtCivicNumber);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.cboHotel);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label2);
@@ -445,7 +445,6 @@
             this.Name = "Hotel";
             this.Text = "Hotel";
             this.Load += new System.EventHandler(this.Hotel_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -457,7 +456,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox cboHotel;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.TextBox txtPhone;
         private System.Windows.Forms.Label label8;
@@ -485,5 +483,6 @@
         private System.Windows.Forms.CheckBox chkBreakfast;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.ErrorProvider errorProvider1;
+        private System.Windows.Forms.Button btnRoom;
     }
 }
