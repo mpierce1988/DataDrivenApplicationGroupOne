@@ -47,7 +47,7 @@
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(400, 24);
+            this.label1.Location = new System.Drawing.Point(427, 24);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(240, 31);
             this.label1.TabIndex = 0;
@@ -56,7 +56,7 @@
             // cmbHotel
             // 
             this.cmbHotel.FormattingEnabled = true;
-            this.cmbHotel.Location = new System.Drawing.Point(484, 83);
+            this.cmbHotel.Location = new System.Drawing.Point(482, 83);
             this.cmbHotel.Name = "cmbHotel";
             this.cmbHotel.Size = new System.Drawing.Size(217, 21);
             this.cmbHotel.TabIndex = 1;
@@ -65,10 +65,10 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(398, 83);
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(396, 81);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(57, 20);
+            this.label2.Size = new System.Drawing.Size(69, 25);
             this.label2.TabIndex = 2;
             this.label2.Text = "Hotel:";
             // 
