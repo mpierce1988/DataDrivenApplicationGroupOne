@@ -511,9 +511,9 @@ namespace HotelApp.MenuForms
                 // create sql state that will return num of bookings with this room and date
                 string sqlCheckForExistingBooking =
                     $@"SELECT COUNT(*) FROM Booking 
-WHERE ArrivalDate <= '{dteArrival.Value}' 
-AND DepartureDate >= '{dteArrival.Value}' 
-AND RoomID = {selectedRoomID}".Replace(Environment.NewLine, " ");
+                    WHERE ArrivalDate <= '{dteArrival.Value}' 
+                    AND DepartureDate >= '{dteArrival.Value}' 
+                    AND RoomID = {selectedRoomID}".Replace(Environment.NewLine, " ");
 
                 // run query. save results to an int
                 int? bookingsForThisRoomDate = DataAccess.ExecuteScalar(sqlCheckForExistingBooking) as int?;
@@ -675,9 +675,6 @@ AND RoomID = {selectedRoomID}".Replace(Environment.NewLine, " ");
 
         #endregion
 
-        private void txtRoomNumber_TextChanged(object sender, EventArgs e)
-        {
 
-        }
     }
 }
