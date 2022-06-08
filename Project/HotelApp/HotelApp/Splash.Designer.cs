@@ -41,11 +41,11 @@
             // lblOne
             // 
             this.lblOne.AutoSize = true;
-            this.lblOne.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblOne.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblOne.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(4)))), ((int)(((byte)(18)))), ((int)(((byte)(217)))));
             this.lblOne.Location = new System.Drawing.Point(12, 294);
             this.lblOne.Name = "lblOne";
-            this.lblOne.Size = new System.Drawing.Size(0, 29);
+            this.lblOne.Size = new System.Drawing.Size(0, 20);
             this.lblOne.TabIndex = 0;
             // 
             // btnCancel
