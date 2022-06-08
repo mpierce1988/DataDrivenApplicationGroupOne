@@ -331,6 +331,25 @@ namespace HotelApp.MenuForms
         }
 
         /// <summary>
+        /// Sets the Read only state of all the text forms to the given state
+        /// </summary>
+        /// <param name="state"></param>
+        private void SetFieldsReadOnly(bool state)
+        {
+            txtCity.ReadOnly = state;
+            txtCivicNumber.ReadOnly = state;
+            txtHotelName.ReadOnly = state;
+            txtPhone.ReadOnly = state;
+            txtProvince.ReadOnly = state;
+            txtRoomsAvailable.ReadOnly = state;
+            txtStreetName.ReadOnly = state;
+
+            chkBreakfast.AutoCheck = !state;
+            chkParking.AutoCheck = !state;
+            chkPool.AutoCheck = !state;
+        }
+
+        /// <summary>
         /// Enum to keep handle changing enabled/disabled state of buttons
         /// </summary>
         private enum ButtonState
@@ -373,6 +392,7 @@ namespace HotelApp.MenuForms
                     cboHotel.Enabled = true;
 
                     UIUtilities.DisplayInStatusStrip(0, "Browsing Hotel Records");
+                    SetFieldsReadOnly(true);
                     break;
                 case ButtonState.Add:
                     // only enable Save and Cancel
@@ -393,6 +413,7 @@ namespace HotelApp.MenuForms
                     btnModify.Enabled = false;
                     UIUtilities.DisplayInStatusStrip(0, "Adding a Hotel Record");
                     UIUtilities.DisplayInStatusStrip(1, "");
+                    SetFieldsReadOnly(false);
                     break;
                 case ButtonState.Modify:
                     // Only enable save and cancel
@@ -411,6 +432,7 @@ namespace HotelApp.MenuForms
                     btnAdd.Enabled = false;
                     btnModify.Enabled = false;
                     UIUtilities.DisplayInStatusStrip(0, "Modifying a Hotel Record");
+                    SetFieldsReadOnly(false);
 
                     break;
                 case ButtonState.Delete:
@@ -625,14 +647,7 @@ SELECT RoomID FROM Room WHERE HotelID = {currentHotelID}
 
             bool hasPool = chkPool.Checked;
             bool hasBreakfast = chkBreakfast.Checked;
-            bool hasParking = chkParking.Checked;
-
-            // display message and return if this modification matches an existing record, including this hotel's original record
-            if(HasDuplicateRecord(hotelName, civicNumber, streetName, city, province, phoneNumber))
-            {
-                MessageBox.Show("This modification matches one or existing hotels. Please make a modification or select 'Cancel'");
-                return;
-            }
+            bool hasParking = chkParking.Checked;            
 
             // create sql statement to update this record
             string sqlUpdateHotelRecord =

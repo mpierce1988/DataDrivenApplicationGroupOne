@@ -18,3 +18,7 @@ C:\src\Spring 2022\Database Programming\DataDrivenApplicationGroupOne\Project\Ho
 C:\src\Spring 2022\Database Programming\DataDrivenApplicationGroupOne\Project\HotelApp\HotelApp\obj\Debug\HotelApp.csproj.CoreCompileInputs.cache
 C:\src\Spring 2022\Database Programming\DataDrivenApplicationGroupOne\Project\HotelApp\HotelApp\obj\Debug\HotelApp.exe
 C:\src\Spring 2022\Database Programming\DataDrivenApplicationGroupOne\Project\HotelApp\HotelApp\obj\Debug\HotelApp.pdb
+C:\src\Spring 2022\Database Programming\DataDrivenApplicationGroupOne\Project\HotelApp\HotelApp\bin\Debug\HotelApp.exe.manifest
+C:\src\Spring 2022\Database Programming\DataDrivenApplicationGroupOne\Project\HotelApp\HotelApp\bin\Debug\HotelApp.application
+C:\src\Spring 2022\Database Programming\DataDrivenApplicationGroupOne\Project\HotelApp\HotelApp\obj\Debug\HotelApp.exe.manifest
+C:\src\Spring 2022\Database Programming\DataDrivenApplicationGroupOne\Project\HotelApp\HotelApp\obj\Debug\HotelApp.application

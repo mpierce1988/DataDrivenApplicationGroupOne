@@ -48,7 +48,7 @@ namespace HotelApp
             try
             {
                 // set display messages
-                lblOne.Text = $@"Welcome to {Application.ProductName}!";
+                lblOne.Text = $"Welcome to {Application.ProductName} \r\nby {Application.CompanyName}!";
                 lblTwo.Text = $"Version {Application.ProductVersion}";
                 
             }
