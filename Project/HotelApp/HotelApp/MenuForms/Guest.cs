@@ -65,7 +65,9 @@ namespace HotelApp.MenuForms
             DataTable dtGuestDetails = DataAccess.GetData(sqlGuestDetails);
             
             // populate form details
-            cboChooseGuest.SelectedValue = currentGuestID; 
+            cboChooseGuest.SelectedValue = currentGuestID;
+            // set current record out of total number
+            currentRecord = cboChooseGuest.SelectedIndex;
 
             //if (dtGuestDetails.Rows.Count > 0)
             //{
@@ -84,6 +86,9 @@ namespace HotelApp.MenuForms
 
 
             SetFirstLastPrevNextValues();
+
+            // set status display
+            UIUtilities.DisplayInStatusStrip(2, $"Displaying Guest {currentRecord} of {cboChooseGuest.Items.Count - 1}");
 
             btnModify.Enabled = true;
         }
@@ -155,30 +160,31 @@ namespace HotelApp.MenuForms
 
         }
 
-        /// <summary>
-        /// The job of this method is to set the tool strip status label’s Text property to the msg that was passed in.
-        /// </summary>
-        /// <param name="msg"></param>
-        /// <param name="c"></param>
-        private void SetToolStrip(string msg, bool c)
-        {
-            toolStripStatusLabel1.Text = msg;
+        ///// <summary>
+        ///// The job of this method is to set the tool strip status label’s Text property to the msg that was passed in.
+        ///// </summary>
+        ///// <param name="msg"></param>
+        ///// <param name="c"></param>
+        //private void SetToolStrip(string msg, bool c)
+        //{
+        //    toolStripStatusLabel1.Text = msg;
 
-            if (c == false)
-            {
-                toolStripStatusLabel1.ForeColor = Color.Red;
-            }
-            else
-            {
-                toolStripStatusLabel1.ForeColor = Color.Black;
-            }
-        }
+        //    if (c == false)
+        //    {
+        //        toolStripStatusLabel1.ForeColor = Color.Red;
+        //    }
+        //    else
+        //    {
+        //        toolStripStatusLabel1.ForeColor = Color.Black;
+        //    }
+        //}
 
         private void Guest_Load(object sender, EventArgs e)
         {
             try
             {
-                SetToolStrip("Ready...", true);
+                //SetToolStrip("Ready...", true);
+                UIUtilities.DisplayInStatusStrip(0, "Ready...", Color.Black);
 
                 LoadGuests();
             }
@@ -330,16 +336,20 @@ namespace HotelApp.MenuForms
             
             try
             {
-                SetToolStrip("", true);
+                // SetToolStrip("", true);
+                UIUtilities.DisplayInStatusStrip(1, "", Color.Black);
 
                 if (cboChooseGuest.SelectedIndex <= 0)
                 {
-                    SetToolStrip("You must select a guest.", false);
+                    //SetToolStrip("You must select a guest.", false);
+                    UIUtilities.DisplayInStatusStrip(1, "You must select a guest.", Color.Red);
                 }
                 else
                 {
                     currentRecord = cboChooseGuest.SelectedIndex;
                     currentGuestID = Convert.ToInt32(cboChooseGuest.SelectedValue);
+
+                    // 
 
                     NavigationButtonManagement();
                     LoadGuestDetails();
@@ -399,7 +409,10 @@ namespace HotelApp.MenuForms
                 btnCancel.Enabled = true;
 
                 // enable text fields to be edited
-                SetTextBoxesReadOnly(false); 
+                SetTextBoxesReadOnly(false);
+
+                // cancel out record position display
+                UIUtilities.DisplayInStatusStrip(2, "", Color.Black);
             }
             catch (Exception ex)
             {
@@ -459,6 +472,9 @@ namespace HotelApp.MenuForms
 
                 // disable navigation buttons
                 SetNavButtonsEnabledState(false);
+
+                // cancel out record position display
+                UIUtilities.DisplayInStatusStrip(2, "", Color.Black);
 
             }
             catch (Exception ex)
