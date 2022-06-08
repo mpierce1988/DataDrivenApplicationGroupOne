@@ -88,6 +88,15 @@ namespace HotelApp.MenuForms
 
 
             cmbHotel.SelectedValue = currentHotelID;
+
+            // get name of current hotel
+            string sqlNameOfCurrentHotel =
+                $"SELECT HotelName FROM Hotel WHERE HotelID = {currentHotelID};";
+            // save results to a string
+            string nameOfCurrentHotel = DataAccess.ExecuteScalar(sqlNameOfCurrentHotel) as string;
+            
+            
+            UIUtilities.DisplayInStatusStrip(2, $"Displaying bookings for Hotel: {nameOfCurrentHotel}");
         }
 
 
@@ -174,7 +183,11 @@ namespace HotelApp.MenuForms
 
                 if (currentHotelID == 0)
                 {
+
                     dgvBookings.DataSource = null;
+
+                    // clear status label display
+                    UIUtilities.DisplayInStatusStrip(2, "Choose a hotel");
                     return;
                 }
                 else
